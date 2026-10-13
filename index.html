@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DNA Kids Lab</title>
-<meta name="description" content="초등 3~6학년 과학·수학·영어 교과 개념을 집에서 쉽게 공부하고, 부모님과 실험으로 확인해 보는 곳.">
+<meta name="description" content="초등 3~6학년 수학·과학·영어 교과 개념을 집에서 쉽게 공부하고, 부모님과 실험으로 확인해 보는 곳.">
 <meta property="og:title" content="DNA Kids Lab (디엔에이 키즈랩)">
 <meta property="og:description" content="학교에서 배우는 개념을 집에서 쉽게, 실험으로 확인까지">
 <meta property="og:image" content="assets/img/e1_done.jpg">
@@ -92,6 +92,7 @@ dl.kw dt{font-weight:700}
 dl.kw dd{margin:0}
 .say{background:none;border:1px solid #ccc;border-radius:4px;padding:2px 8px;font-size:13px;cursor:pointer;margin-left:8px;white-space:nowrap}
 .quiz ol{padding-left:1.3em;margin:0}
+.quiz u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-weight:700}
 .quiz li.q{margin-bottom:26px}
 .ch{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .ch button{text-align:left;background:#fff;border:1px solid #ccc;border-radius:4px;padding:10px 14px;min-height:44px;cursor:pointer}
@@ -145,12 +146,12 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const app = document.getElementById('app');
 const acctEl = document.getElementById('acct');
 const MATS = ['우유팩','페트병','종이컵','휴지심','상자','병뚜껑','이면지','종이접시'];
-const SUBJ = ['과학','수학','영어'];
-const state = { band: '3~4', subject: '과학', aband: '전체', asubject: '전체', mat: '전체' };
+const SUBJ = ['수학','과학','영어'];
+const state = { band: '3~4', subject: '수학', aband: '전체', asubject: '전체', mat: '전체' };
 try { Object.assign(state, JSON.parse(localStorage.getItem('dnakids_v2') || '{}')); } catch (e) {}
 const fixState = () => {
   if (!['3~4','5~6'].includes(state.band)) state.band = '3~4';
-  if (!SUBJ.includes(state.subject)) state.subject = '과학';
+  if (!SUBJ.includes(state.subject)) state.subject = '수학';
   if (!['전체','3~4','5~6'].includes(state.aband)) state.aband = '전체';
   if (!['전체', ...SUBJ].includes(state.asubject)) state.asubject = '전체';
   if (!['전체', ...MATS].includes(state.mat)) state.mat = '전체';
@@ -161,6 +162,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const fbtn = (key, v, label, fn) => `<button class="f" data-k="${key}" data-v="${esc(v)}" aria-pressed="${state[key] === v}">${esc(label || v)}</button>`;
 const short = d => String(d || '').replace(/^난이도\s*/, '').replace(/[★☆]/g, '').trim();
 const fmtMin = s => { s = Math.round(s || 0); if (s < 60) return s + '초'; const m = Math.round(s / 60); return m < 60 ? m + '분' : Math.floor(m / 60) + '시간 ' + (m % 60) + '분'; };
+const qtext = t => esc(t).replace(/__(.+?)__/g, '<u>$1</u>');
 const imgErr = `onerror="this.style.display='none'"`;
 
 /* ---------- 데이터 ---------- */
@@ -265,7 +267,7 @@ async function viewHome() {
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
   <h1>${name ? esc(name) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
-  <div class="intro"><p>초등 3~6학년 과학·수학·영어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 부모님과 집에서 실험으로 직접 확인해 보세요.</p>
+  <div class="intro"><p>초등 3~6학년 수학·과학·영어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 부모님과 집에서 실험으로 직접 확인해 보세요.</p>
   ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div>
   <div class="filters">
     <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('band','3~4','3~4학년')}${fbtn('band','5~6','5~6학년')}</div>
@@ -297,7 +299,7 @@ async function viewLesson(slug) {
     ${c.expressions && c.expressions.length ? `<h2>꼭 알아야 할 표현</h2><div class="tbl"><table><thead><tr><th>영어</th><th>뜻</th></tr></thead><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}<button class="say" data-say="${esc(e.en)}" aria-label="${esc(e.en)} 듣기">듣기</button></td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` : ''}
     ${c.keywords && c.keywords.length ? `<h2>핵심 낱말</h2><dl class="kw">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` : ''}
     <h2>확인 문제</h2>
-    <div class="quiz"><ol>${c.quiz.map((x, i) => `<li class="q" data-i="${i}"><div>${esc(x.q)}</div><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></li>`).join('')}</ol><div id="score"></div></div>
+    <div class="quiz"><ol>${c.quiz.map((x, i) => `<li class="q" data-i="${i}"><div>${qtext(x.q)}</div><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></li>`).join('')}</ol><div id="score"></div></div>
     <div class="sum"><h2 style="margin-top:20px">한 줄 정리</h2><ul class="plain">${c.summary.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>
     ${act ? `<h2>집에서 해 보기</h2><p class="sub" style="font-size:15px">개념을 이해했다면 부모님과 함께 실험으로 확인해 봐요.</p><a class="try" href="#/a/${esc(act.slug)}"><img src="${esc(act.hero_image)}" alt="" ${imgErr}><div><div class="t" style="font-weight:700">${esc(act.title)}</div><div class="meta">${esc(act.duration)}</div><p style="font-size:15px;margin:4px 0 0">${esc(act.summary)}</p></div></a>` : ''}
     <details><summary>부모님께</summary><p style="margin-top:10px">${esc(c.parent_tip)}</p></details>
@@ -325,7 +327,7 @@ async function viewLesson(slug) {
 
 /* ---------- 화면: 실험·활동 ---------- */
 async function viewActivities() {
-  const all = await listActs();
+  const all = [...await listActs()].sort((a, b) => SUBJ.indexOf(a.subject) - SUBJ.indexOf(b.subject));
   const list = all.filter(a => (state.aband === '전체' || a.band === state.aband) && (state.asubject === '전체' || a.subject === state.asubject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
   app.innerHTML = `<h1>실험·활동</h1>
   <div class="intro"><p>단원 개념을 집에 있는 재료로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p></div>
