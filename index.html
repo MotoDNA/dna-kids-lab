@@ -8,7 +8,7 @@
 <meta property="og:title" content="DNA Kids Lab (디엔에이 키즈랩)">
 <meta property="og:description" content="학교에서 배우는 개념을 집에서 쉽게, 실험으로 확인까지">
 <meta property="og:image" content="assets/img/e1_done.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 :root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
 *{box-sizing:border-box}
@@ -183,6 +183,12 @@ ul.plain.big{font-size:19px} ul.plain.big li{margin-bottom:10px}
 .wb{display:block;margin:18px 0 6px;padding:12px 16px;border:1.5px solid var(--accent);border-radius:8px;background:rgba(255,255,255,.7);color:var(--ink);text-decoration:none}
 .wb b{display:block;color:var(--accent);font-size:17px}.wb span{font-size:14px;color:var(--sub)}
 .wb:hover{background:#fff}
+.narr{float:right;margin:0 0 8px 12px;background:#fff;border:1.5px solid var(--accent);color:var(--accent);border-radius:18px;padding:5px 14px;font-size:15px;cursor:pointer;font-weight:700}
+.narr.playing{background:var(--accent);color:#fff}
+.b12 .page-in p{font-size:22px;line-height:1.9}.b12 .pg-h{font-size:28px}.b12 .pg-q{font-size:24px}.b12 .page-in .ch button{font-size:22px}.b12 .page-in .ex{font-size:21px}.b12 dl.kw.big{font-size:21px}.b12 .tbl td{font-size:20px}
+@media (max-width:640px){.b12 .page-in p{font-size:19px}.b12 .pg-h{font-size:23px}.b12 .pg-q{font-size:20px}.b12 .page-in .ch button{font-size:19px}.narr{font-size:14px;padding:4px 11px}}
+.reader.zh .page-in{font-family:'Noto Sans SC','Noto Sans KR',sans-serif}.reader.ja .page-in{font-family:'Noto Sans JP','Noto Sans KR',sans-serif}
+@media (max-width:640px){.reader-top .tp{display:none}.reader-top .sndbtn{margin-left:4px;font-size:12px;padding:2px 8px}}
 .book-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
 .book-nav .btn{min-width:108px}
 .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;flex:1}
@@ -217,11 +223,13 @@ const app = document.getElementById('app');
 const acctEl = document.getElementById('acct');
 const MATS = ['우유팩','페트병','종이컵','휴지심','상자','병뚜껑','이면지','종이접시'];
 const SUBJ = ['수학','과학','영어'];
+const LSUBJ = ['국어','수학','과학','영어','중국어','일본어'];
+const BANDS = ['1~2','3~4','5~6'];
 const state = { band: '3~4', subject: '수학', aband: '전체', asubject: '전체', mat: '전체' };
 try { Object.assign(state, JSON.parse(localStorage.getItem('dnakids_v2') || '{}')); } catch (e) {}
 const fixState = () => {
-  if (!['3~4','5~6'].includes(state.band)) state.band = '3~4';
-  if (!SUBJ.includes(state.subject)) state.subject = '수학';
+  if (!BANDS.includes(state.band)) state.band = '3~4';
+  if (!LSUBJ.includes(state.subject)) state.subject = '수학';
   if (!['전체','3~4','5~6'].includes(state.aband)) state.aband = '전체';
   if (!['전체', ...SUBJ].includes(state.asubject)) state.asubject = '전체';
   if (!['전체', ...MATS].includes(state.mat)) state.mat = '전체';
@@ -333,15 +341,17 @@ async function myDone() {
 async function viewHome() {
   const [topics, lessons, done] = await Promise.all([listTopics(), listLessons(), myDone()]);
   const L = Object.fromEntries(lessons.map(l => [l.slug, l]));
+  const subjHere = LSUBJ.filter(s => topics.some(t => t.band === state.band && t.subject === s));
+  if (!subjHere.includes(state.subject)) state.subject = subjHere.includes('수학') ? '수학' : subjHere[0];
   const rows = topics.filter(t => t.band === state.band && t.subject === state.subject);
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
   <h1>${name ? esc(name) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
-  <div class="intro"><p>초등 3~6학년 수학·과학·영어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 부모님과 집에서 실험으로 직접 확인해 보세요.</p>
+  <div class="intro"><p>초등 1~6학년 국어·수학·과학·영어·중국어·일본어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 1~2학년은 글자를 처음 배우는 아이도 소리를 들으며 따라올 수 있어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 연습문제와 실험으로 다져 보세요.</p>
   ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div>
   <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('band','3~4','3~4학년')}${fbtn('band','5~6','5~6학년')}</div>
-    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${SUBJ.map(s => fbtn('subject', s)).join('')}</div>
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${BANDS.map(b => fbtn('band', b, b + '학년')).join('')}</div>
+    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${subjHere.map(s => fbtn('subject', s)).join('')}</div>
   </div>
   <ol class="units">${rows.map((t, i) => { const l = L[t.lesson_slug]; const d = l && done[l.slug];
     return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
@@ -419,8 +429,14 @@ function burst(el, count = 46) {
 /* ---------- 듣기 (NVIDIA Magpie TTS로 미리 만든 목소리: Sofia·Leo) ---------- */
 let AUDIO = {}, AUDIO_KEYS = [], curAudio = null;
 const audioReady = fetch('audio_manifest.json?v=1').then(r => r.ok ? r.json() : {}).then(m => { AUDIO = m || {}; AUDIO_KEYS = Object.keys(AUDIO).sort((a, b) => b.length - a.length); }).catch(() => {});
-function speakFallback(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
+const guessLang = t => /[\uac00-\ud7a3]/.test(t) ? 'ko-KR' : /[\u3040-\u30ff]/.test(t) ? 'ja-JP' : /[\u4e00-\u9fff]/.test(t) ? 'zh-CN' : 'en-US';
+function autoNarr() { try { const v = localStorage.getItem('dnakids_autonarr'); return v === null ? true : v === '1'; } catch (e) { return true; } }
+let narrAudio = null;
+function stopNarr() { if (narrAudio) { narrAudio.pause(); narrAudio = null; } document.querySelectorAll('.narr.playing').forEach(b => b.classList.remove('playing')); }
+function playNarr(src, btn) { stopNarr(); try { if (curAudio) curAudio.pause(); } catch (e) {} const a = new Audio(src); narrAudio = a; if (btn) { btn.classList.add('playing'); a.onended = () => btn.classList.remove('playing'); } a.play().catch(() => { if (btn) btn.classList.remove('playing'); }); }
+function speakFallback(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = guessLang(text); u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
 function speak(text, btn) {
+  stopNarr();
   try { if (curAudio) { curAudio.pause(); curAudio = null; } speechSynthesis && speechSynthesis.cancel(); } catch (e) {}
   document.querySelectorAll('.say.playing').forEach(b => b.classList.remove('playing'));
   const hit = AUDIO[text];
@@ -457,26 +473,27 @@ async function viewLesson(slug) {
   const n = c.quiz.length;
   const pages = [];
   // 1. 표지
-  pages.push({ label: '표지', html: `<div class="pg-cover">${l.hero_image ? `<img src="${esc(l.hero_image)}" alt="" ${imgErr}>` : ''}<div>
+  pages.push({ label: '표지', nkey: 'cover', html: `<div class="pg-cover">${l.hero_image ? `<img src="${esc(l.hero_image)}" alt="" ${imgErr}>` : ''}<div>
     <div class="meta">${esc(l.subject)} · ${esc(l.band)}학년 · ${esc(l.topic)}</div>
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
     <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
-  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
+  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
   // 3. 표현·낱말
   if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}${sayBtn(e.en)}</td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
-  if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
+  if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', nkey: 'kw', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
   // 4. 확인 문제 한 문제씩
-  c.quiz.forEach((x, i) => pages.push({ label: `확인 문제 ${i + 1}`, quiz: i, html: `<div class="pg-kicker">확인 문제 ${i + 1} / ${n}</div><div class="quiz" data-i="${i}"><p class="pg-q">${qtext(x.q)}</p><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></div>` }));
+  c.quiz.forEach((x, i) => pages.push({ label: `확인 문제 ${i + 1}`, quiz: i, nkey: 'q' + i, html: `<div class="pg-kicker">확인 문제 ${i + 1} / ${n}</div><div class="quiz" data-i="${i}"><p class="pg-q">${qtext(x.q)}</p><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></div>` }));
   // 5. 정리
-  pages.push({ label: '한 줄 정리', html: `<div class="pg-kicker">마무리</div><h2 class="pg-h">한 줄 정리</h2><div id="score"></div><ul class="plain big">${c.summary.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
+  pages.push({ label: '한 줄 정리', nkey: 'sum', html: `<div class="pg-kicker">마무리</div><h2 class="pg-h">한 줄 정리</h2><div id="score"></div><ul class="plain big">${c.summary.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
     ${act ? `<h3 style="margin-top:22px">집에서 해 보기</h3><p class="sub" style="font-size:15px;margin:2px 0 0">개념을 이해했다면 부모님과 함께 실험으로 확인해 봐요.</p><a class="try" href="#/a/${esc(act.slug)}"><img src="${esc(act.hero_image)}" alt="" ${imgErr}><div><div class="t" style="font-weight:700">${esc(act.title)}</div><div class="meta">${esc(act.duration)}</div><p style="font-size:15px;margin:4px 0 0">${esc(act.summary)}</p></div></a>` : ''}
     <a class="wb" href="assets/workbook/${esc(slug)}.pdf" download="연습문제_${esc(l.title)}.pdf"><b>📝 연습문제 20문제 내려받기</b><span>A4 인쇄용 PDF · 쉬움 8 · 보통 8 · 도전 4 · 정답과 풀이 포함</span></a>
     <details><summary>부모님께</summary><p style="margin-top:10px">${esc(c.parent_tip)}</p></details>` });
 
-  app.innerHTML = `<div class="reader">
-    <div class="reader-top"><a class="back" href="#/" style="margin:0">← 단원 목록</a><span class="meta">${esc(l.topic)} <button class="sndbtn" id="sndBtn" aria-pressed="${sfxOn()}">${sfxOn() ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'}</button></span></div>
-    <div class="book" id="book"><button class="edge l" id="eL" aria-label="이전 쪽" tabindex="-1">‹</button><button class="edge r" id="eR" aria-label="다음 쪽" tabindex="-1">›</button><div class="swipe-hint" id="swHint" aria-hidden="true"><span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span></div>${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
+  const N = c.narr || {}; const hasN = Object.keys(N).length > 0;
+  app.innerHTML = `<div class="reader${l.band === '1~2' ? ' b12' : ''}${l.subject === '중국어' ? ' zh' : l.subject === '일본어' ? ' ja' : ''}">
+    <div class="reader-top"><a class="back" href="#/" style="margin:0;white-space:nowrap">← 단원 목록</a><span class="meta"><span class="tp">${esc(l.topic)}</span> ${hasN ? `<button class="sndbtn" id="autoBtn" aria-pressed="${autoNarr()}">${autoNarr() ? '📖 자동 읽기 켜짐' : '📖 자동 읽기 꺼짐'}</button>` : ''}<button class="sndbtn" id="sndBtn" aria-pressed="${sfxOn()}">${sfxOn() ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'}</button></span></div>
+    <div class="book" id="book"><button class="edge l" id="eL" aria-label="이전 쪽" tabindex="-1">‹</button><button class="edge r" id="eR" aria-label="다음 쪽" tabindex="-1">›</button><div class="swipe-hint" id="swHint" aria-hidden="true"><span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span></div>${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${N[p.nkey] ? `<button class="narr" data-narr="${esc(N[p.nkey])}" aria-label="이 쪽 읽어 주기">🔊 읽어 주기</button>` : ''}${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
     <div class="book-nav"><button class="btn ghost" id="pPrev" aria-label="이전 쪽">◀ 이전</button>
       <div class="dots" id="dots">${pages.map((p, i) => `<button class="dot${p.quiz !== undefined ? ' q' : ''}" data-go="${i}" aria-label="${i + 1}쪽: ${esc(p.label)}" title="${esc(p.label)}"></button>`).join('')}</div>
       <button class="btn" id="pNext" aria-label="다음 쪽">다음 ▶</button></div>
@@ -498,6 +515,7 @@ async function viewLesson(slug) {
     const nb = document.getElementById('pNext'); nb.textContent = last ? '단원 목록 ▶' : '다음 ▶';
     document.getElementById('eL').hidden = cur === 0; document.getElementById('eR').hidden = last;
     document.getElementById('eR').classList.toggle('nudge', cur === 0);
+    if (hasN && autoNarr() && N[pages[cur].nkey]) { clearTimeout(window._nt); window._nt = setTimeout(() => playNarr(N[pages[cur].nkey], els[cur].querySelector('.narr')), 650); } else stopNarr();
     document.getElementById('pCount').textContent = `${cur + 1} / ${pages.length} · ${pages[cur].label}`;
   };
   document.getElementById('pPrev').onclick = () => show(cur - 1);
@@ -534,6 +552,8 @@ async function viewLesson(slug) {
     });
   });
   fracify(book);
+  const ab = document.getElementById('autoBtn'); if (ab) ab.onclick = () => { const on = !autoNarr(); try { localStorage.setItem('dnakids_autonarr', on ? '1' : '0'); } catch (e) {} ab.textContent = on ? '📖 자동 읽기 켜짐' : '📖 자동 읽기 꺼짐'; ab.setAttribute('aria-pressed', on); if (on && N[pages[cur].nkey]) playNarr(N[pages[cur].nkey], els[cur].querySelector('.narr')); else stopNarr(); };
+  book.addEventListener('click', e => { const b = e.target.closest('[data-narr]'); if (b) { e.stopPropagation(); if (b.classList.contains('playing')) stopNarr(); else playNarr(b.dataset.narr, b); } });
   const sb2 = document.getElementById('sndBtn'); if (sb2) sb2.onclick = () => { const on = !sfxOn(); try { localStorage.setItem('dnakids_sfx', on ? '1' : '0'); } catch (e) {} sb2.textContent = on ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'; sb2.setAttribute('aria-pressed', on); if (on) sfx('right'); };
   show(0);
   await startTracking('lesson', slug, l.title);
@@ -597,7 +617,7 @@ async function viewDownloads() {
   app.innerHTML = `<div class="narrow"><h1>도안·문제지</h1><p class="sub">A4 용지에 배율 100%(실제 크기)로 인쇄해 주세요.</p>
   ${SUBJ.map(s => `<h2>${s}</h2><table><tbody>${all.filter(a => a.subject === s).map(a => `<tr><td>${esc(a.title)}</td><td style="white-space:nowrap"><a href="${esc(a.template_pdf)}" download>PDF 내려받기</a></td></tr>`).join('')}</tbody></table>`).join('')}
   <h1 style="margin-top:40px" id="workbooks">단원별 연습문제</h1><p class="sub">단원마다 20문제(쉬움 8 · 보통 8 · 도전 4)와 정답·풀이가 들어 있는 A4 문제지예요. 단원 공부를 마친 뒤 연필로 풀어 보세요.</p>
-  ${['3~4', '5~6'].map(b => SUBJ.map(s => { const ls = lessons.filter(x => x.band === b && x.subject === s); return ls.length ? `<h2>${b}학년 ${s}</h2><table><tbody>${ls.map(x => `<tr><td>${esc(x.title)}<div class="sub" style="font-size:14px">${esc(x.topic)}</div></td><td style="white-space:nowrap"><a href="assets/workbook/${esc(x.slug)}.pdf" download="연습문제_${esc(x.title)}.pdf">연습문제 PDF</a></td></tr>`).join('')}</tbody></table>` : ''; }).join('')).join('')}</div>`;
+  ${BANDS.map(b => LSUBJ.map(s => { const ls = lessons.filter(x => x.band === b && x.subject === s); return ls.length ? `<h2>${b}학년 ${s}</h2><table><tbody>${ls.map(x => `<tr><td>${esc(x.title)}<div class="sub" style="font-size:14px">${esc(x.topic)}</div></td><td style="white-space:nowrap"><a href="assets/workbook/${esc(x.slug)}.pdf" download="연습문제_${esc(x.title)}.pdf">연습문제 PDF</a></td></tr>`).join('')}</tbody></table>` : ''; }).join('')).join('')}</div>`;
 }
 
 /* ---------- 화면: 타자 연습 ---------- */
@@ -648,7 +668,7 @@ function viewSignup() {
   <label for="sid">아이디</label><input type="text" id="sid" autocomplete="username" autocapitalize="off" spellcheck="false"><div class="hint">영어 소문자와 숫자 4~20자</div>
   <label for="spw">비밀번호 (아이가 로그인할 때 써요)</label><input type="password" id="spw" autocomplete="new-password"><div class="hint">6자 이상</div>
   <label for="sname">아이 이름</label><input type="text" id="sname" maxlength="10">
-  <label for="sband">학년</label><select id="sband"><option value="3~4">3~4학년</option><option value="5~6">5~6학년</option></select>
+  <label for="sband">학년</label><select id="sband"><option value="1~2">1~2학년</option><option value="3~4" selected>3~4학년</option><option value="5~6">5~6학년</option></select>
   <label for="spin">부모님 비밀번호</label><input type="password" id="spin" inputmode="numeric" maxlength="6" autocomplete="off"><div class="hint">숫자 4~6자리. 아이 비밀번호와 다르게, 아이가 모르게 정해 주세요.</div>
   <p class="err" id="serr" role="alert"></p>
   <button class="btn" id="sgo" type="submit" style="margin-top:8px">가입하기</button></form>
@@ -723,7 +743,7 @@ async function viewParent() {
   <h2>설정</h2>
   <div class="form"><label for="np0">지금 부모님 비밀번호</label><input type="password" id="np0" inputmode="numeric" maxlength="6"><label for="np1">새 부모님 비밀번호</label><input type="password" id="np1" inputmode="numeric" maxlength="6">
   <p class="err" id="nperr" role="status"></p><button class="btn ghost" id="npgo">부모님 비밀번호 바꾸기</button>
-  <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb"><option value="3~4" ${me.profile && me.profile.band === '3~4' ? 'selected' : ''}>3~4학년</option><option value="5~6" ${me.profile && me.profile.band === '5~6' ? 'selected' : ''}>5~6학년</option></select>
+  <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb"><option value="1~2" ${me.profile && me.profile.band === '1~2' ? 'selected' : ''}>1~2학년</option><option value="3~4" ${me.profile && me.profile.band === '3~4' ? 'selected' : ''}>3~4학년</option><option value="5~6" ${me.profile && me.profile.band === '5~6' ? 'selected' : ''}>5~6학년</option></select>
   <p class="err" id="cerr" role="status"></p><button class="btn ghost" id="cgo">저장</button></div>
   <p class="sub" style="font-size:14px;margin-top:24px">부모님 모드는 30분 뒤 자동으로 아이 화면으로 돌아가요.</p></div>`;
   document.getElementById('npgo').onclick = async () => {
@@ -743,6 +763,7 @@ async function viewParent() {
 
 /* ---------- 길 찾기 ---------- */
 async function route() {
+  stopNarr(); clearTimeout(window._nt);
   const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   const [p, arg] = h.split('/');
   document.title = 'DNA Kids Lab · 학교 개념을 집에서 쉽게';
