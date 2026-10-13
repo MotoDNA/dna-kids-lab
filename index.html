@@ -95,6 +95,10 @@ ul.plain li{margin-bottom:6px}
 dl.kw{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0}
 dl.kw dt{font-weight:700}
 dl.kw dd{margin:0}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.9em;line-height:1.08;margin:0 .12em;font-variant-numeric:tabular-nums}
+.fr .fn{border-bottom:.09em solid currentColor;padding:0 .2em .04em}
+.fr .fd{padding:.04em .2em 0}
+.ch button .fr,.pg-q .fr{font-size:1.05em;margin:2px .12em}
 canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999}
 @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.08)}70%{transform:scale(.98)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
@@ -331,6 +335,19 @@ async function viewHome() {
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'band') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
+/* ---------- 분수 1/2 → 위아래로 쌓인 진짜 분수 모양 ---------- */
+const FRAC_RE = /(^|[^\d/.])(\d{1,3})\/(\d{1,3})(?![\d/])/g;
+function fracify(root) {
+  if (!root) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => (/\d\/\d/.test(n.nodeValue) && !n.parentElement.closest('.fr,script,style,textarea,.say,a[href^="http"]')) ? 1 : 2 });
+  const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+  nodes.forEach(n => {
+    const span = document.createElement('span');
+    span.innerHTML = esc(n.nodeValue).replace(FRAC_RE, (m, pre, a, b) => `${pre}<span class="fr" role="math" aria-label="${b}분의 ${a}"><span class="fn">${a}</span><span class="fd">${b}</span></span>`);
+    n.replaceWith(...span.childNodes);
+  });
+}
+
 /* ---------- 정답 소리·효과 (파일 없이 브라우저에서 직접 만든 소리) ---------- */
 function sfxOn() { try { return localStorage.getItem('dnakids_sfx') !== '0'; } catch (e) { return true; } }
 let actx = null;
@@ -468,16 +485,19 @@ async function viewLesson(slug) {
       qz.querySelectorAll('.ch button').forEach(bb => { bb.disabled = true; const jj = +bb.dataset.j; if (jj === x.answer) bb.classList.add('right'); else if (jj === j) bb.classList.add('wrong'); });
       if (ok) { sfx('right'); burst(b); } else { sfx('wrong'); b.classList.add('shake'); }
       qz.querySelector('.fb').innerHTML = `<b class="${ok ? 'ok' : 'no'}">${ok ? '정답!' : '아쉬워요.'}</b> ${esc(x.explain)}<div style="margin-top:12px"><button class="btn" data-next>다음 ▶</button></div>`;
+      fracify(qz.querySelector('.fb'));
       qz.querySelector('[data-next]').onclick = () => show(cur + 1);
       document.querySelectorAll('#dots .dot')[pages.findIndex(p => p.quiz === i)].classList.add(ok ? 'ok' : 'no');
       if (Object.keys(answered).length === n) {
         document.getElementById('score').innerHTML = `<div class="score"><b>확인 문제 ${n}개 중 ${right}개 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제를 다시 넘겨 보며 설명을 읽어 보세요.'} <button class="lnk" id="retry">처음부터 다시</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div>`;
         document.getElementById('retry').onclick = () => viewLesson(slug);
+        fracify(document.getElementById('score'));
         if (right === n) setTimeout(() => { sfx('perfect'); burst(document.getElementById('score'), 140); }, 650);
         await logOnce({ kind: 'quiz', ref: slug, title: l.title, score: right, total: n, detail: { answers: answered } });
       }
     });
   });
+  fracify(book);
   const sb2 = document.getElementById('sndBtn'); if (sb2) sb2.onclick = () => { const on = !sfxOn(); try { localStorage.setItem('dnakids_sfx', on ? '1' : '0'); } catch (e) {} sb2.textContent = on ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'; sb2.setAttribute('aria-pressed', on); if (on) sfx('right'); };
   show(0);
   await startTracking('lesson', slug, l.title);
@@ -532,6 +552,7 @@ async function viewActivity(slug) {
     ${caution.length ? `<p class="caution">주의: ${esc(caution.join(', '))}</p>` : ''}
     ${a.content.map(block).join('')}
   </article>`;
+  fracify(app.querySelector('article'));
   await startTracking('activity', slug, a.title);
 }
 async function viewDownloads() {
