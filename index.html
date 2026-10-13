@@ -12,7 +12,7 @@
 <style>
 :root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
 *{box-sizing:border-box}
-body{margin:0;background:#fff;color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#f6f1e6 url(assets/img/paper_bg.jpg) repeat;background-size:384px;color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;line-break:strict}
 a{color:var(--accent)}
 img{max-width:100%;display:block}
 button,select,input{font:inherit;color:inherit}
@@ -84,7 +84,7 @@ ol.steps li.has-img{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:1
 .say.playing{background:#e6f2ec;border-color:var(--accent)}
 .caution{font-size:15px;color:#8a3b12;margin-top:4px}
 .note{background:var(--note);padding:14px 18px;border-radius:4px;margin:16px 0;font-size:16px}
-.ex{background:#f5f7f6;border-left:3px solid var(--accent);padding:10px 16px;margin:10px 0 0;font-size:16px}
+.ex{background:rgba(46,110,80,.06);border-left:3px solid var(--accent);padding:10px 16px;margin:10px 0 0;font-size:16px}
 .dl{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin:24px 0}
 .dl a{font-weight:700}
 .dl span{font-size:15px;color:var(--sub)}
@@ -147,7 +147,7 @@ body.nofs-scroll{overflow:hidden}
 .reader{max-width:860px;margin:0 auto}
 .reader-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
 .book{position:relative;height:clamp(440px,calc(100vh - 250px),720px);perspective:2000px}
-.page{position:absolute;inset:0;background:#fffdf8;border:1px solid #e3ded2;border-radius:4px 10px 10px 4px;box-shadow:inset 14px 0 18px -14px rgba(0,0,0,.18),0 10px 26px rgba(30,30,20,.10);transform-origin:left center;transition:transform .6s cubic-bezier(.3,.7,.3,1),opacity 0s;backface-visibility:hidden;display:flex;flex-direction:column}
+.page{position:absolute;inset:0;background:#fffdf8 url(assets/img/paper_page.jpg) repeat;background-size:320px;border:1px solid #e3ded2;border-radius:4px 10px 10px 4px;box-shadow:inset 14px 0 18px -14px rgba(0,0,0,.18),0 10px 26px rgba(30,30,20,.10);transform-origin:left center;transition:transform .6s cubic-bezier(.3,.7,.3,1),opacity 0s;backface-visibility:hidden;display:flex;flex-direction:column}
 .page.now{transform:rotateY(0);opacity:1;z-index:3}
 .page.future{transform:rotateY(0);opacity:0;z-index:1;transition:opacity .1s linear .5s}
 .page.past{transform:rotateY(-100deg);opacity:0;z-index:4;pointer-events:none;transition:transform .6s cubic-bezier(.3,.7,.3,1),opacity .15s linear .45s}
@@ -168,6 +168,18 @@ body.nofs-scroll{overflow:hidden}
 .page-in .ch button{font-size:18px}
 dl.kw.big{font-size:19px;gap:12px 22px}
 ul.plain.big{font-size:19px} ul.plain.big li{margin-bottom:10px}
+.edge{position:absolute;top:50%;z-index:6;width:40px;height:40px;margin-top:-20px;border-radius:50%;border:1px solid #d8d2c4;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.12);color:var(--accent);font-size:28px;line-height:34px;text-align:center;padding:0;cursor:pointer;font-family:Georgia,serif}
+.edge.l{left:-20px}.edge.r{right:-20px}
+.edge[hidden]{display:none}
+.edge:hover{background:#fff;border-color:var(--accent)}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.edge.r.nudge{animation:nudge 1.2s ease-in-out 3}
+.swipe-hint{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);z-index:7;background:rgba(30,60,45,.88);color:#fff;font-size:15px;padding:8px 16px;border-radius:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+.swipe-hint.on{opacity:1}
+.swipe-hint .ar{display:inline-block;font-weight:700;animation:nudge 1s ease-in-out infinite}
+.swipe-hint .ar:first-child{animation-direction:reverse}
+@media (max-width:640px){.edge{width:34px;height:34px;margin-top:-17px;font-size:24px;line-height:29px}.edge.l{left:-12px}.edge.r{right:-12px}}
+@media (prefers-reduced-motion:reduce){.edge.r.nudge,.swipe-hint .ar{animation:none}}
 .book-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
 .book-nav .btn{min-width:108px}
 .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;flex:1}
@@ -447,7 +459,7 @@ async function viewLesson(slug) {
 
   app.innerHTML = `<div class="reader">
     <div class="reader-top"><a class="back" href="#/" style="margin:0">← 단원 목록</a><span class="meta">${esc(l.topic)} <button class="sndbtn" id="sndBtn" aria-pressed="${sfxOn()}">${sfxOn() ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'}</button></span></div>
-    <div class="book" id="book">${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
+    <div class="book" id="book"><button class="edge l" id="eL" aria-label="이전 쪽" tabindex="-1">‹</button><button class="edge r" id="eR" aria-label="다음 쪽" tabindex="-1">›</button><div class="swipe-hint" id="swHint" aria-hidden="true"><span class="ar">‹</span><span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span>nbsp; 옆으로 밀어서 넘겨요 <span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span>nbsp;<span class="ar">›</span></div>${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
     <div class="book-nav"><button class="btn ghost" id="pPrev" aria-label="이전 쪽">◀ 이전</button>
       <div class="dots" id="dots">${pages.map((p, i) => `<button class="dot${p.quiz !== undefined ? ' q' : ''}" data-go="${i}" aria-label="${i + 1}쪽: ${esc(p.label)}" title="${esc(p.label)}"></button>`).join('')}</div>
       <button class="btn" id="pNext" aria-label="다음 쪽">다음 ▶</button></div>
@@ -465,9 +477,14 @@ async function viewLesson(slug) {
     document.getElementById('pPrev').disabled = cur === 0;
     const last = cur === pages.length - 1;
     const nb = document.getElementById('pNext'); nb.textContent = last ? '단원 목록 ▶' : '다음 ▶';
+    document.getElementById('eL').hidden = cur === 0; document.getElementById('eR').hidden = last;
+    document.getElementById('eR').classList.toggle('nudge', cur === 0);
     document.getElementById('pCount').textContent = `${cur + 1} / ${pages.length} · ${pages[cur].label}`;
   };
   document.getElementById('pPrev').onclick = () => show(cur - 1);
+  document.getElementById('eL').onclick = () => show(cur - 1);
+  document.getElementById('eR').onclick = () => show(cur + 1);
+  try { if (matchMedia('(pointer:coarse)').matches && !localStorage.getItem('dnakids_swipe_seen')) { const h = document.getElementById('swHint'); h.classList.add('on'); setTimeout(() => h.classList.remove('on'), 3200); localStorage.setItem('dnakids_swipe_seen', '1'); } } catch (e) {}
   document.getElementById('pNext').onclick = () => { if (cur === pages.length - 1) location.hash = '#/'; else show(cur + 1); };
   document.querySelectorAll('#dots .dot').forEach(d => d.onclick = () => show(+d.dataset.go));
   bookKeys = e => { if (e.target.closest('input,textarea,select')) return; if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); show(cur + 1); } if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(cur - 1); } };
