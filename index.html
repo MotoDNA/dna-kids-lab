@@ -95,6 +95,14 @@ ul.plain li{margin-bottom:6px}
 dl.kw{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0}
 dl.kw dt{font-weight:700}
 dl.kw dd{margin:0}
+canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.08)}70%{transform:scale(.98)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.pop{animation:pop .45s ease-out}
+.ch button.shake{animation:shake .4s ease-in-out}
+.fb b.ok{display:inline-block;animation:pop .5s ease-out}
+.sndbtn{margin-left:10px;background:none;border:1px solid #ccc;border-radius:14px;padding:2px 10px;font-size:13px;cursor:pointer;color:inherit}
+@media (prefers-reduced-motion:reduce){.pop,.ch button.shake,.fb b.ok{animation:none}}
 .say{background:none;border:1px solid #ccc;border-radius:4px;padding:2px 8px;font-size:13px;cursor:pointer;margin-left:8px;white-space:nowrap}
 .quiz ol{padding-left:1.3em;margin:0}
 .quiz u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;font-weight:700}
@@ -323,6 +331,46 @@ async function viewHome() {
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'band') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
+/* ---------- 정답 소리·효과 (파일 없이 브라우저에서 직접 만든 소리) ---------- */
+function sfxOn() { try { return localStorage.getItem('dnakids_sfx') !== '0'; } catch (e) { return true; } }
+let actx = null;
+function sfx(kind) {
+  if (!sfxOn()) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    const t0 = actx.currentTime + 0.01;
+    const tone = (freq, at, dur, type = 'triangle', vol = 0.22) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, t0 + at);
+      g.gain.setValueAtTime(0.0001, t0 + at); g.gain.exponentialRampToValueAtTime(vol, t0 + at + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      o.connect(g).connect(actx.destination); o.start(t0 + at); o.stop(t0 + at + dur + 0.05);
+    };
+    if (kind === 'right') { tone(1046.5, 0, 0.18); tone(1318.5, 0.09, 0.22); tone(1568, 0.18, 0.4); tone(2093, 0.18, 0.35, 'sine', 0.08); }
+    else if (kind === 'wrong') { tone(392, 0, 0.18, 'sine', 0.16); tone(330, 0.15, 0.3, 'sine', 0.14); }
+    else if (kind === 'perfect') { [523.3, 659.3, 784, 1046.5, 784, 1046.5, 1318.5].forEach((f, k) => tone(f, k * 0.11, k === 6 ? 0.6 : 0.2, 'triangle', 0.2)); }
+  } catch (e) {}
+}
+// 버튼에서 색종이가 터지는 효과
+function burst(el, count = 46) {
+  if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const cv = document.createElement('canvas'); cv.className = 'fx';
+  const dpr = window.devicePixelRatio || 1; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+  document.body.appendChild(cv); const g = cv.getContext('2d'); g.scale(dpr, dpr);
+  const cols = ['#f4b400', '#2e9d63', '#3b82f6', '#ef6c8a', '#a855f7', '#ff8a3d'];
+  const ps = Array.from({ length: count }, (_, k) => { const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 7; return { x: cx + (Math.random() - .5) * r.width * .6, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 5, s: 5 + Math.random() * 6, c: cols[k % cols.length], rot: Math.random() * 6, vr: (Math.random() - .5) * .4, star: k % 5 === 0 }; });
+  const star = (x, y, rr) => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5 - Math.PI / 2, d = i % 2 ? rr * .45 : rr; g.lineTo(x + Math.cos(a) * d, y + Math.sin(a) * d); } g.closePath(); g.fill(); };
+  const start = performance.now();
+  (function frame(now) {
+    const t = now - start; g.clearRect(0, 0, innerWidth, innerHeight); g.globalAlpha = Math.max(0, 1 - t / 1300);
+    ps.forEach(p => { p.vy += .32; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.rot += p.vr; g.fillStyle = p.c; g.save(); g.translate(p.x, p.y); g.rotate(p.rot); if (p.star) star(0, 0, p.s); else g.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); g.restore(); });
+    if (t < 1300) requestAnimationFrame(frame); else cv.remove();
+  })(start);
+  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+}
+
 /* ---------- 듣기 (NVIDIA Magpie TTS로 미리 만든 목소리: Sofia·Leo) ---------- */
 let AUDIO = {}, AUDIO_KEYS = [], curAudio = null;
 const audioReady = fetch('audio_manifest.json?v=1').then(r => r.ok ? r.json() : {}).then(m => { AUDIO = m || {}; AUDIO_KEYS = Object.keys(AUDIO).sort((a, b) => b.length - a.length); }).catch(() => {});
@@ -381,7 +429,7 @@ async function viewLesson(slug) {
     <details><summary>부모님께</summary><p style="margin-top:10px">${esc(c.parent_tip)}</p></details>` });
 
   app.innerHTML = `<div class="reader">
-    <div class="reader-top"><a class="back" href="#/" style="margin:0">← 단원 목록</a><span class="meta">${esc(l.topic)}</span></div>
+    <div class="reader-top"><a class="back" href="#/" style="margin:0">← 단원 목록</a><span class="meta">${esc(l.topic)} <button class="sndbtn" id="sndBtn" aria-pressed="${sfxOn()}">${sfxOn() ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'}</button></span></div>
     <div class="book" id="book">${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
     <div class="book-nav"><button class="btn ghost" id="pPrev" aria-label="이전 쪽">◀ 이전</button>
       <div class="dots" id="dots">${pages.map((p, i) => `<button class="dot${p.quiz !== undefined ? ' q' : ''}" data-go="${i}" aria-label="${i + 1}쪽: ${esc(p.label)}" title="${esc(p.label)}"></button>`).join('')}</div>
@@ -418,16 +466,19 @@ async function viewLesson(slug) {
       if (answered[i] !== undefined) return;
       const j = +b.dataset.j; answered[i] = j; const ok = j === x.answer; if (ok) right++;
       qz.querySelectorAll('.ch button').forEach(bb => { bb.disabled = true; const jj = +bb.dataset.j; if (jj === x.answer) bb.classList.add('right'); else if (jj === j) bb.classList.add('wrong'); });
+      if (ok) { sfx('right'); burst(b); } else { sfx('wrong'); b.classList.add('shake'); }
       qz.querySelector('.fb').innerHTML = `<b class="${ok ? 'ok' : 'no'}">${ok ? '정답!' : '아쉬워요.'}</b> ${esc(x.explain)}<div style="margin-top:12px"><button class="btn" data-next>다음 ▶</button></div>`;
       qz.querySelector('[data-next]').onclick = () => show(cur + 1);
       document.querySelectorAll('#dots .dot')[pages.findIndex(p => p.quiz === i)].classList.add(ok ? 'ok' : 'no');
       if (Object.keys(answered).length === n) {
         document.getElementById('score').innerHTML = `<div class="score"><b>확인 문제 ${n}개 중 ${right}개 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제를 다시 넘겨 보며 설명을 읽어 보세요.'} <button class="lnk" id="retry">처음부터 다시</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div>`;
         document.getElementById('retry').onclick = () => viewLesson(slug);
+        if (right === n) setTimeout(() => { sfx('perfect'); burst(document.getElementById('score'), 140); }, 650);
         await logOnce({ kind: 'quiz', ref: slug, title: l.title, score: right, total: n, detail: { answers: answered } });
       }
     });
   });
+  const sb2 = document.getElementById('sndBtn'); if (sb2) sb2.onclick = () => { const on = !sfxOn(); try { localStorage.setItem('dnakids_sfx', on ? '1' : '0'); } catch (e) {} sb2.textContent = on ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'; sb2.setAttribute('aria-pressed', on); if (on) sfx('right'); };
   show(0);
   await startTracking('lesson', slug, l.title);
 }
