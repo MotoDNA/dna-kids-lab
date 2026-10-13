@@ -433,7 +433,7 @@ const guessLang = t => /[\uac00-\ud7a3]/.test(t) ? 'ko-KR' : /[\u3040-\u30ff]/.t
 function autoNarr() { try { const v = localStorage.getItem('dnakids_autonarr'); return v === null ? true : v === '1'; } catch (e) { return true; } }
 let narrAudio = null;
 function stopNarr() { if (narrAudio) { narrAudio.pause(); narrAudio = null; } document.querySelectorAll('.narr.playing').forEach(b => b.classList.remove('playing')); }
-function playNarr(src, btn) { stopNarr(); try { if (curAudio) curAudio.pause(); } catch (e) {} const a = new Audio(src); narrAudio = a; if (btn) { btn.classList.add('playing'); a.onended = () => btn.classList.remove('playing'); } a.play().catch(() => { if (btn) btn.classList.remove('playing'); }); }
+function playNarr(src, btn) { stopNarr(); try { if (curAudio) curAudio.pause(); } catch (e) {} const a = new Audio(src + '?v=2'); narrAudio = a; if (btn) { btn.classList.add('playing'); a.onended = () => btn.classList.remove('playing'); } a.play().catch(() => { if (btn) btn.classList.remove('playing'); }); }
 function speakFallback(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = guessLang(text); u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
 function speak(text, btn) {
   stopNarr();
