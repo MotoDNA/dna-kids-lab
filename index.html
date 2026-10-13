@@ -378,6 +378,19 @@ function sfx(kind) {
     };
     if (kind === 'right') { tone(1046.5, 0, 0.18); tone(1318.5, 0.09, 0.22); tone(1568, 0.18, 0.4); tone(2093, 0.18, 0.35, 'sine', 0.08); }
     else if (kind === 'wrong') { tone(392, 0, 0.18, 'sine', 0.16); tone(330, 0.15, 0.3, 'sine', 0.14); }
+    else if (kind === 'flip') {
+      // 종이 넘기는 소리: 짧은 잡음을 대역 필터로 쓸어 내려 "사락" 느낌을 낸다
+      const len = 0.32, buf = actx.createBuffer(1, actx.sampleRate * len, actx.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (0.6 + 0.4 * Math.random());
+      const src = actx.createBufferSource(); src.buffer = buf;
+      const bp = actx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 0.9;
+      bp.frequency.setValueAtTime(2600, t0); bp.frequency.exponentialRampToValueAtTime(900, t0 + len);
+      const hp = actx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 400;
+      const g = actx.createGain();
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.12, t0 + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.04, t0 + 0.16); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
+      src.connect(bp).connect(hp).connect(g).connect(actx.destination); src.start(t0); src.stop(t0 + len + 0.02);
+    }
     else if (kind === 'perfect') { [523.3, 659.3, 784, 1046.5, 784, 1046.5, 1318.5].forEach((f, k) => tone(f, k * 0.11, k === 6 ? 0.6 : 0.2, 'triangle', 0.2)); }
   } catch (e) {}
 }
@@ -470,7 +483,9 @@ async function viewLesson(slug) {
   const els = [...book.querySelectorAll('.page')];
   let cur = 0;
   const show = i => {
-    cur = Math.max(0, Math.min(pages.length - 1, i));
+    const nxt = Math.max(0, Math.min(pages.length - 1, i));
+    if (nxt !== cur && els[cur] && els[cur].classList.contains('now')) sfx('flip');
+    cur = nxt;
     els.forEach((el, k) => { el.classList.toggle('past', k < cur); el.classList.toggle('now', k === cur); el.classList.toggle('future', k > cur); el.inert = k !== cur; el.setAttribute('aria-hidden', k !== cur); });
     els[cur].querySelector('.page-in').scrollTop = 0;
     document.querySelectorAll('#dots .dot').forEach((d, k) => { d.classList.toggle('on', k === cur); d.classList.toggle('seen', k < cur); });
