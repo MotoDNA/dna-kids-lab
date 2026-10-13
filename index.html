@@ -124,9 +124,11 @@ summary{cursor:pointer;font-weight:500}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
 .modal .box{background:#fff;border-radius:6px;padding:22px;max-width:360px;width:100%}
 .pin{letter-spacing:.4em;font-size:22px;text-align:center}
-iframe.typing{width:100%;height:880px;border:1px solid var(--line);border-radius:4px}
+iframe.typing{width:100%;height:max(560px,calc(100vh - 150px));border:1px solid var(--line);border-radius:4px;display:block}
+iframe.typing.fs{position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;border:0;border-radius:0;z-index:50;background:#fff}
+body.nofs-scroll{overflow:hidden}
 footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color:var(--sub)}
-@media (max-width:560px){ul.list a{grid-template-columns:88px 1fr;gap:14px}ul.list img{width:88px;height:66px}h1{font-size:24px}.try{grid-template-columns:96px 1fr}.try img{width:96px;height:72px}iframe.typing{height:760px}}
+@media (max-width:560px){ul.list a{grid-template-columns:88px 1fr;gap:14px}ul.list img{width:88px;height:66px}h1{font-size:24px}.try{grid-template-columns:96px 1fr}.try img{width:96px;height:72px}iframe.typing{height:max(520px,calc(100vh - 130px))}}
 </style>
 </head>
 <body>
@@ -384,11 +386,12 @@ async function viewDownloads() {
 /* ---------- 화면: 타자 연습 ---------- */
 function viewTyping() {
   const name = me && me.profile ? me.profile.child_name : '';
-  app.innerHTML = `<h1>타자 연습</h1><p class="sub">한글·영어 자리 연습과 타자 게임이에요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p>
-  <iframe class="typing" src="typing.html${name ? '?name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
+  app.innerHTML = `<h1 style="font-size:22px">타자 연습</h1><p class="sub" style="font-size:15px;margin-bottom:10px">한글·영어 자리 연습과 타자 게임이에요. 화면이 작으면 오른쪽 위 <b>전체화면</b> 버튼을 눌러 보세요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p>
+  <iframe class="typing" id="typingFrame" allow="fullscreen" allowfullscreen src="typing.html${name ? '?name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
   startTracking('typing', 'typing', '타자 연습');
 }
 window.addEventListener('message', e => {
+  if (e.origin === location.origin && e.data && e.data.dnakids === 'fs') { const f = document.getElementById('typingFrame'); if (f) { f.classList.toggle('fs', !!e.data.on); document.body.classList.toggle('nofs-scroll', !!e.data.on); } return; }
   if (e.origin !== location.origin || !e.data || e.data.dnakids !== 'typing') return;
   const r = e.data.record || {};
   const lang = r.lang === 'en' ? '영어' : '한글';
@@ -506,6 +509,7 @@ async function route() {
   const navKey = p === 'u' ? '' : p === 'a' ? 'activities' : (p || '');
   document.querySelectorAll('nav a').forEach(x => x.classList.toggle('on', x.dataset.nav === navKey));
   await endTracking();
+  document.body.classList.remove('nofs-scroll');
   renderAcct();
   try {
     if (p === 'u' && arg) await viewLesson(arg);

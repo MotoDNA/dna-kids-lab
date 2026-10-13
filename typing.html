@@ -279,6 +279,19 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
   .caret{animation:none}
   .word.pop,.stage.shake,.burst{animation-duration:.01s}
 }
+
+/* ===== 전체화면 & 화면 맞춤 ===== */
+.fs-btn{white-space:nowrap}
+body.fs{overflow:hidden}
+body.fs .app{max-width:none;min-height:100vh;padding:14px 22px 16px;gap:12px}
+body.fs .board{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch;column-gap:22px;row-gap:12px}
+body.fs .board > .panel{grid-column:1;grid-row:1;display:flex;flex-direction:column;min-width:0}
+body.fs .board > .panel .stage{flex:1;min-height:260px}
+body.fs .board > .kb-wrap{grid-column:2;grid-row:1;justify-content:center;min-width:0}
+body.fs #tab-records{grid-column:1 / -1}
+body.fs .hands svg{width:clamp(100px,12vw,190px)}
+body.fs .key{height:clamp(40px,4.2vw,58px);font-size:clamp(14px,1.5vw,22px)}
+body.fs .stats .stat b{font-size:clamp(18px,1.8vw,26px)}
 </style>
 
 <div class="app">
@@ -296,6 +309,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
         <button data-level="easy" class="on">쉬움</button><button data-level="mid">보통</button><button data-level="hard">어려움</button>
       </div>
       <button id="soundBtn" class="icon-btn" aria-pressed="true">소리 켬</button>
+      <button id="fsBtn" class="icon-btn fs-btn" aria-pressed="false">전체화면</button>
     </div>
   </header>
 
@@ -1121,6 +1135,50 @@ $('soundBtn').setAttribute('aria-pressed',Sfx.on); $('soundBtn').textContent=Sfx
 document.querySelectorAll('#langSeg button').forEach(b=>b.classList.toggle('on',b.dataset.lang===state.lang));
 document.querySelectorAll('#levelSeg button').forEach(b=>b.classList.toggle('on',b.dataset.level===state.level));
 paintKb(); P.reset(); G.reset(); setTab('practice');
+
+/* ===================== 전체화면 & 화면 맞춤 ===================== */
+const inFrame = window.parent !== window;
+let fakeFs = false;
+const realFs = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+function fitApp(){
+  const a=document.querySelector('.app'); if(!a) return;
+  a.style.zoom='';
+  if(state.tab==='records'){ return; }
+  const h=a.scrollHeight, w=a.scrollWidth;
+  const z=Math.min(1, window.innerHeight/h, window.innerWidth/w);
+  if(z<0.995) a.style.zoom=Math.max(z,0.45).toFixed(3);
+}
+function applyFs(){
+  const on = realFs() || fakeFs;
+  document.body.classList.toggle('fs', on);
+  $('fsBtn').textContent = on ? '전체화면 끝내기' : '전체화면';
+  $('fsBtn').setAttribute('aria-pressed', on);
+  requestAnimationFrame(()=>requestAnimationFrame(fitApp));
+}
+function setFake(on){ fakeFs=on; try{ if(inFrame) window.parent.postMessage({dnakids:'fs',on},location.origin); }catch(e){} applyFs(); }
+$('fsBtn').addEventListener('click', async ()=>{
+  const on = realFs() || fakeFs;
+  if(on){
+    if(fakeFs){ setFake(false); return; }
+    try{ await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); }catch(e){}
+    return;
+  }
+  const el=document.documentElement;
+  try{
+    if(el.requestFullscreen) await el.requestFullscreen();
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else throw new Error('no');
+  }catch(e){ setFake(true); }
+  setTimeout(()=>{ if(!realFs() && !fakeFs) setFake(true); }, 400);
+  $('fsBtn').blur();
+});
+document.addEventListener('fullscreenchange', applyFs);
+document.addEventListener('webkitfullscreenchange', applyFs);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && fakeFs) setFake(false); });
+window.addEventListener('resize', ()=>requestAnimationFrame(fitApp));
+document.querySelectorAll('.tabs button, #langSeg button, #levelSeg button').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(fitApp))));
+document.addEventListener('click', e=>{ if(e.target.closest('#gameList')) requestAnimationFrame(()=>requestAnimationFrame(fitApp)); });
+window.addEventListener('load', fitApp); setTimeout(fitApp, 300);
 </script>
 
 </body></html>
