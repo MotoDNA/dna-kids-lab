@@ -386,12 +386,35 @@ async function viewDownloads() {
 /* ---------- 화면: 타자 연습 ---------- */
 function viewTyping() {
   const name = me && me.profile ? me.profile.child_name : '';
-  app.innerHTML = `<h1 style="font-size:22px">타자 연습</h1><p class="sub" style="font-size:15px;margin-bottom:10px">한글·영어 자리 연습과 타자 게임이에요. 화면이 작으면 오른쪽 위 <b>전체화면</b> 버튼을 눌러 보세요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p>
-  <iframe class="typing" id="typingFrame" allow="fullscreen" allowfullscreen src="typing.html${name ? '?name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
+  app.innerHTML = `<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:10px"><div><h1 style="font-size:22px;margin:0">타자 연습</h1><p class="sub" style="font-size:15px;margin:2px 0 0">한글·영어 자리 연습과 타자 게임이에요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p></div><button class="btn" id="typingFs">⛶ 전체화면으로 하기</button></div>
+  <iframe class="typing" id="typingFrame" allow="fullscreen" allowfullscreen src="typing.html?v=4${name ? '&name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
+  document.getElementById('typingFs').onclick = () => typingFs(true);
   startTracking('typing', 'typing', '타자 연습');
 }
+let typingOverlay = false;
+const tf = () => document.getElementById('typingFrame');
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+function tellTyping(on) { const f = tf(); if (f && f.contentWindow) f.contentWindow.postMessage({ dnakids: 'setfs', on }, location.origin); }
+async function typingFs(on) {
+  const f = tf(); if (!f) return;
+  if (on) {
+    try {
+      if (f.requestFullscreen) await f.requestFullscreen();
+      else if (f.webkitRequestFullscreen) f.webkitRequestFullscreen();
+      else throw new Error('no');
+    } catch (e) { typingOverlay = true; f.classList.add('fs'); document.body.classList.add('nofs-scroll'); }
+    tellTyping(true); setTimeout(() => f.focus(), 100);
+  } else {
+    if (fsEl()) { try { await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); } catch (e) {} }
+    typingOverlay = false; f.classList.remove('fs'); document.body.classList.remove('nofs-scroll');
+    tellTyping(false);
+  }
+}
+const onFsChange = () => { const f = tf(); if (!f) return; if (!fsEl() && !typingOverlay) tellTyping(false); else if (fsEl() === f) tellTyping(true); };
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
 window.addEventListener('message', e => {
-  if (e.origin === location.origin && e.data && e.data.dnakids === 'fs') { const f = document.getElementById('typingFrame'); if (f) { f.classList.toggle('fs', !!e.data.on); document.body.classList.toggle('nofs-scroll', !!e.data.on); } return; }
+  if (e.origin === location.origin && e.data && e.data.dnakids === 'fsctl') { typingFs(!!e.data.on); return; }
   if (e.origin !== location.origin || !e.data || e.data.dnakids !== 'typing') return;
   const r = e.data.record || {};
   const lang = r.lang === 'en' ? '영어' : '한글';

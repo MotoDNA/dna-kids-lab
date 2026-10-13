@@ -1138,7 +1138,7 @@ paintKb(); P.reset(); G.reset(); setTab('practice');
 
 /* ===================== 전체화면 & 화면 맞춤 ===================== */
 const inFrame = window.parent !== window;
-let fakeFs = false;
+let fakeFs = false, parentFs = false;
 const realFs = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
 function fitApp(){
   const a=document.querySelector('.app'); if(!a) return;
@@ -1149,17 +1149,19 @@ function fitApp(){
   if(z<0.995) a.style.zoom=Math.max(z,0.45).toFixed(3);
 }
 function applyFs(){
-  const on = realFs() || fakeFs;
+  const on = realFs() || fakeFs || parentFs;
   document.body.classList.toggle('fs', on);
   $('fsBtn').textContent = on ? '전체화면 끝내기' : '전체화면';
   $('fsBtn').setAttribute('aria-pressed', on);
   requestAnimationFrame(()=>requestAnimationFrame(fitApp));
 }
-function setFake(on){ fakeFs=on; try{ if(inFrame) window.parent.postMessage({dnakids:'fs',on},location.origin); }catch(e){} applyFs(); }
+const toParent = m => { try{ window.parent.postMessage(Object.assign({dnakids:'fsctl'},m), location.origin); }catch(e){} };
+window.addEventListener('message', e=>{ if(e.origin===location.origin && e.data && e.data.dnakids==='setfs'){ parentFs=!!e.data.on; applyFs(); } });
 $('fsBtn').addEventListener('click', async ()=>{
-  const on = realFs() || fakeFs;
-  if(on){
-    if(fakeFs){ setFake(false); return; }
+  $('fsBtn').blur();
+  if(inFrame){ toParent({on: !parentFs}); return; }
+  if(realFs() || fakeFs){
+    if(fakeFs){ fakeFs=false; applyFs(); return; }
     try{ await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); }catch(e){}
     return;
   }
@@ -1168,13 +1170,11 @@ $('fsBtn').addEventListener('click', async ()=>{
     if(el.requestFullscreen) await el.requestFullscreen();
     else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
     else throw new Error('no');
-  }catch(e){ setFake(true); }
-  setTimeout(()=>{ if(!realFs() && !fakeFs) setFake(true); }, 400);
-  $('fsBtn').blur();
+  }catch(e){ fakeFs=true; applyFs(); }
 });
 document.addEventListener('fullscreenchange', applyFs);
 document.addEventListener('webkitfullscreenchange', applyFs);
-document.addEventListener('keydown', e=>{ if(e.key==='Escape' && fakeFs) setFake(false); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ if(fakeFs){ fakeFs=false; applyFs(); } else if(parentFs){ toParent({on:false}); } } });
 window.addEventListener('resize', ()=>requestAnimationFrame(fitApp));
 document.querySelectorAll('.tabs button, #langSeg button, #levelSeg button').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(fitApp))));
 document.addEventListener('click', e=>{ if(e.target.closest('#gameList')) requestAnimationFrame(()=>requestAnimationFrame(fitApp)); });
