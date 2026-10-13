@@ -1,3 +1,4 @@
 .dbpass
 supabase/.temp/
 .DS_Store
+_incoming/

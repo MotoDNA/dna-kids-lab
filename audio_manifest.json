@@ -1,0 +1,838 @@
+{
+"apple": {
+"f": "assets/audio/1f3870be27.mp3",
+"v": "Sofia"
+},
+"ball": {
+"f": "assets/audio/7a10ea1b9b.mp3",
+"v": "Leo"
+},
+"cat": {
+"f": "assets/audio/d077f244de.mp3",
+"v": "Sofia"
+},
+"dog": {
+"f": "assets/audio/06d80eb0c5.mp3",
+"v": "Leo"
+},
+"egg": {
+"f": "assets/audio/0e9312087f.mp3",
+"v": "Sofia"
+},
+"What's this?": {
+"f": "assets/audio/9a86f3bf9f.mp3",
+"v": "Leo"
+},
+"It's a cat.": {
+"f": "assets/audio/1483c447e9.mp3",
+"v": "Sofia"
+},
+"Can I help you?": {
+"f": "assets/audio/aa79a8418b.mp3",
+"v": "Leo"
+},
+"I want a pencil.": {
+"f": "assets/audio/17503522c0.mp3",
+"v": "Sofia"
+},
+"How much is it?": {
+"f": "assets/audio/6ca7524a64.mp3",
+"v": "Leo"
+},
+"It's 500 won.": {
+"f": "assets/audio/c212d5a5ba.mp3",
+"v": "Sofia"
+},
+"Here you are.": {
+"f": "assets/audio/57403500de.mp3",
+"v": "Leo"
+},
+"Thank you.": {
+"f": "assets/audio/2d439011ec.mp3",
+"v": "Sofia"
+},
+"You're welcome.": {
+"f": "assets/audio/14e573ad7d.mp3",
+"v": "Leo"
+},
+"Can I help you? - I want a pencil.": {
+"f": "assets/audio/d26b607a56.mp3",
+"v": "Sofia+Leo"
+},
+"How much is it? - It's 1,000 won.": {
+"f": "assets/audio/9bae8c9f34.mp3",
+"v": "Leo+Sofia"
+},
+"Here you are. - Thank you. - You're welcome.": {
+"f": "assets/audio/3d95e4017a.mp3",
+"v": "Sofia+Leo+Sofia"
+},
+"This is my mom.": {
+"f": "assets/audio/7fc0fbe12d.mp3",
+"v": "Leo"
+},
+"This is my brother.": {
+"f": "assets/audio/3dc16b9a5a.mp3",
+"v": "Sofia"
+},
+"Who is he?": {
+"f": "assets/audio/6e04300264.mp3",
+"v": "Leo"
+},
+"Who is she?": {
+"f": "assets/audio/326413fb6b.mp3",
+"v": "Sofia"
+},
+"He is my dad.": {
+"f": "assets/audio/b3336bc58c.mp3",
+"v": "Leo"
+},
+"She is my sister.": {
+"f": "assets/audio/070882c15a.mp3",
+"v": "Sofia"
+},
+"I love my family.": {
+"f": "assets/audio/02c5061798.mp3",
+"v": "Leo"
+},
+"Who is she? - She is my grandmother.": {
+"f": "assets/audio/256d930c93.mp3",
+"v": "Sofia+Leo"
+},
+"How's the weather?": {
+"f": "assets/audio/256deef7cc.mp3",
+"v": "Leo"
+},
+"It's sunny.": {
+"f": "assets/audio/f1f237e83b.mp3",
+"v": "Sofia"
+},
+"It's rainy.": {
+"f": "assets/audio/73ebae9029.mp3",
+"v": "Leo"
+},
+"It's cloudy.": {
+"f": "assets/audio/c32bd4a801.mp3",
+"v": "Sofia"
+},
+"It's snowy.": {
+"f": "assets/audio/baefc1a14a.mp3",
+"v": "Leo"
+},
+"It's hot.": {
+"f": "assets/audio/1dda036d1b.mp3",
+"v": "Sofia"
+},
+"It's cold.": {
+"f": "assets/audio/812082c026.mp3",
+"v": "Leo"
+},
+"Take your umbrella.": {
+"f": "assets/audio/4db233dbf5.mp3",
+"v": "Sofia"
+},
+"How's the weather today?": {
+"f": "assets/audio/f2c87e427a.mp3",
+"v": "Leo"
+},
+"It's cold. Wear your coat.": {
+"f": "assets/audio/4e31c0642f.mp3",
+"v": "Sofia"
+},
+"What color is it?": {
+"f": "assets/audio/33e73a78d0.mp3",
+"v": "Leo"
+},
+"It's red.": {
+"f": "assets/audio/7937c5167a.mp3",
+"v": "Sofia"
+},
+"How many apples?": {
+"f": "assets/audio/a1c33c4ada.mp3",
+"v": "Leo"
+},
+"Three apples.": {
+"f": "assets/audio/e374c24ae8.mp3",
+"v": "Sofia"
+},
+"I like blue.": {
+"f": "assets/audio/e05b00e778.mp3",
+"v": "Leo"
+},
+"Let's count!": {
+"f": "assets/audio/72359bd550.mp3",
+"v": "Sofia"
+},
+"The apple is red.": {
+"f": "assets/audio/2e82767a38.mp3",
+"v": "Leo"
+},
+"What color is it? - It's yellow.": {
+"f": "assets/audio/e6f5a1a716.mp3",
+"v": "Sofia+Leo"
+},
+"How many balls? - Five balls.": {
+"f": "assets/audio/ff4d810d98.mp3",
+"v": "Leo+Sofia"
+},
+"Hello!": {
+"f": "assets/audio/952d2c56d0.mp3",
+"v": "Sofia"
+},
+"Hi!": {
+"f": "assets/audio/5360706c80.mp3",
+"v": "Leo"
+},
+"Good morning.": {
+"f": "assets/audio/062cfca203.mp3",
+"v": "Sofia"
+},
+"What's your name?": {
+"f": "assets/audio/4a0804b810.mp3",
+"v": "Leo"
+},
+"I'm Mina.": {
+"f": "assets/audio/f037a03b70.mp3",
+"v": "Sofia"
+},
+"Nice to meet you.": {
+"f": "assets/audio/67bd7ea9f2.mp3",
+"v": "Leo"
+},
+"Nice to meet you, too.": {
+"f": "assets/audio/1cf2732c43.mp3",
+"v": "Sofia"
+},
+"How are you?": {
+"f": "assets/audio/04e35eb3e4.mp3",
+"v": "Leo"
+},
+"Goodbye. See you later.": {
+"f": "assets/audio/1db11cfb08.mp3",
+"v": "Sofia"
+},
+"Mina! - Hello": {
+"f": "assets/audio/803f986be6.mp3",
+"v": "Leo+Sofia"
+},
+"Tom!": {
+"f": "assets/audio/118726d1d8.mp3",
+"v": "Sofia"
+},
+"Goodbye! - See you!": {
+"f": "assets/audio/ff10182ab3.mp3",
+"v": "Leo+Sofia"
+},
+"What's your name? - My name is Jiho.": {
+"f": "assets/audio/e9748ea44d.mp3",
+"v": "Sofia+Leo"
+},
+"How are you? - I'm good, thanks.": {
+"f": "assets/audio/4e774a0227.mp3",
+"v": "Leo+Sofia"
+},
+"I'm happy.": {
+"f": "assets/audio/d5f8247f79.mp3",
+"v": "Sofia"
+},
+"I'm sad.": {
+"f": "assets/audio/6a39df6334.mp3",
+"v": "Leo"
+},
+"I'm hungry.": {
+"f": "assets/audio/b79e45445b.mp3",
+"v": "Sofia"
+},
+"Are you tired?": {
+"f": "assets/audio/fac4ab93df.mp3",
+"v": "Leo"
+},
+"Yes, I am.": {
+"f": "assets/audio/e7085ee481.mp3",
+"v": "Sofia"
+},
+"No, I'm not.": {
+"f": "assets/audio/8bb06375aa.mp3",
+"v": "Leo"
+},
+"What's wrong?": {
+"f": "assets/audio/5e7e2961cd.mp3",
+"v": "Sofia"
+},
+"I'm very hungry.": {
+"f": "assets/audio/185df041a7.mp3",
+"v": "Leo"
+},
+"Are you tired? - Yes": {
+"f": "assets/audio/0553c14358.mp3",
+"v": "Sofia+Leo"
+},
+"I am.": {
+"f": "assets/audio/30f40cbede.mp3",
+"v": "Leo"
+},
+"I'm not.": {
+"f": "assets/audio/ebf095ed6d.mp3",
+"v": "Sofia"
+},
+"I like apples.": {
+"f": "assets/audio/1db529d122.mp3",
+"v": "Leo"
+},
+"I don't like carrots.": {
+"f": "assets/audio/4bdb985adc.mp3",
+"v": "Sofia"
+},
+"Do you like pizza?": {
+"f": "assets/audio/8095a62f86.mp3",
+"v": "Leo"
+},
+"Yes, I do.": {
+"f": "assets/audio/0c83594ace.mp3",
+"v": "Sofia"
+},
+"No, I don't.": {
+"f": "assets/audio/514cef703b.mp3",
+"v": "Leo"
+},
+"What do you like?": {
+"f": "assets/audio/21de54cc69.mp3",
+"v": "Sofia"
+},
+"My favorite color is blue.": {
+"f": "assets/audio/80580b24c7.mp3",
+"v": "Leo"
+},
+"I like bananas.": {
+"f": "assets/audio/0a24f94414.mp3",
+"v": "Sofia"
+},
+"I like soccer.": {
+"f": "assets/audio/5454836da9.mp3",
+"v": "Leo"
+},
+"I don't like snakes.": {
+"f": "assets/audio/a6d75b4bba.mp3",
+"v": "Sofia"
+},
+"Do you like cats? - Yes": {
+"f": "assets/audio/0bc94f79c6.mp3",
+"v": "Leo+Sofia"
+},
+"I do.": {
+"f": "assets/audio/e6eb22b109.mp3",
+"v": "Sofia"
+},
+"I don't.": {
+"f": "assets/audio/1a088574bf.mp3",
+"v": "Leo"
+},
+"Excuse me. Where is the library?": {
+"f": "assets/audio/3bbaf945db.mp3",
+"v": "Sofia"
+},
+"Go straight.": {
+"f": "assets/audio/0a9993d67e.mp3",
+"v": "Leo"
+},
+"Turn left.": {
+"f": "assets/audio/214975c935.mp3",
+"v": "Sofia"
+},
+"Turn right.": {
+"f": "assets/audio/e881cc5b22.mp3",
+"v": "Leo"
+},
+"It's next to the bank.": {
+"f": "assets/audio/79beeaa835.mp3",
+"v": "Sofia"
+},
+"It's across from the park.": {
+"f": "assets/audio/1c0bb7bbc3.mp3",
+"v": "Leo"
+},
+"It's on your left.": {
+"f": "assets/audio/5ea48672fc.mp3",
+"v": "Sofia"
+},
+"Thank you for your help.": {
+"f": "assets/audio/f1b6ff2034.mp3",
+"v": "Leo"
+},
+"Excuse me. Where is the post office?": {
+"f": "assets/audio/c0ef94ad75.mp3",
+"v": "Sofia"
+},
+"Go straight one block and turn right.": {
+"f": "assets/audio/dfa0c0cb05.mp3",
+"v": "Leo"
+},
+"It's between the school and the park.": {
+"f": "assets/audio/c8aecb13ca.mp3",
+"v": "Sofia"
+},
+"What time is it?": {
+"f": "assets/audio/67e07d17d4.mp3",
+"v": "Leo"
+},
+"It's seven thirty.": {
+"f": "assets/audio/ecf7f5621f.mp3",
+"v": "Sofia"
+},
+"What time do you get up?": {
+"f": "assets/audio/4afc2d69f9.mp3",
+"v": "Leo"
+},
+"I get up at 7.": {
+"f": "assets/audio/d4d9ba58e9.mp3",
+"v": "Sofia"
+},
+"I go to school at 8:30.": {
+"f": "assets/audio/581e5f33b1.mp3",
+"v": "Leo"
+},
+"I go to bed at 10.": {
+"f": "assets/audio/c3defd7cce.mp3",
+"v": "Sofia"
+},
+"It's time for lunch.": {
+"f": "assets/audio/b82065d909.mp3",
+"v": "Leo"
+},
+"What time is it? - It's eight thirty.": {
+"f": "assets/audio/195d81c43d.mp3",
+"v": "Sofia+Leo"
+},
+"get up": {
+"f": "assets/audio/c6ec1bb206.mp3",
+"v": "Leo"
+},
+"eat breakfast": {
+"f": "assets/audio/c1b521b31b.mp3",
+"v": "Sofia"
+},
+"go to school": {
+"f": "assets/audio/32b80dc691.mp3",
+"v": "Leo"
+},
+"do my homework": {
+"f": "assets/audio/315d7b10c4.mp3",
+"v": "Sofia"
+},
+"go to bed": {
+"f": "assets/audio/2aa6db0f71.mp3",
+"v": "Leo"
+},
+"What time do you go to bed? - I go to bed at 10.": {
+"f": "assets/audio/d225096cec.mp3",
+"v": "Sofia+Leo"
+},
+"I play soccer.": {
+"f": "assets/audio/361766c5b1.mp3",
+"v": "Leo"
+},
+"She is tall.": {
+"f": "assets/audio/e7e1cc490a.mp3",
+"v": "Sofia"
+},
+"We are friends.": {
+"f": "assets/audio/37aca13094.mp3",
+"v": "Leo"
+},
+"Are you hungry?": {
+"f": "assets/audio/c17691672e.mp3",
+"v": "Sofia"
+},
+"Do you like music?": {
+"f": "assets/audio/97b863df27.mp3",
+"v": "Leo"
+},
+"I don't play the piano.": {
+"f": "assets/audio/a0205df36e.mp3",
+"v": "Sofia"
+},
+"my dog is cute": {
+"f": "assets/audio/03b01a59b9.mp3",
+"v": "Leo"
+},
+"My dog is cute.": {
+"f": "assets/audio/d299649782.mp3",
+"v": "Sofia"
+},
+"I am happy.": {
+"f": "assets/audio/2b1814c97b.mp3",
+"v": "Leo"
+},
+"He is my brother.": {
+"f": "assets/audio/f6673f9083.mp3",
+"v": "Sofia"
+},
+"They are students.": {
+"f": "assets/audio/8e084037cd.mp3",
+"v": "Leo"
+},
+"You are tall.": {
+"f": "assets/audio/66b6d06dd3.mp3",
+"v": "Sofia"
+},
+"Are you tall?": {
+"f": "assets/audio/9f6af53419.mp3",
+"v": "Leo"
+},
+"I like milk.": {
+"f": "assets/audio/3a4fd6670a.mp3",
+"v": "Sofia"
+},
+"I don't like milk.": {
+"f": "assets/audio/647fd13b34.mp3",
+"v": "Leo"
+},
+"You should wash your hands.": {
+"f": "assets/audio/18746496af.mp3",
+"v": "Sofia"
+},
+"I should do my homework.": {
+"f": "assets/audio/46620638d2.mp3",
+"v": "Leo"
+},
+"You shouldn't run here.": {
+"f": "assets/audio/1de7bac690.mp3",
+"v": "Sofia"
+},
+"Don't run.": {
+"f": "assets/audio/eafc34530c.mp3",
+"v": "Leo"
+},
+"Be quiet, please.": {
+"f": "assets/audio/a01f998d44.mp3",
+"v": "Sofia"
+},
+"What should I do?": {
+"f": "assets/audio/40cc9a3d8b.mp3",
+"v": "Leo"
+},
+"You should see a doctor.": {
+"f": "assets/audio/095590f094.mp3",
+"v": "Sofia"
+},
+"You should wear a helmet.": {
+"f": "assets/audio/38716e7392.mp3",
+"v": "Leo"
+},
+"Don't run in the hallway.": {
+"f": "assets/audio/03e49deb69.mp3",
+"v": "Sofia"
+},
+"Be quiet in the library.": {
+"f": "assets/audio/e709a40b2d.mp3",
+"v": "Leo"
+},
+"I have a cold. - You should get some rest.": {
+"f": "assets/audio/dc439187b6.mp3",
+"v": "Sofia+Leo"
+},
+"What did you do yesterday?": {
+"f": "assets/audio/c1c03688e0.mp3",
+"v": "Leo"
+},
+"I played soccer.": {
+"f": "assets/audio/702b392a06.mp3",
+"v": "Sofia"
+},
+"I watched a movie.": {
+"f": "assets/audio/581c6a94ce.mp3",
+"v": "Leo"
+},
+"I went to the beach.": {
+"f": "assets/audio/d29e495c35.mp3",
+"v": "Sofia"
+},
+"I visited my grandma.": {
+"f": "assets/audio/efe81cb1fd.mp3",
+"v": "Leo"
+},
+"I ate pizza.": {
+"f": "assets/audio/460da81e80.mp3",
+"v": "Sofia"
+},
+"It was fun!": {
+"f": "assets/audio/eda2c07c6d.mp3",
+"v": "Leo"
+},
+"I played soccer yesterday.": {
+"f": "assets/audio/a7043edbdb.mp3",
+"v": "Sofia"
+},
+"I went to the beach. I ate ice cream.": {
+"f": "assets/audio/c69c4ef9ed.mp3",
+"v": "Leo"
+},
+"What did you do last weekend? - I went camping.": {
+"f": "assets/audio/4cee140d97.mp3",
+"v": "Sofia+Leo"
+},
+"What do you want to be?": {
+"f": "assets/audio/2228383b92.mp3",
+"v": "Leo"
+},
+"I want to be a doctor.": {
+"f": "assets/audio/c56694f419.mp3",
+"v": "Sofia"
+},
+"I want to be an artist.": {
+"f": "assets/audio/832aa069ed.mp3",
+"v": "Leo"
+},
+"Why?": {
+"f": "assets/audio/2673ce8234.mp3",
+"v": "Sofia"
+},
+"Because I like animals.": {
+"f": "assets/audio/ef813b388c.mp3",
+"v": "Leo"
+},
+"I'm good at drawing.": {
+"f": "assets/audio/b54c3b1180.mp3",
+"v": "Sofia"
+},
+"That's a great dream!": {
+"f": "assets/audio/d47d63fc9c.mp3",
+"v": "Leo"
+},
+"a doctor, a cook, an artist, an engineer": {
+"f": "assets/audio/7cd7c17d0f.mp3",
+"v": "Sofia"
+},
+"What do you want to be? - I want to be a scientist.": {
+"f": "assets/audio/0a37f9e628.mp3",
+"v": "Leo+Sofia"
+},
+"Why? - Because I like cooking.": {
+"f": "assets/audio/3fcc7379c9.mp3",
+"v": "Sofia+Leo"
+},
+"What are you going to do this weekend?": {
+"f": "assets/audio/3600d50c16.mp3",
+"v": "Leo"
+},
+"I'm going to visit my uncle.": {
+"f": "assets/audio/306a5eb622.mp3",
+"v": "Sofia"
+},
+"I'm going to go camping.": {
+"f": "assets/audio/cfe30559e7.mp3",
+"v": "Leo"
+},
+"Are you going to swim?": {
+"f": "assets/audio/c0720125aa.mp3",
+"v": "Sofia"
+},
+"Let's go together!": {
+"f": "assets/audio/d661efce84.mp3",
+"v": "Leo"
+},
+"Have a nice weekend!": {
+"f": "assets/audio/c7dfc3c189.mp3",
+"v": "Sofia"
+},
+"I'm going to swim.": {
+"f": "assets/audio/c1116ac791.mp3",
+"v": "Leo"
+},
+"She is going to read books.": {
+"f": "assets/audio/c30c2f7df3.mp3",
+"v": "Sofia"
+},
+"this weekend, next week, tomorrow": {
+"f": "assets/audio/67494c7b50.mp3",
+"v": "Leo"
+},
+"Are you going to play baseball? - Yes": {
+"f": "assets/audio/2f95cdfddf.mp3",
+"v": "Sofia+Leo"
+},
+"What letter is it?": {
+"f": "assets/audio/e3ab27dc23.mp3",
+"v": "Leo"
+},
+"It's B.": {
+"f": "assets/audio/aaf7a7e4f9.mp3",
+"v": "Sofia"
+},
+"B is for ball.": {
+"f": "assets/audio/33398fc9af.mp3",
+"v": "Leo"
+},
+"Big B, little b.": {
+"f": "assets/audio/28e2535dec.mp3",
+"v": "Sofia"
+},
+"This is my mother.": {
+"f": "assets/audio/0841d46c76.mp3",
+"v": "Leo"
+},
+"She is kind.": {
+"f": "assets/audio/5015a9d0e5.mp3",
+"v": "Sofia"
+},
+"He is tall.": {
+"f": "assets/audio/ab417e4eeb.mp3",
+"v": "Leo"
+},
+"I love my family!": {
+"f": "assets/audio/d040a3022d.mp3",
+"v": "Sofia"
+},
+"Take your umbrella!": {
+"f": "assets/audio/9ec55ec87e.mp3",
+"v": "Leo"
+},
+"Let's go outside!": {
+"f": "assets/audio/b3ffded938.mp3",
+"v": "Sofia"
+},
+"How many cups?": {
+"f": "assets/audio/c82da223b9.mp3",
+"v": "Leo"
+},
+"Five cups!": {
+"f": "assets/audio/15015e5e0f.mp3",
+"v": "Sofia"
+},
+"Strike!": {
+"f": "assets/audio/d6a1f51e4d.mp3",
+"v": "Leo"
+},
+"Where is the library?": {
+"f": "assets/audio/665ad25e4b.mp3",
+"v": "Sofia"
+},
+"I get up at seven.": {
+"f": "assets/audio/9f7d2dc763.mp3",
+"v": "Leo"
+},
+"I go to school at eight thirty.": {
+"f": "assets/audio/1bf00988a3.mp3",
+"v": "Sofia"
+},
+"It's nine o'clock.": {
+"f": "assets/audio/9b488d608d.mp3",
+"v": "Leo"
+},
+"We should save water.": {
+"f": "assets/audio/931c4c86ad.mp3",
+"v": "Sofia"
+},
+"We should recycle paper.": {
+"f": "assets/audio/465365fca8.mp3",
+"v": "Leo"
+},
+"We shouldn't waste food.": {
+"f": "assets/audio/96a7244d1a.mp3",
+"v": "Sofia"
+},
+"Let's save the Earth together!": {
+"f": "assets/audio/04bb99c911.mp3",
+"v": "Leo"
+},
+"What did you do this summer?": {
+"f": "assets/audio/22fe15ba90.mp3",
+"v": "Sofia"
+},
+"I went to Jeju Island.": {
+"f": "assets/audio/2c9fadbba0.mp3",
+"v": "Leo"
+},
+"I saw dolphins.": {
+"f": "assets/audio/5ba850c881.mp3",
+"v": "Sofia"
+},
+"I ate fish.": {
+"f": "assets/audio/f9ead6215d.mp3",
+"v": "Leo"
+},
+"It was great!": {
+"f": "assets/audio/0f9b2c8269.mp3",
+"v": "Sofia"
+},
+"Hello.": {
+"f": "assets/audio/f9776f93ac.mp3",
+"v": "Leo"
+},
+"Hi.": {
+"f": "assets/audio/7b00b6d52a.mp3",
+"v": "Sofia"
+},
+"Good night.": {
+"f": "assets/audio/c71bed73a9.mp3",
+"v": "Leo"
+},
+"I'm fine, thank you. And you?": {
+"f": "assets/audio/cfa6968d85.mp3",
+"v": "Sofia"
+},
+"Goodbye.": {
+"f": "assets/audio/0101977b40.mp3",
+"v": "Leo"
+},
+"See you later.": {
+"f": "assets/audio/be266dedb6.mp3",
+"v": "Sofia"
+},
+"I'm angry.": {
+"f": "assets/audio/851ea012d4.mp3",
+"v": "Leo"
+},
+"I'm tired.": {
+"f": "assets/audio/be691426f1.mp3",
+"v": "Sofia"
+},
+"I'm sleepy.": {
+"f": "assets/audio/31ed78a1ec.mp3",
+"v": "Leo"
+},
+"Are you okay?": {
+"f": "assets/audio/e9911b09e9.mp3",
+"v": "Sofia"
+},
+"I like chicken.": {
+"f": "assets/audio/086d53ef04.mp3",
+"v": "Leo"
+},
+"What food do you like?": {
+"f": "assets/audio/a46a03b68f.mp3",
+"v": "Sofia"
+},
+"I want to be a scientist.": {
+"f": "assets/audio/2ac1ca3bcc.mp3",
+"v": "Leo"
+},
+"Because I like robots.": {
+"f": "assets/audio/85f30cc3d4.mp3",
+"v": "Sofia"
+},
+"Good luck!": {
+"f": "assets/audio/82a09b9d44.mp3",
+"v": "Leo"
+},
+"I'm going to play soccer.": {
+"f": "assets/audio/ac3f125d06.mp3",
+"v": "Sofia"
+},
+"On Saturday, I'm going to visit Grandma.": {
+"f": "assets/audio/ce147cdae0.mp3",
+"v": "Leo"
+},
+"Sounds fun!": {
+"f": "assets/audio/a141e15a28.mp3",
+"v": "Sofia"
+},
+"How about you?": {
+"f": "assets/audio/d198e54c1d.mp3",
+"v": "Leo"
+},
+"I'm not going to watch TV.": {
+"f": "assets/audio/b7d09b8ce9.mp3",
+"v": "Sofia"
+}
+}

@@ -76,7 +76,12 @@ td:first-child{font-weight:500;padding-right:16px}
 ol.steps{margin:0;padding-left:1.4em}
 ol.steps li{margin-bottom:26px;padding-left:4px}
 ol.steps li::marker{font-weight:700}
-ol.steps img{margin-top:12px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px}
+ol.steps img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;border:1px solid #e3e3e3;background:#f3f3f3}
+ol.steps li.has-img{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px;align-items:start}
+@media (max-width:640px){ol.steps li.has-img{grid-template-columns:1fr}ol.steps li.has-img img{max-width:340px}}
+.sayrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.say.chip{margin-left:0;font-size:14px;padding:3px 10px;border-radius:14px;background:#fff}
+.say.playing{background:#e6f2ec;border-color:var(--accent)}
 .caution{font-size:15px;color:#8a3b12;margin-top:4px}
 .note{background:var(--note);padding:14px 18px;border-radius:4px;margin:16px 0;font-size:16px}
 .ex{background:#f5f7f6;border-left:3px solid var(--accent);padding:10px 16px;margin:10px 0 0;font-size:16px}
@@ -318,9 +323,37 @@ async function viewHome() {
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'band') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
-function speak(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
+/* ---------- 듣기 (NVIDIA Magpie TTS로 미리 만든 목소리: Sofia·Leo) ---------- */
+let AUDIO = {}, AUDIO_KEYS = [], curAudio = null;
+const audioReady = fetch('audio_manifest.json?v=1').then(r => r.ok ? r.json() : {}).then(m => { AUDIO = m || {}; AUDIO_KEYS = Object.keys(AUDIO).sort((a, b) => b.length - a.length); }).catch(() => {});
+function speakFallback(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
+function speak(text, btn) {
+  try { if (curAudio) { curAudio.pause(); curAudio = null; } speechSynthesis && speechSynthesis.cancel(); } catch (e) {}
+  document.querySelectorAll('.say.playing').forEach(b => b.classList.remove('playing'));
+  const hit = AUDIO[text];
+  if (!hit) return speakFallback(text);
+  const a = new Audio(hit.f); curAudio = a;
+  if (btn) { btn.classList.add('playing'); a.onended = a.onpause = () => btn.classList.remove('playing'); }
+  a.play().catch(() => speakFallback(text));
+}
+const sayBtn = t => `<button class="say" data-say="${esc(t)}" aria-label="${esc(t)} 듣기">듣기</button>`;
+// 예시 문장 안에 들어 있는 영어 문장·낱말을 찾아 듣기 버튼으로 보여 준다
+function sayChips(text) {
+  if (!text || !AUDIO_KEYS.length) return '';
+  const found = []; let rest = text;
+  for (const k of AUDIO_KEYS) {
+    const re = new RegExp('(^|[^A-Za-z])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![A-Za-z])');
+    const m = rest.match(re);
+    if (m) { const at = m.index + m[1].length; found.push([at, k]); rest = rest.slice(0, at) + ' '.repeat(k.length) + rest.slice(at + k.length); }
+  }
+  if (!found.length) return '';
+  found.sort((a, b) => a[0] - b[0]);
+  return `<div class="sayrow">${found.map(([, k]) => `<button class="say chip" data-say="${esc(k)}">▶ ${esc(k)}</button>`).join('')}</div>`;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) { e.stopPropagation(); speak(b.dataset.say, b); } }, true);
 let bookKeys = null;
 async function viewLesson(slug) {
+  await audioReady;
   const l = (await q('lesson:' + slug, () => sb.from('lessons').select('*').eq('slug', slug)))[0];
   if (!l) { app.innerHTML = `<p class="empty">찾는 단원이 없어요. <a href="#/">단원 목록으로</a></p>`; return; }
   const [topics, acts] = await Promise.all([listTopics(), listActs()]);
@@ -336,9 +369,9 @@ async function viewLesson(slug) {
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
     <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
-  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}</div>` : ''}` }));
+  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
   // 3. 표현·낱말
-  if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}<button class="say" data-say="${esc(e.en)}" aria-label="${esc(e.en)} 듣기">듣기</button></td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
+  if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}${sayBtn(e.en)}</td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
   if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
   // 4. 확인 문제 한 문제씩
   c.quiz.forEach((x, i) => pages.push({ label: `확인 문제 ${i + 1}`, quiz: i, html: `<div class="pg-kicker">확인 문제 ${i + 1} / ${n}</div><div class="quiz" data-i="${i}"><p class="pg-q">${qtext(x.q)}</p><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></div>` }));
@@ -377,7 +410,6 @@ async function viewLesson(slug) {
   let sx = null, sy = null;
   book.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
   book.addEventListener('touchend', e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(cur + (dx < 0 ? 1 : -1)); sx = null; }, { passive: true });
-  book.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) speak(b.dataset.say); });
 
   const answered = {}; let right = 0;
   book.querySelectorAll('.quiz').forEach(qz => {
@@ -420,11 +452,11 @@ async function viewActivities() {
 function block(c) {
   switch (c.type) {
     case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit ? '<span class="kit">· 키트 예정</span>' : ''}</td></tr>`).join('')}</tbody></table></div>${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
-    case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy">` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
-    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+    case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li class="${s.image ? 'has-img' : ''}"><div><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}${sayChips(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}</div>${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)} 장면" loading="lazy" ${imgErr}>` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
+    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}${AUDIO[x] ? sayBtn(x) : sayChips(x)}</li>`).join('')}</ul>`;
     case 'explain': return `${c.title ? `<h2>${esc(c.title)}</h2>` : '<h2>부모님께</h2>'}${c.boxes.map(b => `<h3 style="margin-top:18px">${esc(b.label)}</h3>${b.paras.map(p => `<p>${esc(p)}</p>`).join('')}`).join('')}`;
     case 'more': return `<h2>더 해 보기</h2><ul class="plain">${c.items.map(m => `<li><b>${esc(m.title)}</b> — ${esc(m.body)}</li>`).join('')}</ul>`;
-    case 'table': return `<h2>${esc(c.title)}</h2><div class="tbl"><table><thead><tr>${c.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.note ? `<p class="sub" style="font-size:15px;margin-top:10px">${esc(c.note)}</p>` : ''}`;
+    case 'table': return `<h2>${esc(c.title)}</h2><div class="tbl"><table><thead><tr>${c.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}${AUDIO[v] ? sayBtn(v) : ''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.note ? `<p class="sub" style="font-size:15px;margin-top:10px">${esc(c.note)}</p>` : ''}`;
     case 'template': return c.pdf ? `<div class="dl"><a href="${esc(c.pdf)}" download>${esc(c.title)} 내려받기 (PDF)</a><span>${esc(c.desc)}</span></div>` : '';
     case 'note': return `<div class="note">${esc(c.text)}</div>`;
     case 'info': return `<div class="facts">${c.items.map(i => `<div><b>${esc(i.label)}</b>${esc(i.value)}</div>`).join('')}</div>`;
@@ -432,6 +464,7 @@ function block(c) {
   return '';
 }
 async function viewActivity(slug) {
+  await audioReady;
   const a = (await q('act:' + slug, () => sb.from('activities').select('*').eq('slug', slug)))[0];
   if (!a) { app.innerHTML = `<p class="empty">찾는 활동이 없어요. <a href="#/activities">목록으로</a></p>`; return; }
   const topics = await listTopics();
