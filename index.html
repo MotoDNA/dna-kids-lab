@@ -4,52 +4,65 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DNA Kids Lab</title>
-<meta name="description" content="집에 있는 재료로 해 보는 초등 3~6학년 과학·수학·영어 활동과 인쇄용 도안.">
+<meta name="description" content="초등 3~6학년 과학·수학·영어 교과 개념을 집에서 쉽게 공부하고, 부모님과 실험으로 확인해 보는 곳.">
 <meta property="og:title" content="DNA Kids Lab (디엔에이 키즈랩)">
-<meta property="og:description" content="집에 있는 재료로 해 보는 초등 과학·수학·영어 활동">
+<meta property="og:description" content="학교에서 배우는 개념을 집에서 쉽게, 실험으로 확인까지">
 <meta property="og:image" content="assets/img/e1_done.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-:root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--note:#fff8e1}
+:root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
 img{max-width:100%;display:block}
-button,select{font:inherit;color:inherit}
+button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .w{max-width:880px;margin:0 auto;padding-inline:20px}
 .narrow{max-width:720px}
 header{border-bottom:1px solid var(--line)}
-header .w{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;padding-block:18px}
+header .w{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding-block:14px}
 .brand{font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}
 .brand small{font-weight:400;color:var(--sub);font-size:14px;margin-left:6px}
-nav a{color:var(--ink);text-decoration:none;margin-left:18px;font-size:15px}
-nav a:first-child{margin-left:0}
+nav{display:flex;flex-wrap:wrap;gap:2px 16px}
+nav a{color:var(--ink);text-decoration:none;font-size:15px;padding:4px 0}
 nav a.on{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
-main{padding-block:36px 80px;min-height:60vh}
+.acct{width:100%;display:flex;justify-content:flex-end;align-items:center;gap:10px;font-size:14px;color:var(--sub);min-height:28px}
+.acct.parent{background:#fff4e5;border-radius:4px;padding:4px 10px;color:#7a4b00}
+.lnk{background:none;border:0;padding:4px 2px;color:var(--accent);text-decoration:underline;cursor:pointer;font-size:14px}
+main{padding-block:32px 80px;min-height:60vh}
 h1{font-size:28px;line-height:1.35;margin:0 0 10px;letter-spacing:-.3px}
-h2{font-size:21px;margin:48px 0 14px;letter-spacing:-.2px}
+h2{font-size:21px;margin:44px 0 14px;letter-spacing:-.2px}
 h3{font-size:17px;margin:0}
 p{margin:0 0 12px}
 .sub{color:var(--sub)}
-.intro{max-width:36em;margin-bottom:28px}
-.filters{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;padding:14px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);font-size:15px}
-.filters .grp{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px}
-.filters .lab{color:var(--sub);margin-right:6px}
+.intro{max-width:36em;margin-bottom:24px}
 .f{background:none;border:0;padding:8px 8px;min-height:40px;cursor:pointer;border-radius:4px}
 .f[aria-pressed="true"]{font-weight:700;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
 .f:hover{background:#f4f4f4}
-select{border:1px solid #ccc;border-radius:4px;padding:6px 8px;min-height:40px;background:#fff}
+.filters{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;padding:12px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);font-size:15px}
+.filters .grp{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px}
+.filters .lab{color:var(--sub);margin-right:6px}
+select,input[type=text],input[type=password]{border:1px solid #bbb;border-radius:4px;padding:8px 10px;min-height:44px;background:#fff;width:100%}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:4px;padding:10px 18px;min-height:44px;cursor:pointer;font-weight:500}
+.btn.ghost{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+.btn:disabled{opacity:.5;cursor:default}
 .count{font-size:14px;color:var(--sub);margin:14px 0 4px}
 ul.list{list-style:none;margin:0;padding:0}
 ul.list li{border-bottom:1px solid var(--line)}
 ul.list a{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:18px 0;color:var(--ink);text-decoration:none;align-items:start}
 ul.list img{width:120px;height:90px;object-fit:cover;border-radius:3px;background:#f2f2f2}
-ul.list img.doc{object-position:top}
 ul.list .t{font-weight:700;font-size:18px;line-height:1.4}
 ul.list a:hover .t{text-decoration:underline}
 .meta{font-size:14px;color:var(--sub)}
 ul.list p{margin:4px 0 0;font-size:15px;color:#444}
+.units{list-style:none;margin:0;padding:0;counter-reset:u}
+.units li{border-bottom:1px solid var(--line)}
+.units a{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:baseline;padding:14px 0;color:var(--ink);text-decoration:none}
+.units a:hover .t{text-decoration:underline}
+.units .n{color:var(--sub);font-size:15px;font-variant-numeric:tabular-nums}
+.units .t{font-weight:700}
+.units .topic{display:block;font-size:14px;color:var(--sub);font-weight:400}
+.done{font-size:13px;color:var(--good);white-space:nowrap}
 .empty{padding:40px 0;color:var(--sub)}
 .back{font-size:15px;display:inline-block;margin-bottom:20px;text-decoration:none}
 .hero{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px;margin:22px 0 8px;background:#f2f2f2}
@@ -57,7 +70,7 @@ ul.list p{margin:4px 0 0;font-size:15px;color:#444}
 table{width:100%;border-collapse:collapse;font-size:16px}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:14px;color:var(--sub);font-weight:500;border-bottom:1px solid var(--ink)}
-td:first-child{white-space:nowrap;font-weight:500;padding-right:16px}
+td:first-child{font-weight:500;padding-right:16px}
 .tbl{overflow-x:auto}
 .kit{font-size:13px;color:var(--accent);margin-left:6px;white-space:nowrap}
 ol.steps{margin:0;padding-left:1.4em}
@@ -66,96 +79,266 @@ ol.steps li::marker{font-weight:700}
 ol.steps img{margin-top:12px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px}
 .caution{font-size:15px;color:#8a3b12;margin-top:4px}
 .note{background:var(--note);padding:14px 18px;border-radius:4px;margin:16px 0;font-size:16px}
+.ex{background:#f5f7f6;border-left:3px solid var(--accent);padding:10px 16px;margin:10px 0 0;font-size:16px}
 .dl{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin:24px 0}
 .dl a{font-weight:700}
 .dl span{font-size:15px;color:var(--sub)}
-.parent{border-top:1px solid var(--line);padding-top:4px}
 ul.plain{margin:0;padding-left:1.2em}
 ul.plain li{margin-bottom:6px}
-.more li{margin-bottom:8px}
 .facts{margin-top:48px;border-top:1px solid var(--ink);padding-top:16px;font-size:15px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px}
 .facts b{display:block;font-weight:500;color:var(--sub);font-size:13px}
-.tabs{display:flex;gap:4px;margin:20px 0 8px}
-.prog h2{margin-top:36px}
-.prog td:first-child{font-weight:400;color:#444;width:42%}
-.soon{color:#999;font-size:15px}
+dl.kw{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0}
+dl.kw dt{font-weight:700}
+dl.kw dd{margin:0}
+.say{background:none;border:1px solid #ccc;border-radius:4px;padding:2px 8px;font-size:13px;cursor:pointer;margin-left:8px;white-space:nowrap}
+.quiz ol{padding-left:1.3em;margin:0}
+.quiz li.q{margin-bottom:26px}
+.ch{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.ch button{text-align:left;background:#fff;border:1px solid #ccc;border-radius:4px;padding:10px 14px;min-height:44px;cursor:pointer}
+.ch button:hover:not(:disabled){border-color:var(--accent)}
+.ch button.right{border-color:var(--good);background:var(--accent-soft);font-weight:500}
+.ch button.wrong{border-color:var(--bad);background:#fbeceb}
+.ch button:disabled{cursor:default}
+.fb{margin-top:8px;font-size:15px}
+.fb b.ok{color:var(--good)} .fb b.no{color:var(--bad)}
+.score{border:1px solid var(--accent);border-radius:4px;padding:14px 18px;margin-top:10px}
+.sum{border-top:1px solid var(--ink);margin-top:44px;padding-top:6px}
+details{border:1px solid var(--line);border-radius:4px;padding:10px 16px;margin-top:20px}
+summary{cursor:pointer;font-weight:500}
+.try{display:grid;grid-template-columns:140px 1fr;gap:16px;border:1px solid var(--line);border-radius:4px;padding:14px;text-decoration:none;color:var(--ink);margin-top:8px}
+.try img{width:140px;height:105px;object-fit:cover;border-radius:3px;background:#f2f2f2}
+.try:hover .t{text-decoration:underline}
+.form{max-width:420px}
+.form label{display:block;margin:16px 0 4px;font-weight:500;font-size:15px}
+.form .hint{font-size:13px;color:var(--sub);margin-top:4px}
+.err{color:var(--bad);font-size:15px;margin-top:12px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.stat div{border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:13px;color:var(--sub)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:120px;border-bottom:1px solid var(--ink);margin-top:10px}
+.bars div{flex:1;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;position:relative}
+.bars-l{display:flex;gap:6px;font-size:12px;color:var(--sub)}
+.bars-l span{flex:1;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal .box{background:#fff;border-radius:6px;padding:22px;max-width:360px;width:100%}
+.pin{letter-spacing:.4em;font-size:22px;text-align:center}
+iframe.typing{width:100%;height:880px;border:1px solid var(--line);border-radius:4px}
 footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color:var(--sub)}
-@media (max-width:560px){ul.list a{grid-template-columns:88px 1fr;gap:14px}ul.list img{width:88px;height:66px}h1{font-size:24px}}
+@media (max-width:560px){ul.list a{grid-template-columns:88px 1fr;gap:14px}ul.list img{width:88px;height:66px}h1{font-size:24px}.try{grid-template-columns:96px 1fr}.try img{width:96px;height:72px}iframe.typing{height:760px}}
 </style>
 </head>
 <body>
 <header><div class="w">
 <a class="brand" href="#/">DNA Kids Lab<small>디엔에이 키즈랩</small></a>
-<nav aria-label="메뉴"><a href="#/" data-nav="">활동</a><a href="#/progress" data-nav="progress">진도표</a><a href="#/downloads" data-nav="downloads">도안 모음</a></nav>
+<nav aria-label="메뉴"><a href="#/" data-nav="">단원 공부</a><a href="#/activities" data-nav="activities">실험·활동</a><a href="#/typing" data-nav="typing">타자 연습</a><a href="#/downloads" data-nav="downloads">도안</a></nav>
+<div class="acct" id="acct"></div>
 </div></header>
 <main class="w" id="app"><p class="sub">불러오는 중…</p></main>
 <footer><div class="w">DNA Kids Lab · 도안은 가정에서 자유롭게 인쇄해 쓰셔도 됩니다.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://lnnyevytmpgvdqtpfyjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_tJppUfQ22tu3GjSajvq-4w_CMB87DL4';
+const ID_DOMAIN = 'kids.dnakidslab.com';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 const app = document.getElementById('app');
-const MATS = ['우유팩','페트병','종이컵','휴지심','상자','병뚜껑','이면지'];
-const state = { band: '전체', subject: '전체', mat: '전체', pband: '3~4' };
-try { const s = JSON.parse(localStorage.getItem('dnakids_filters') || '{}'); Object.assign(state, s); } catch (e) {}
-const save = () => { try { localStorage.setItem('dnakids_filters', JSON.stringify({ band: state.band, subject: state.subject, mat: state.mat })); } catch (e) {} };
-const cache = {};
+const acctEl = document.getElementById('acct');
+const MATS = ['우유팩','페트병','종이컵','휴지심','상자','병뚜껑','이면지','종이접시'];
+const SUBJ = ['과학','수학','영어'];
+const state = { band: '3~4', subject: '과학', aband: '전체', asubject: '전체', mat: '전체' };
+try { Object.assign(state, JSON.parse(localStorage.getItem('dnakids_filters') || '{}')); } catch (e) {}
+const saveState = () => { try { localStorage.setItem('dnakids_filters', JSON.stringify(state)); } catch (e) {} };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function api(path) {
-  if (cache[path]) return cache[path];
-  const r = await fetch(SUPABASE_URL + '/rest/v1/' + path, { headers: { apikey: SUPABASE_KEY } });
-  if (!r.ok) throw new Error('내용을 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요.');
-  return (cache[path] = await r.json());
-}
-const listAll = () => api('activities?select=slug,subject,band,topic,title,summary,duration,tags,hero_image,hero_is_doc,template_pdf&order=sort_order');
+const fbtn = (key, v, label, fn) => `<button class="f" data-k="${key}" data-v="${esc(v)}" aria-pressed="${state[key] === v}">${esc(label || v)}</button>`;
 const short = d => String(d || '').replace(/^난이도\s*/, '').replace(/[★☆]/g, '').trim();
-const fbtn = (key, v, label) => `<button class="f" data-k="${key}" data-v="${esc(v)}" aria-pressed="${state[key] === v}">${esc(label || v)}</button>`;
+const fmtMin = s => { s = Math.round(s || 0); if (s < 60) return s + '초'; const m = Math.round(s / 60); return m < 60 ? m + '분' : Math.floor(m / 60) + '시간 ' + (m % 60) + '분'; };
+const imgErr = `onerror="this.style.display='none'"`;
 
+/* ---------- 데이터 ---------- */
+const cache = {};
+async function q(key, fn) { if (cache[key]) return cache[key]; const { data, error } = await fn(); if (error) throw new Error('내용을 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요.'); return (cache[key] = data); }
+const listActs = () => q('acts', () => sb.from('activities').select('slug,subject,band,topic,title,summary,duration,tags,hero_image,hero_is_doc,template_pdf').order('sort_order'));
+const listTopics = () => q('topics', () => sb.from('topics').select('band,subject,name,sort_order,activity_slug,lesson_slug').order('sort_order'));
+const listLessons = () => q('lessons', () => sb.from('lessons').select('slug,band,subject,topic,title,hero_image').order('sort_order'));
+
+/* ---------- 계정 ---------- */
+let me = null;            // { user, profile }
+let parentMode = false;
+function loadParentMode() { try { const t = +sessionStorage.getItem('dnakids_parent_until') || 0; parentMode = t > Date.now(); } catch (e) { parentMode = false; } }
+function setParentMode(on) { parentMode = on; try { on ? sessionStorage.setItem('dnakids_parent_until', String(Date.now() + 30 * 60 * 1000)) : sessionStorage.removeItem('dnakids_parent_until'); } catch (e) {} renderAcct(); }
+async function loadMe() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { me = null; return; }
+  const { data: profile } = await sb.from('profiles').select('*').eq('user_id', session.user.id).maybeSingle();
+  me = { user: session.user, profile };
+  if (profile && profile.band) { if (!localStorage.getItem('dnakids_band_set')) { state.band = profile.band; } }
+}
+function renderAcct() {
+  loadParentMode();
+  if (!me) { acctEl.className = 'acct'; acctEl.innerHTML = `<a href="#/login">로그인</a><span>·</span><a href="#/signup">가족 가입</a>`; return; }
+  const name = me.profile ? me.profile.child_name : '학생';
+  if (parentMode) {
+    acctEl.className = 'acct parent';
+    acctEl.innerHTML = `<span>부모님 모드</span><a href="#/parent">학습 기록</a><button class="lnk" id="toKid">아이 화면으로</button>`;
+    document.getElementById('toKid').onclick = () => { setParentMode(false); if (location.hash.startsWith('#/parent')) location.hash = '#/'; };
+  } else {
+    acctEl.className = 'acct';
+    acctEl.innerHTML = `<span>${esc(name)} 학생</span><button class="lnk" id="toParent">부모님으로 전환</button><button class="lnk" id="logout">로그아웃</button>`;
+    document.getElementById('toParent').onclick = () => askPin();
+    document.getElementById('logout').onclick = async () => { await endTracking(); await endSession(); await sb.auth.signOut(); me = null; setParentMode(false); location.hash = '#/'; renderAcct(); };
+  }
+}
+function askPin(after) {
+  const m = document.createElement('div'); m.className = 'modal';
+  m.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-labelledby="pinT"><h3 id="pinT">부모님 비밀번호</h3><p class="sub" style="font-size:15px;margin-top:6px">가입할 때 정한 숫자 4~6자리를 넣어 주세요.</p>
+    <input type="password" inputmode="numeric" maxlength="6" class="pin" id="pinIn" autocomplete="off"><p class="err" id="pinErr"></p>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px"><button class="btn ghost" id="pinNo">취소</button><button class="btn" id="pinOk">확인</button></div></div>`;
+  document.body.appendChild(m);
+  const inp = m.querySelector('#pinIn'); inp.focus();
+  const close = () => m.remove();
+  m.querySelector('#pinNo').onclick = close;
+  m.onclick = e => { if (e.target === m) close(); };
+  const go = async () => {
+    const { data, error } = await sb.rpc('verify_parent_pin', { pin: inp.value });
+    const err = m.querySelector('#pinErr');
+    if (error) { err.textContent = '확인하지 못했어요. 다시 시도해 주세요.'; return; }
+    if (data === 'ok') { close(); setParentMode(true); location.hash = after || '#/parent'; return; }
+    err.textContent = { wrong: '비밀번호가 맞지 않아요.', locked: '여러 번 틀려서 10분 동안 잠겼어요.', none: '부모님 비밀번호가 아직 없어요. 다시 로그인해 주세요.' }[data] || '다시 시도해 주세요.';
+    inp.value = ''; inp.focus();
+  };
+  m.querySelector('#pinOk').onclick = go;
+  inp.onkeydown = e => { if (e.key === 'Enter') go(); if (e.key === 'Escape') close(); };
+}
+
+/* ---------- 접속 시간·학습 기록 ---------- */
+let sess = null;          // { id, sec }
+let track = null;         // { id, sec, kind }
+let tick = null;
+const visible = () => document.visibilityState === 'visible';
+async function startSession() {
+  if (!me || sess) return;
+  const { data } = await sb.from('study_logs').insert({ kind: 'session', title: '접속' }).select('id').single();
+  if (data) sess = { id: data.id, sec: 0, saved: 0 };
+  if (!tick) tick = setInterval(onTick, 1000);
+}
+function onTick() {
+  if (!visible()) return;
+  if (sess) { sess.sec++; if (sess.sec - sess.saved >= 30) flush(sess); }
+  if (track) { track.sec++; if (track.sec - track.saved >= 30) flush(track); }
+}
+function flush(t) { if (!t || !t.id) return; t.saved = t.sec; return sb.from('study_logs').update({ duration_sec: t.sec, ended_at: new Date().toISOString() }).eq('id', t.id); }
+async function endSession() { if (sess) { await flush(sess); sess = null; } }
+async function startTracking(kind, ref, title) {
+  await endTracking();
+  if (!me) return null;
+  track = { id: null, sec: 0, saved: 0, kind };
+  const t = track;
+  const { data } = await sb.from('study_logs').insert({ kind, ref, title }).select('id').single();
+  if (data) t.id = data.id;
+  return t;
+}
+async function endTracking() { if (track) { const t = track; track = null; if (t.sec > 0) await flush(t); } }
+async function logOnce(row) { if (!me) return; await sb.from('study_logs').insert(row); }
+document.addEventListener('visibilitychange', () => { if (!visible()) { if (sess) flush(sess); if (track) flush(track); } });
+window.addEventListener('pagehide', () => { if (sess) flush(sess); if (track) flush(track); });
+
+/* ---------- 화면: 단원 공부 ---------- */
+async function myDone() {
+  if (!me) return {};
+  const { data } = await sb.from('study_logs').select('ref,score,total').eq('kind', 'quiz').order('started_at', { ascending: false }).limit(500);
+  const best = {}; (data || []).forEach(r => { const p = r.total ? r.score / r.total : 0; if (!best[r.ref] || p > best[r.ref].p) best[r.ref] = { p, s: r.score, t: r.total }; });
+  return best;
+}
 async function viewHome() {
-  const all = await listAll();
-  const list = all.filter(a => (state.band === '전체' || a.band === state.band) && (state.subject === '전체' || a.subject === state.subject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
+  const [topics, lessons, done] = await Promise.all([listTopics(), listLessons(), myDone()]);
+  const L = Object.fromEntries(lessons.map(l => [l.slug, l]));
+  const rows = topics.filter(t => t.band === state.band && t.subject === state.subject);
+  const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
-  <h1>집에서 해 보는 과학·수학·영어</h1>
-  <div class="intro"><p>우유팩, 페트병, 휴지심처럼 집에 있는 재료로 초등 3~6학년 교과 내용을 직접 해 볼 수 있게 정리했습니다. 활동마다 준비물과 순서, 부모님이 읽어 볼 설명, 인쇄용 도안을 함께 올려 두었습니다.</p></div>
+  <h1>${name ? esc(name) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
+  <div class="intro"><p>초등 3~6학년 과학·수학·영어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 부모님과 집에서 실험으로 직접 확인해 보세요.</p>
+  ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div>
   <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('band','전체')}${fbtn('band','3~4','3~4학년')}${fbtn('band','5~6','5~6학년')}</div>
-    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${['전체','과학','수학','영어'].map(s => fbtn('subject', s)).join('')}</div>
-    <div class="grp"><label class="lab" for="mat">재료</label><select id="mat"><option value="전체">전체</option>${MATS.map(m => `<option ${m === state.mat ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('band','3~4','3~4학년')}${fbtn('band','5~6','5~6학년')}</div>
+    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${SUBJ.map(s => fbtn('subject', s)).join('')}</div>
+  </div>
+  <ol class="units">${rows.map((t, i) => { const l = L[t.lesson_slug]; const d = l && done[l.slug];
+    return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
+      : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
+  <p class="sub" style="font-size:14px;margin-top:18px">교과서는 출판사마다 단원 이름과 순서가 달라서, 국가 교육과정에 공통으로 나오는 주제를 기준으로 정리했어요.</p>`;
+  app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'band') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
+}
+
+function speak(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
+async function viewLesson(slug) {
+  const l = (await q('lesson:' + slug, () => sb.from('lessons').select('*').eq('slug', slug)))[0];
+  if (!l) { app.innerHTML = `<p class="empty">찾는 단원이 없어요. <a href="#/">단원 목록으로</a></p>`; return; }
+  const [topics, acts] = await Promise.all([listTopics(), listActs()]);
+  const t = topics.find(x => x.lesson_slug === slug);
+  const act = t && t.activity_slug ? acts.find(a => a.slug === t.activity_slug) : null;
+  const c = l.content;
+  document.title = l.title + ' · DNA Kids Lab';
+  app.innerHTML = `<article class="narrow">
+    <a class="back" href="#/">← 단원 목록</a>
+    <div class="meta">${esc(l.subject)} · ${esc(l.band)}학년 · ${esc(l.topic)}</div>
+    <h1>${esc(l.title)}</h1>
+    ${l.hero_image ? `<img class="hero" src="${esc(l.hero_image)}" alt="" ${imgErr}>` : ''}
+    <p style="font-size:18px;margin-top:14px">${esc(c.intro)}</p>
+    ${c.sections.map((s, i) => `<h2>${i + 1}. ${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}</div>` : ''}`).join('')}
+    ${c.expressions && c.expressions.length ? `<h2>꼭 알아야 할 표현</h2><div class="tbl"><table><thead><tr><th>영어</th><th>뜻</th></tr></thead><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}<button class="say" data-say="${esc(e.en)}" aria-label="${esc(e.en)} 듣기">듣기</button></td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` : ''}
+    ${c.keywords && c.keywords.length ? `<h2>핵심 낱말</h2><dl class="kw">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` : ''}
+    <h2>확인 문제</h2>
+    <div class="quiz"><ol>${c.quiz.map((x, i) => `<li class="q" data-i="${i}"><div>${esc(x.q)}</div><div class="ch">${x.choices.map((ch, j) => `<button data-j="${j}">${esc(ch)}</button>`).join('')}</div><div class="fb" aria-live="polite"></div></li>`).join('')}</ol><div id="score"></div></div>
+    <div class="sum"><h2 style="margin-top:20px">한 줄 정리</h2><ul class="plain">${c.summary.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>
+    ${act ? `<h2>집에서 해 보기</h2><p class="sub" style="font-size:15px">개념을 이해했다면 부모님과 함께 실험으로 확인해 봐요.</p><a class="try" href="#/a/${esc(act.slug)}"><img src="${esc(act.hero_image)}" alt="" ${imgErr}><div><div class="t" style="font-weight:700">${esc(act.title)}</div><div class="meta">${esc(act.duration)}</div><p style="font-size:15px;margin:4px 0 0">${esc(act.summary)}</p></div></a>` : ''}
+    <details><summary>부모님께</summary><p style="margin-top:10px">${esc(c.parent_tip)}</p></details>
+  </article>`;
+  app.querySelectorAll('[data-say]').forEach(b => b.onclick = () => speak(b.dataset.say));
+  const answered = {}; let right = 0;
+  app.querySelectorAll('li.q').forEach(li => {
+    const i = +li.dataset.i, x = c.quiz[i];
+    li.querySelectorAll('.ch button').forEach(b => b.onclick = async () => {
+      if (answered[i] !== undefined) return;
+      const j = +b.dataset.j; answered[i] = j; const ok = j === x.answer; if (ok) right++;
+      li.querySelectorAll('.ch button').forEach(bb => { bb.disabled = true; const jj = +bb.dataset.j; if (jj === x.answer) bb.classList.add('right'); else if (jj === j) bb.classList.add('wrong'); });
+      li.querySelector('.fb').innerHTML = `<b class="${ok ? 'ok' : 'no'}">${ok ? '정답!' : '아쉬워요.'}</b> ${esc(x.explain)}`;
+      if (Object.keys(answered).length === c.quiz.length) {
+        const n = c.quiz.length;
+        document.getElementById('score').innerHTML = `<div class="score"><b>${n}문제 중 ${right}문제 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제의 설명을 다시 읽어 보세요.'} <button class="lnk" id="retry">다시 풀기</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div>`;
+        document.getElementById('retry').onclick = () => viewLesson(slug);
+        await logOnce({ kind: 'quiz', ref: slug, title: l.title, score: right, total: n, detail: { answers: answered } });
+        delete cache.done;
+      }
+    });
+  });
+  await startTracking('lesson', slug, l.title);
+}
+
+/* ---------- 화면: 실험·활동 ---------- */
+async function viewActivities() {
+  const all = await listActs();
+  const list = all.filter(a => (state.aband === '전체' || a.band === state.aband) && (state.asubject === '전체' || a.subject === state.asubject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
+  app.innerHTML = `<h1>실험·활동</h1>
+  <div class="intro"><p>단원 개념을 집에 있는 재료로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p></div>
+  <div class="filters">
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('aband','전체')}${fbtn('aband','3~4','3~4학년')}${fbtn('aband','5~6','5~6학년')}</div>
+    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${['전체', ...SUBJ].map(s => fbtn('asubject', s)).join('')}</div>
+    <div class="grp"><label class="lab" for="mat">재료</label><select id="mat" style="width:auto">${['전체', ...MATS].map(m => `<option ${m === state.mat ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
   </div>
   <p class="count">${list.length}개</p>
-  ${list.length ? `<ul class="list">${list.map(a => `<li><a href="#/a/${esc(a.slug)}"><img src="${esc(a.hero_image)}" alt="" loading="lazy" class="${a.hero_is_doc ? 'doc' : ''}"><div><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.subject)} · ${esc(a.band)}학년 · ${esc(a.topic)} · ${esc(a.duration)}</div><p>${esc(a.summary)}</p></div></a></li>`).join('')}</ul>`
-    : `<p class="empty">조건에 맞는 활동이 아직 없습니다. 재료나 학년을 바꿔 보세요.</p>`}`;
-  app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; save(); viewHome(); });
-  document.getElementById('mat').onchange = e => { state.mat = e.target.value; save(); viewHome(); };
+  ${list.length ? `<ul class="list">${list.map(a => `<li><a href="#/a/${esc(a.slug)}"><img src="${esc(a.hero_image)}" alt="" loading="lazy" ${imgErr}><div><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.subject)} · ${esc(a.band)}학년 · ${esc(a.topic)} · ${esc(a.duration)}</div><p>${esc(a.summary)}</p></div></a></li>`).join('')}</ul>`
+    : `<p class="empty">조건에 맞는 활동이 아직 없어요. 재료나 학년을 바꿔 보세요.</p>`}`;
+  app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; saveState(); viewActivities(); });
+  document.getElementById('mat').onchange = e => { state.mat = e.target.value; saveState(); viewActivities(); };
 }
-
-async function viewProgress() {
-  const [topics, all] = await Promise.all([api('topics?select=band,subject,name,sort_order,activity_slug&order=sort_order'), listAll()]);
-  const title = Object.fromEntries(all.map(a => [a.slug, a.title]));
-  const b = state.pband;
-  const ts = topics.filter(t => t.band === b);
-  app.innerHTML = `<div class="narrow prog">
-  <h1>진도표</h1>
-  <p class="sub">국가 교육과정의 학년군 주제별로 정리했습니다. 교과서는 출판사마다 단원 이름과 순서가 달라서, 모든 교과서에 공통으로 나오는 주제를 기준으로 했습니다.</p>
-  <div class="tabs" role="group" aria-label="학년군">${['3~4','5~6'].map(x => `<button class="f" data-b="${x}" aria-pressed="${x === b}">${x}학년</button>`).join('')}</div>
-  ${['과학','수학','영어'].map(s => { const rows = ts.filter(t => t.subject === s); const n = rows.filter(t => t.activity_slug).length;
-    return `<h2>${s} <span class="sub" style="font-weight:400;font-size:15px">${n}/${rows.length}</span></h2><table><tbody>${rows.map(t => `<tr><td>${esc(t.name)}</td><td>${t.activity_slug ? `<a href="#/a/${esc(t.activity_slug)}">${esc(title[t.activity_slug] || '')}</a>` : '<span class="soon">준비 중</span>'}</td></tr>`).join('')}</tbody></table>`; }).join('')}
-  </div>`;
-  app.querySelectorAll('[data-b]').forEach(x => x.onclick = () => { state.pband = x.dataset.b; viewProgress(); });
-}
-
-async function viewDownloads() {
-  const all = (await listAll()).filter(a => a.template_pdf);
-  app.innerHTML = `<div class="narrow"><h1>도안 모음</h1><p class="sub">A4 용지에 배율 100%(실제 크기)로 인쇄해 주세요.</p>
-  ${['과학','수학','영어'].map(s => `<h2>${s}</h2><table><tbody>${all.filter(a => a.subject === s).map(a => `<tr><td>${esc(a.title)}</td><td><a href="${esc(a.template_pdf)}" download>PDF 내려받기</a></td></tr>`).join('')}</tbody></table>`).join('')}</div>`;
-}
-
 function block(c) {
   switch (c.type) {
     case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit ? '<span class="kit">· 키트 예정</span>' : ''}</td></tr>`).join('')}</tbody></table></div>${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
     case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)}" loading="lazy">` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
-    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(q => `<li>${esc(q)}</li>`).join('')}</ul>`;
+    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
     case 'explain': return `${c.title ? `<h2>${esc(c.title)}</h2>` : '<h2>부모님께</h2>'}${c.boxes.map(b => `<h3 style="margin-top:18px">${esc(b.label)}</h3>${b.paras.map(p => `<p>${esc(p)}</p>`).join('')}`).join('')}`;
-    case 'more': return `<h2>더 해보기</h2><ul class="plain more">${c.items.map(m => `<li><b>${esc(m.title)}</b> — ${esc(m.body)}</li>`).join('')}</ul>`;
+    case 'more': return `<h2>더 해 보기</h2><ul class="plain">${c.items.map(m => `<li><b>${esc(m.title)}</b> — ${esc(m.body)}</li>`).join('')}</ul>`;
     case 'table': return `<h2>${esc(c.title)}</h2><div class="tbl"><table><thead><tr>${c.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.note ? `<p class="sub" style="font-size:15px;margin-top:10px">${esc(c.note)}</p>` : ''}`;
     case 'template': return c.pdf ? `<div class="dl"><a href="${esc(c.pdf)}" download>${esc(c.title)} 내려받기 (PDF)</a><span>${esc(c.desc)}</span></div>` : '';
     case 'note': return `<div class="note">${esc(c.text)}</div>`;
@@ -163,32 +346,166 @@ function block(c) {
   }
   return '';
 }
-
 async function viewActivity(slug) {
-  const a = (await api('activities?slug=eq.' + encodeURIComponent(slug) + '&select=*'))[0];
-  if (!a) { app.innerHTML = `<p class="empty">찾는 활동이 없습니다. <a href="#/">목록으로</a></p>`; return; }
+  const a = (await q('act:' + slug, () => sb.from('activities').select('*').eq('slug', slug)))[0];
+  if (!a) { app.innerHTML = `<p class="empty">찾는 활동이 없어요. <a href="#/activities">목록으로</a></p>`; return; }
+  const topics = await listTopics();
+  const t = topics.find(x => x.activity_slug === slug);
   document.title = a.title + ' · DNA Kids Lab';
   const caution = (a.caution || []).filter(c => !c.includes('혼자'));
   app.innerHTML = `<article class="narrow">
-    <a class="back" href="#/">← 활동 목록</a>
+    <a class="back" href="#/activities">← 실험·활동 목록</a>
     <h1>${esc(a.title)}</h1>
     <div class="meta">${esc(a.subject)} · ${esc(a.band)}학년 · ${esc(a.topic)} · ${esc(a.duration)} · ${esc(short(a.difficulty))}</div>
-    <img class="hero ${a.hero_is_doc ? 'doc' : ''}" src="${esc(a.hero_image)}" alt="${esc(a.title)}">
+    ${t && t.lesson_slug ? `<div class="note" style="font-size:15px">이 실험은 <a href="#/u/${esc(t.lesson_slug)}">‘${esc(t.name)}’ 단원 개념</a>을 확인하는 활동이에요. 개념을 먼저 읽고 오면 더 잘 이해돼요.</div>` : ''}
+    <img class="hero ${a.hero_is_doc ? 'doc' : ''}" src="${esc(a.hero_image)}" alt="${esc(a.title)}" ${imgErr}>
     <p style="font-size:18px;margin-top:18px">${esc(a.summary)}</p>
     ${caution.length ? `<p class="caution">주의: ${esc(caution.join(', '))}</p>` : ''}
     ${a.content.map(block).join('')}
   </article>`;
+  await startTracking('activity', slug, a.title);
+}
+async function viewDownloads() {
+  const all = (await listActs()).filter(a => a.template_pdf);
+  app.innerHTML = `<div class="narrow"><h1>도안 모음</h1><p class="sub">A4 용지에 배율 100%(실제 크기)로 인쇄해 주세요.</p>
+  ${SUBJ.map(s => `<h2>${s}</h2><table><tbody>${all.filter(a => a.subject === s).map(a => `<tr><td>${esc(a.title)}</td><td style="white-space:nowrap"><a href="${esc(a.template_pdf)}" download>PDF 내려받기</a></td></tr>`).join('')}</tbody></table>`).join('')}</div>`;
 }
 
+/* ---------- 화면: 타자 연습 ---------- */
+function viewTyping() {
+  const name = me && me.profile ? me.profile.child_name : '';
+  app.innerHTML = `<h1>타자 연습</h1><p class="sub">한글·영어 자리 연습과 타자 게임이에요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p>
+  <iframe class="typing" src="typing.html${name ? '?name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
+  startTracking('typing', 'typing', '타자 연습');
+}
+window.addEventListener('message', e => {
+  if (e.origin !== location.origin || !e.data || e.data.dnakids !== 'typing') return;
+  const r = e.data.record || {};
+  const lang = r.lang === 'en' ? '영어' : '한글';
+  const title = r.mode === 'practice' ? `${lang} 타자 연습` : `${lang} 타자 게임`;
+  logOnce({ kind: 'typing', ref: r.mode === 'practice' ? 'practice' : (r.game || 'game'), title, score: r.mode === 'practice' ? r.kpm : r.score, total: r.mode === 'practice' ? r.acc : null, detail: r });
+});
+
+/* ---------- 화면: 가입·로그인 ---------- */
+const idOk = s => /^[a-z0-9]{4,20}$/.test(s);
+function viewSignup() {
+  if (me) { location.hash = '#/'; return; }
+  app.innerHTML = `<div class="form"><h1>가족 가입</h1><p class="sub" style="font-size:15px">아이 아이디 하나로 가입해요. 아이는 이 아이디로 로그인해서 공부하고, 부모님은 ‘부모님으로 전환’에서 부모님 비밀번호를 넣고 기록을 봐요.</p>
+  <form id="sf" novalidate>
+  <label for="sid">아이디</label><input type="text" id="sid" autocomplete="username" autocapitalize="off" spellcheck="false"><div class="hint">영어 소문자와 숫자 4~20자</div>
+  <label for="spw">비밀번호 (아이가 로그인할 때 써요)</label><input type="password" id="spw" autocomplete="new-password"><div class="hint">6자 이상</div>
+  <label for="sname">아이 이름</label><input type="text" id="sname" maxlength="10">
+  <label for="sband">학년</label><select id="sband"><option value="3~4">3~4학년</option><option value="5~6">5~6학년</option></select>
+  <label for="spin">부모님 비밀번호</label><input type="password" id="spin" inputmode="numeric" maxlength="6" autocomplete="off"><div class="hint">숫자 4~6자리. 아이 비밀번호와 다르게, 아이가 모르게 정해 주세요.</div>
+  <p class="err" id="serr" role="alert"></p>
+  <button class="btn" id="sgo" type="submit" style="margin-top:8px">가입하기</button></form>
+  <p class="sub" style="font-size:15px;margin-top:20px">이미 가입했나요? <a href="#/login">로그인</a></p></div>`;
+  document.getElementById('sf').onsubmit = async ev => {
+    ev.preventDefault();
+    const id = document.getElementById('sid').value.trim().toLowerCase(), pw = document.getElementById('spw').value, name = document.getElementById('sname').value.trim(), band = document.getElementById('sband').value, pin = document.getElementById('spin').value;
+    const err = document.getElementById('serr'); err.textContent = '';
+    if (!idOk(id)) return err.textContent = '아이디는 영어 소문자와 숫자 4~20자로 만들어 주세요.';
+    if (pw.length < 6) return err.textContent = '비밀번호는 6자 이상이어야 해요.';
+    if (!name) return err.textContent = '아이 이름을 적어 주세요.';
+    if (!/^[0-9]{4,6}$/.test(pin)) return err.textContent = '부모님 비밀번호는 숫자 4~6자리예요.';
+    const btn = document.getElementById('sgo'); btn.disabled = true;
+    const { data, error } = await sb.auth.signUp({ email: `${id}@${ID_DOMAIN}`, password: pw });
+    if (error || !data.session) { btn.disabled = false; return err.textContent = (error && /registered|already/i.test(error.message)) ? '이미 쓰고 있는 아이디예요. 다른 아이디를 골라 주세요.' : '가입하지 못했어요. 잠시 뒤 다시 시도해 주세요.'; }
+    const r1 = await sb.from('profiles').insert({ user_id: data.user.id, login_id: id, child_name: name, band });
+    const r2 = await sb.rpc('set_parent_pin', { new_pin: pin });
+    if (r1.error || r2.error) { btn.disabled = false; return err.textContent = '가입은 됐지만 정보를 저장하지 못했어요. 로그인 후 다시 시도해 주세요.'; }
+    state.band = band; saveState();
+    await loadMe(); renderAcct(); await startSession(); location.hash = '#/';
+  };
+}
+function viewLogin() {
+  if (me) { location.hash = '#/'; return; }
+  app.innerHTML = `<div class="form"><h1>로그인</h1>
+  <form id="lf" novalidate><label for="lid">아이디</label><input type="text" id="lid" autocomplete="username" autocapitalize="off" spellcheck="false">
+  <label for="lpw">비밀번호</label><input type="password" id="lpw" autocomplete="current-password">
+  <p class="err" id="lerr" role="alert"></p><button class="btn" type="submit" style="margin-top:8px">로그인</button></form>
+  <p class="sub" style="font-size:15px;margin-top:20px">처음이라면 <a href="#/signup">가족 가입</a></p></div>`;
+  document.getElementById('lf').onsubmit = async ev => {
+    ev.preventDefault();
+    const id = document.getElementById('lid').value.trim().toLowerCase(), pw = document.getElementById('lpw').value;
+    const { error } = await sb.auth.signInWithPassword({ email: `${id}@${ID_DOMAIN}`, password: pw });
+    if (error) return document.getElementById('lerr').textContent = '아이디나 비밀번호가 맞지 않아요.';
+    await loadMe(); renderAcct(); await startSession(); location.hash = '#/';
+  };
+}
+
+/* ---------- 화면: 부모님 ---------- */
+const KIND = { session: '접속', lesson: '개념 공부', quiz: '확인 문제', activity: '실험·활동', typing: '타자' };
+const dayKey = d => { const x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
+const hm = d => { const x = new Date(d); return `${String(x.getHours()).padStart(2, '0')}:${String(x.getMinutes()).padStart(2, '0')}`; };
+async function viewParent() {
+  if (!me) { location.hash = '#/login'; return; }
+  loadParentMode();
+  if (!parentMode) { app.innerHTML = `<div class="narrow"><h1>학습 기록</h1><p>부모님 비밀번호를 넣어야 볼 수 있어요.</p><button class="btn" id="pp">부모님으로 전환</button></div>`; document.getElementById('pp').onclick = () => askPin('#/parent'); return; }
+  const since = new Date(Date.now() - 30 * 864e5).toISOString();
+  const { data: logs } = await sb.from('study_logs').select('*').gte('started_at', since).order('started_at', { ascending: false }).limit(2000);
+  const L = logs || [];
+  const today = dayKey(new Date());
+  const sessions = L.filter(r => r.kind === 'session');
+  const sumBy = f => sessions.filter(f).reduce((s, r) => s + (r.duration_sec || 0), 0);
+  const days = [...Array(14)].map((_, i) => { const d = new Date(Date.now() - (13 - i) * 864e5); return dayKey(d); });
+  const perDay = Object.fromEntries(days.map(k => [k, 0])); sessions.forEach(r => { const k = dayKey(r.started_at); if (k in perDay) perDay[k] += r.duration_sec || 0; });
+  const max = Math.max(60, ...Object.values(perDay));
+  const week = days.slice(7).reduce((s, k) => s + perDay[k], 0);
+  const quizzes = L.filter(r => r.kind === 'quiz');
+  const work = L.filter(r => r.kind !== 'session');
+  const byDay = {}; L.forEach(r => { (byDay[dayKey(r.started_at)] ||= []).push(r); });
+  const name = me.profile ? me.profile.child_name : '아이';
+  app.innerHTML = `<div class="narrow">
+  <h1>${esc(name)}의 학습 기록</h1><p class="sub" style="font-size:15px">최근 30일 기록이에요. 접속 시간은 화면을 실제로 보고 있던 시간만 셌어요.</p>
+  <div class="stat"><div><b>${fmtMin(sumBy(r => dayKey(r.started_at) === today))}</b><span>오늘 접속 시간</span></div><div><b>${fmtMin(week)}</b><span>최근 7일 접속 시간</span></div>
+  <div><b>${new Set(quizzes.map(r => r.ref)).size}</b><span>문제 푼 단원 (30일)</span></div><div><b>${quizzes.length ? Math.round(quizzes.reduce((s, r) => s + r.score / (r.total || 1), 0) / quizzes.length * 100) : 0}%</b><span>확인 문제 평균 정답률</span></div></div>
+  <h2>하루 접속 시간 (최근 14일)</h2>
+  <div class="bars">${days.map(k => `<div style="height:${Math.round(perDay[k] / max * 100)}%" title="${k} ${fmtMin(perDay[k])}"></div>`).join('')}</div>
+  <div class="bars-l">${days.map(k => `<span>${+k.slice(8)}</span>`).join('')}</div>
+  <h2>날짜별 기록</h2>
+  ${Object.keys(byDay).length ? Object.keys(byDay).sort().reverse().map(k => { const rs = byDay[k]; const ss = rs.filter(r => r.kind === 'session'); const first = ss.length ? ss[ss.length - 1] : null;
+    return `<h3 style="margin-top:22px">${k} <span class="sub" style="font-weight:400;font-size:14px">접속 ${ss.length}번 · ${fmtMin(ss.reduce((s, r) => s + (r.duration_sec || 0), 0))}${first ? ` · 처음 ${hm(first.started_at)}` : ''}</span></h3>
+    <div class="tbl"><table><tbody>${rs.filter(r => r.kind !== 'session').map(r => `<tr><td style="white-space:nowrap;font-weight:400;color:var(--sub)">${hm(r.started_at)}</td><td>${KIND[r.kind] || r.kind}</td><td>${esc(r.title || '')}</td><td style="white-space:nowrap">${r.kind === 'quiz' ? `${r.score}/${r.total}` : r.kind === 'typing' ? (r.ref === 'practice' ? `${r.score}타 · ${r.total}%` : `${r.score}점`) : fmtMin(r.duration_sec)}</td></tr>`).join('') || '<tr><td colspan="4" class="sub">접속만 했어요</td></tr>'}</tbody></table></div>`; }).join('') : '<p class="empty">아직 기록이 없어요.</p>'}
+  <h2>설정</h2>
+  <div class="form"><label for="np0">지금 부모님 비밀번호</label><input type="password" id="np0" inputmode="numeric" maxlength="6"><label for="np1">새 부모님 비밀번호</label><input type="password" id="np1" inputmode="numeric" maxlength="6">
+  <p class="err" id="nperr" role="status"></p><button class="btn ghost" id="npgo">부모님 비밀번호 바꾸기</button>
+  <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb"><option value="3~4" ${me.profile && me.profile.band === '3~4' ? 'selected' : ''}>3~4학년</option><option value="5~6" ${me.profile && me.profile.band === '5~6' ? 'selected' : ''}>5~6학년</option></select>
+  <p class="err" id="cerr" role="status"></p><button class="btn ghost" id="cgo">저장</button></div>
+  <p class="sub" style="font-size:14px;margin-top:24px">부모님 모드는 30분 뒤 자동으로 아이 화면으로 돌아가요.</p></div>`;
+  document.getElementById('npgo').onclick = async () => {
+    const o = document.getElementById('np0').value, n = document.getElementById('np1').value, e = document.getElementById('nperr');
+    if (!/^[0-9]{4,6}$/.test(n)) return e.textContent = '새 비밀번호는 숫자 4~6자리예요.';
+    const { data, error } = await sb.rpc('set_parent_pin', { new_pin: n, old_pin: o });
+    e.textContent = error ? '바꾸지 못했어요.' : data ? '바꿨어요.' : '지금 비밀번호가 맞지 않아요.';
+  };
+  document.getElementById('cgo').onclick = async () => {
+    const n = document.getElementById('cn').value.trim(), b = document.getElementById('cb').value, e = document.getElementById('cerr');
+    if (!n) return e.textContent = '이름을 적어 주세요.';
+    const { error } = await sb.from('profiles').update({ child_name: n, band: b }).eq('user_id', me.user.id);
+    if (error) return e.textContent = '저장하지 못했어요.';
+    e.textContent = '저장했어요.'; await loadMe(); renderAcct();
+  };
+}
+
+/* ---------- 길 찾기 ---------- */
 async function route() {
   const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   const [p, arg] = h.split('/');
-  document.title = 'DNA Kids Lab · 집에서 해 보는 과학·수학·영어';
-  document.querySelectorAll('nav a').forEach(x => x.classList.toggle('on', x.dataset.nav === (p === 'a' ? '' : (p || ''))));
+  document.title = 'DNA Kids Lab · 학교 개념을 집에서 쉽게';
+  const navKey = p === 'u' ? '' : p === 'a' ? 'activities' : (p || '');
+  document.querySelectorAll('nav a').forEach(x => x.classList.toggle('on', x.dataset.nav === navKey));
+  await endTracking();
+  renderAcct();
   try {
-    if (p === 'a' && arg) await viewActivity(arg);
-    else if (p === 'progress') await viewProgress();
+    if (p === 'u' && arg) await viewLesson(arg);
+    else if (p === 'a' && arg) await viewActivity(arg);
+    else if (p === 'activities') await viewActivities();
     else if (p === 'downloads') await viewDownloads();
+    else if (p === 'typing') viewTyping();
+    else if (p === 'login') viewLogin();
+    else if (p === 'signup') viewSignup();
+    else if (p === 'parent') await viewParent();
     else await viewHome();
     window.scrollTo(0, 0);
   } catch (e) {
@@ -196,7 +513,7 @@ async function route() {
   }
 }
 window.addEventListener('hashchange', route);
-route();
+(async () => { try { await loadMe(); } catch (e) {} renderAcct(); route(); startSession(); })();
 </script>
 </body>
 </html>
