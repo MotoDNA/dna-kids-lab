@@ -84,7 +84,8 @@ ol.steps img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;bord
 ol.steps li.has-img{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px;align-items:start}
 @media (max-width:640px){ol.steps li.has-img{grid-template-columns:1fr}ol.steps li.has-img img{max-width:340px}}
 .sayrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.say.chip{margin-left:0;font-size:14px;padding:3px 10px;border-radius:14px;background:#fff}
+.say.chip{margin-left:0;font-size:14px;padding:3px 10px;border-radius:14px;background:#fff;white-space:normal;max-width:100%;text-align:left;overflow-wrap:anywhere}
+.page-in .tbl table{width:100%;table-layout:fixed}.page-in .tbl td{overflow-wrap:anywhere}.reader.ja .tbl td:first-child,.reader.zh .tbl td:first-child{word-break:normal}
 .say.playing{background:#e6f2ec;border-color:var(--accent)}
 .caution{font-size:15px;color:#8a3b12;margin-top:4px}
 .note{background:var(--note);padding:14px 18px;border-radius:4px;margin:16px 0;font-size:16px}
@@ -555,7 +556,7 @@ async function viewLesson(slug) {
     const nb = document.getElementById('pNext'); nb.textContent = last ? '단원 목록 ▶' : '다음 ▶';
     document.getElementById('eL').hidden = cur === 0; document.getElementById('eR').hidden = last;
     document.getElementById('eR').classList.toggle('nudge', cur === 0);
-    if (hasN && autoNarr() && N[pages[cur].nkey]) { clearTimeout(window._nt); window._nt = setTimeout(() => playNarr(N[pages[cur].nkey], els[cur].querySelector('.narr')), 650); } else stopNarr();
+    clearTimeout(window._nt); if (hasN && autoNarr() && N[pages[cur].nkey]) { const src = N[pages[cur].nkey], nb2 = els[cur].querySelector('.narr'), at = cur; window._nt = setTimeout(() => { if (cur === at) playNarr(src, nb2); }, 650); } else stopNarr();
     document.getElementById('pCount').textContent = `${cur + 1} / ${pages.length} · ${pages[cur].label}`;
   };
   document.getElementById('pPrev').onclick = () => show(cur - 1);
