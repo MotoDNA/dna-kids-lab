@@ -123,6 +123,11 @@ canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-
 .ch button.wrong{border-color:var(--bad);background:#fbeceb}
 .ch button:disabled{cursor:default}
 .fb{margin-top:8px;font-size:15px}
+.fb.has-didi{display:flex;gap:12px;align-items:flex-start}.fb .didi{width:72px;height:auto;flex:none;margin-top:-6px}.fb.has-didi>div{flex:1;min-width:0}
+.home-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}.home-top .didi{width:120px;height:auto;flex:none;margin:-8px 0 8px}
+.score.has-didi{display:flex;gap:12px;align-items:center}.score .didi{width:84px;height:auto;flex:none}
+.narr .didi-i{width:24px;height:24px;object-fit:contain;vertical-align:-6px;margin-right:2px}
+@media (max-width:560px){.home-top .didi{width:84px}.fb .didi{width:56px}}
 .fb b.ok{color:var(--good)} .fb b.no{color:var(--bad)}
 .score{border:1px solid var(--accent);border-radius:4px;padding:14px 18px;margin-top:10px}
 .sum{border-top:1px solid var(--ink);margin-top:44px;padding-top:6px}
@@ -379,9 +384,11 @@ async function viewHome() {
   const rows = topics.filter(t => t.band === state.band && t.subject === state.subject);
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
+  <div class="home-top"><div>
   <h1>${name ? esc(name) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
   <div class="intro"><p>초등 1~6학년 국어·수학·과학·영어·중국어·일본어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 1~2학년은 글자를 처음 배우는 아이도 소리를 들으며 따라올 수 있어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 연습문제와 실험으로 다져 보세요.</p>
-  ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div>
+  ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div></div>
+  <img class="didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="120" height="122"></div>
   <div class="filters">
     <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${BANDS.map(b => fbtn('band', b, b + '학년')).join('')}</div>
     <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${subjHere.map(s => fbtn('subject', s)).join('')}</div>
@@ -534,7 +541,7 @@ async function viewLesson(slug) {
   const N = c.narr || {}; const hasN = Object.keys(N).length > 0;
   app.innerHTML = `<div class="reader${l.band === '1~2' ? ' b12' : ''}${l.subject === '중국어' ? ' zh' : l.subject === '일본어' ? ' ja' : ''}">
     <div class="reader-top"><a class="back" href="#/" style="margin:0;white-space:nowrap">← 단원 목록</a><span class="meta"><span class="tp">${esc(l.topic)}</span> <button class="sndbtn" id="shareBtn">📤 공유</button>${hasN ? `<button class="sndbtn" id="autoBtn" aria-pressed="${autoNarr()}">${autoNarr() ? '📖 자동 읽기 켜짐' : '📖 자동 읽기 꺼짐'}</button>` : ''}<button class="sndbtn" id="sndBtn" aria-pressed="${sfxOn()}">${sfxOn() ? '🔊 소리 켜짐' : '🔈 소리 꺼짐'}</button></span></div>
-    <div class="book" id="book"><button class="edge l" id="eL" aria-label="이전 쪽" tabindex="-1">‹</button><button class="edge r" id="eR" aria-label="다음 쪽" tabindex="-1">›</button><div class="swipe-hint" id="swHint" aria-hidden="true"><span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span></div>${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${N[p.nkey] ? `<button class="narr" data-narr="${esc(N[p.nkey])}" aria-label="이 쪽 읽어 주기">🔊 읽어 주기</button>` : ''}${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
+    <div class="book" id="book"><button class="edge l" id="eL" aria-label="이전 쪽" tabindex="-1">‹</button><button class="edge r" id="eR" aria-label="다음 쪽" tabindex="-1">›</button><div class="swipe-hint" id="swHint" aria-hidden="true"><span class="ar">‹</span>&nbsp; 옆으로 밀어서 넘겨요 &nbsp;<span class="ar">›</span></div>${pages.map((p, i) => `<section class="page" data-p="${i}" aria-label="${esc(p.label)}"><div class="page-in">${N[p.nkey] ? `<button class="narr" data-narr="${esc(N[p.nkey])}" aria-label="이 쪽 읽어 주기"><img class="didi-i" src="assets/img/didi/read.webp" alt="">읽어 주기</button>` : ''}${p.html}</div><div class="folio">${i + 1}</div></section>`).join('')}</div>
     <div class="book-nav"><button class="btn ghost" id="pPrev" aria-label="이전 쪽">◀ 이전</button>
       <div class="dots" id="dots">${pages.map((p, i) => `<button class="dot${p.quiz !== undefined ? ' q' : ''}" data-go="${i}" aria-label="${i + 1}쪽: ${esc(p.label)}" title="${esc(p.label)}"></button>`).join('')}</div>
       <button class="btn" id="pNext" aria-label="다음 쪽">다음 ▶</button></div>
@@ -579,12 +586,12 @@ async function viewLesson(slug) {
       const j = +b.dataset.j; answered[i] = j; const ok = j === x.answer; if (ok) right++;
       qz.querySelectorAll('.ch button').forEach(bb => { bb.disabled = true; const jj = +bb.dataset.j; if (jj === x.answer) bb.classList.add('right'); else if (jj === j) bb.classList.add('wrong'); });
       if (ok) { sfx('right'); burst(b); } else { sfx('wrong'); b.classList.add('shake'); }
-      qz.querySelector('.fb').innerHTML = `<b class="${ok ? 'ok' : 'no'}">${ok ? '정답!' : '아쉬워요.'}</b> ${esc(x.explain)}<div style="margin-top:12px"><button class="btn" data-next>다음 ▶</button></div>`;
+      qz.querySelector('.fb').classList.add('has-didi'); qz.querySelector('.fb').innerHTML = `<img class="didi" src="assets/img/didi/${ok ? 'yay' : 'think'}.webp" alt=""><div><b class="${ok ? 'ok' : 'no'}">${ok ? '정답!' : '아쉬워요.'}</b> ${esc(x.explain)}<div style="margin-top:12px"><button class="btn" data-next>다음 ▶</button></div></div>`;
       fracify(qz.querySelector('.fb'));
       qz.querySelector('[data-next]').onclick = () => show(cur + 1);
       document.querySelectorAll('#dots .dot')[pages.findIndex(p => p.quiz === i)].classList.add(ok ? 'ok' : 'no');
       if (Object.keys(answered).length === n) {
-        document.getElementById('score').innerHTML = `<div class="score"><b>확인 문제 ${n}개 중 ${right}개 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제를 다시 넘겨 보며 설명을 읽어 보세요.'} <button class="lnk" id="retry">처음부터 다시</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div>`;
+        document.getElementById('score').innerHTML = `<div class="score has-didi"><img class="didi" src="assets/img/didi/${right === n ? 'yay' : 'cheer'}.webp" alt=""><div><b>확인 문제 ${n}개 중 ${right}개 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제를 다시 넘겨 보며 설명을 읽어 보세요.'} <button class="lnk" id="retry">처음부터 다시</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div></div>`;
         document.getElementById('retry').onclick = () => viewLesson(slug);
         fracify(document.getElementById('score'));
         if (right === n) setTimeout(() => { sfx('perfect'); burst(document.getElementById('score'), 140); }, 650);
@@ -668,7 +675,7 @@ async function viewDownloads() {
 function viewTyping() {
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:10px"><div><h1 style="font-size:22px;margin:0">타자 연습</h1><p class="sub" style="font-size:15px;margin:2px 0 0">한글·영어 자리 연습과 타자 게임이에요.${me ? ' 연습 결과는 학습 기록에 남아요.' : ' 로그인하면 결과가 학습 기록에 남아요.'}</p></div><button class="btn" id="typingFs">⛶ 전체화면으로 하기</button></div>
-  <iframe class="typing" id="typingFrame" allow="fullscreen" allowfullscreen src="typing.html?v=4${name ? '&name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
+  <iframe class="typing" id="typingFrame" allow="fullscreen" allowfullscreen src="typing.html?v=5${name ? '&name=' + encodeURIComponent(name) : ''}" title="타자 연습"></iframe>`;
   document.getElementById('typingFs').onclick = () => typingFs(true);
   startTracking('typing', 'typing', '타자 연습');
 }

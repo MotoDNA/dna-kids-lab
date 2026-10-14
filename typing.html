@@ -284,14 +284,30 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 .fs-btn{white-space:nowrap}
 body.fs{overflow:hidden}
 body.fs .app{max-width:none;min-height:100vh;padding:14px 22px 16px;gap:12px}
-body.fs .board{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch;column-gap:22px;row-gap:12px}
-body.fs .board > .panel{grid-column:1;grid-row:1;display:flex;flex-direction:column;min-width:0}
-body.fs .board > .panel .stage{flex:1;min-height:260px}
-body.fs .board > .kb-wrap{grid-column:2;grid-row:1;justify-content:center;min-width:0}
-body.fs #tab-records{grid-column:1 / -1}
-body.fs .hands svg{width:clamp(100px,12vw,190px)}
-body.fs .key{height:clamp(40px,4.2vw,58px);font-size:clamp(14px,1.5vw,22px)}
-body.fs .stats .stat b{font-size:clamp(18px,1.8vw,26px)}
+/* 전체화면: 위에서 아래로 — 통계·예시 문장(가로로 넓게) → 키보드 → 손가락 */
+body.fs .app{min-height:100vh;display:flex;flex-direction:column;padding:12px 22px 10px;gap:8px}
+body.fs .app > div:last-child{flex:1;display:flex;flex-direction:column}
+body.fs .tabs button{padding:6px 16px 9px}
+body.fs .board{flex:1;display:flex;flex-direction:column;gap:10px;padding:14px 18px 10px}
+body.fs .board > .panel{display:flex;flex-direction:column;flex:1}
+body.fs .board > .panel[hidden]{display:none}
+body.fs .stats{grid-template-columns:repeat(4,minmax(0,200px));justify-content:center;margin-bottom:10px!important}
+body.fs .stat{flex-direction:row;align-items:baseline;gap:10px;padding:6px 14px}
+body.fs .stats .stat b{font-size:clamp(18px,1.7vw,24px)}
+body.fs .board > .panel .stage{flex:1;min-height:320px;padding:14px 24px;gap:10px}
+body.fs #gStage{min-height:240px}
+body.fs .target{max-width:100%;font-size:clamp(28px,3vw,46px);text-wrap:wrap}
+body.fs .typed{max-width:100%;font-size:clamp(24px,2.6vw,38px)}
+body.fs .progress{max-width:900px}
+body.fs #tab-records{flex:1;overflow:auto}
+body.fs .board > .kb-wrap{margin-top:auto;width:100%;max-width:min(1180px,100%);align-self:center;gap:6px}
+body.fs .next-hint{min-height:28px}
+body.fs .key{height:clamp(38px,5.4vh,58px);font-size:clamp(14px,1.4vw,22px)}
+body.fs .hands{padding:0 10%;margin-top:2px}
+body.fs .hands svg{width:auto;height:clamp(105px,19vh,210px)}
+body.fs .legend{margin-top:-4px}
+body.fs #pOverlay img,body.fs #gOverlay img{width:72px!important}
+body.fs .overlay{gap:6px}
 </style>
 
 <div class="app">
@@ -682,7 +698,7 @@ const P={
   },
   showStart(){
     $('pOverlay').hidden=false;
-    $('pOverlay').innerHTML=`<h2>${state.lang==='ko'?'한글':'영어'} ${LEVEL_NAME[state.level]}</h2><p>${LEVEL_DESC[state.level]}</p>
+    $('pOverlay').innerHTML=`<img src="assets/img/didi/cheer.webp" alt="" style="width:110px;height:auto;margin-bottom:-4px"><h2>${state.lang==='ko'?'한글':'영어'} ${LEVEL_NAME[state.level]}</h2><p>${LEVEL_DESC[state.level]}</p>
       <p>노란 키를 찾아서 눌러요. 틀리면 빨간불이 켜지고 넘어가지 않아요.</p>
       <div class="btn-row"><button class="big-btn" id="pStart">시작하기</button></div>
       <div class="hint-key">키보드 아무 키를 눌러도 시작돼요</div>`;
