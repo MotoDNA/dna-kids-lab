@@ -479,11 +479,18 @@ function speak(text, btn) {
 }
 const sayBtn = t => `<button class="say" data-say="${esc(t)}" aria-label="${esc(t)} 듣기">듣기</button>`;
 // 예시 문장 안에 들어 있는 영어 문장·낱말을 찾아 듣기 버튼으로 보여 준다
+let CUR_LANG = null;
+const LANG_OF = { '영어': 'en', '국어': 'ko', '중국어': 'zh', '일본어': 'ja' };
+const audioLang = k => (AUDIO[k] && (AUDIO[k].l || 'en')) || null;
+const hasAudio = k => !!CUR_LANG && audioLang(k) === CUR_LANG;
+const WORDCH = 'A-Za-z\\uac00-\\ud7a3\\u3040-\\u30ff\\u4e00-\\u9fff';
 function sayChips(text) {
-  if (!text || !AUDIO_KEYS.length) return '';
+  if (!text || !AUDIO_KEYS.length || !CUR_LANG) return '';
   const found = []; let rest = text;
   for (const k of AUDIO_KEYS) {
-    const re = new RegExp('(^|[^A-Za-z])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![A-Za-z])');
+    if (audioLang(k) !== CUR_LANG) continue;
+    if (CUR_LANG === 'en' && !/[A-Za-z]/.test(k)) continue;
+    const re = new RegExp('(^|[^' + WORDCH + '])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![' + WORDCH + '])');
     const m = rest.match(re);
     if (m) { const at = m.index + m[1].length; found.push([at, k]); rest = rest.slice(0, at) + ' '.repeat(k.length) + rest.slice(at + k.length); }
   }
@@ -496,6 +503,7 @@ let bookKeys = null;
 async function viewLesson(slug) {
   await audioReady;
   const l = (await q('lesson:' + slug, () => sb.from('lessons').select('*').eq('slug', slug)))[0];
+  CUR_LANG = l ? (LANG_OF[l.subject] || null) : null;
   if (!l) { app.innerHTML = `<p class="empty">찾는 단원이 없어요. <a href="#/">단원 목록으로</a></p>`; return; }
   const [topics, acts] = await Promise.all([listTopics(), listActs()]);
   const t = topics.find(x => x.lesson_slug === slug);
@@ -613,10 +621,10 @@ function block(c) {
   switch (c.type) {
     case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit ? '<span class="kit">· 키트 예정</span>' : ''}</td></tr>`).join('')}</tbody></table></div>${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
     case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li class="${s.image ? 'has-img' : ''}"><div><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}${sayChips(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}</div>${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)} 장면" loading="lazy" ${imgErr}>` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
-    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}${AUDIO[x] ? sayBtn(x) : sayChips(x)}</li>`).join('')}</ul>`;
+    case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}${hasAudio(x) ? sayBtn(x) : sayChips(x)}</li>`).join('')}</ul>`;
     case 'explain': return `${c.title ? `<h2>${esc(c.title)}</h2>` : '<h2>부모님께</h2>'}${c.boxes.map(b => `<h3 style="margin-top:18px">${esc(b.label)}</h3>${b.paras.map(p => `<p>${esc(p)}</p>`).join('')}`).join('')}`;
     case 'more': return `<h2>더 해 보기</h2><ul class="plain">${c.items.map(m => `<li><b>${esc(m.title)}</b> — ${esc(m.body)}</li>`).join('')}</ul>`;
-    case 'table': return `<h2>${esc(c.title)}</h2><div class="tbl"><table><thead><tr>${c.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}${AUDIO[v] ? sayBtn(v) : ''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.note ? `<p class="sub" style="font-size:15px;margin-top:10px">${esc(c.note)}</p>` : ''}`;
+    case 'table': return `<h2>${esc(c.title)}</h2><div class="tbl"><table><thead><tr>${c.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.rows.map(r => `<tr>${r.map(v => `<td>${esc(v)}${hasAudio(v) ? sayBtn(v) : ''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.note ? `<p class="sub" style="font-size:15px;margin-top:10px">${esc(c.note)}</p>` : ''}`;
     case 'template': return c.pdf ? `<div class="dl"><a href="${esc(c.pdf)}" download>${esc(c.title)} 내려받기 (PDF)</a><span>${esc(c.desc)}</span></div>` : '';
     case 'note': return `<div class="note">${esc(c.text)}</div>`;
     case 'info': return `<div class="facts">${c.items.map(i => `<div><b>${esc(i.label)}</b>${esc(i.value)}</div>`).join('')}</div>`;
@@ -630,6 +638,7 @@ async function viewActivity(slug) {
   const topics = await listTopics();
   const t = topics.find(x => x.activity_slug === slug);
   document.title = a.title + ' · DNA Kids Lab';
+  CUR_LANG = LANG_OF[a.subject] || null;
   const caution = (a.caution || []).filter(c => !c.includes('혼자'));
   app.innerHTML = `<article class="narrow">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><a class="back" href="#/activities">← 실험·활동 목록</a><button class="sndbtn" id="shareAct">📤 공유</button></div>
