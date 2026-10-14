@@ -217,6 +217,45 @@ ul.plain.big{font-size:19px} ul.plain.big li{margin-bottom:10px}
 @media (prefers-reduced-motion:reduce){.page{transition:none}}
 footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color:var(--sub)}
 @media (max-width:560px){ul.list a{grid-template-columns:88px 1fr;gap:14px}ul.list img{width:88px;height:66px}h1{font-size:24px}.try{grid-template-columns:96px 1fr}.try img{width:96px;height:72px}iframe.typing{height:max(520px,calc(100vh - 130px))}}
+
+/* 디디 결과 축하 애니메이션 */
+.dfx{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;background:rgba(30,40,35,.45);opacity:0;transition:opacity .25s;padding:16px}
+.dfx.on{opacity:1}
+.dfx-card{position:relative;background:#fffdf7;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:min(420px,100%);padding:26px 22px 22px;text-align:center;overflow:hidden;transform:scale(.8);transition:transform .35s cubic-bezier(.2,1.6,.4,1)}
+.dfx.on .dfx-card{transform:scale(1)}
+.dfx-stage{position:relative;height:210px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+.dfx-stage img{position:relative;z-index:2;height:190px;width:auto;transform-origin:50% 100%}
+.dfx-rays{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-160px 0 0 -150px;border-radius:50%;z-index:1;background:repeating-conic-gradient(rgba(255,196,0,.28) 0 10deg,transparent 10deg 20deg);-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:dfxSpin 8s linear infinite}
+.dfx-title{font-size:28px;font-weight:800;margin:4px 0 4px;letter-spacing:-.01em}
+.dfx-msg{font-size:17px;color:#444;margin:0 0 6px;word-break:keep-all}
+.dfx-score{font-size:15px;color:#777;margin-bottom:16px}
+.dfx-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.dfx-btns button{border:0;border-radius:999px;padding:11px 22px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.dfx-btns .p{background:#1f6b52;color:#fff}.dfx-btns .s{background:#eef3f0;color:#1f6b52}
+.dfx-deco{position:absolute;z-index:3;pointer-events:none;font-size:26px;line-height:1}
+/* 단계별 */
+.dfx.t-perfect .dfx-title{color:#e08a00}
+.dfx.t-perfect img{animation:dfxJumpIn .7s cubic-bezier(.2,1.4,.4,1) both,dfxHop 1s .7s ease-in-out infinite}
+.dfx.t-good .dfx-title{color:#1f6b52}
+.dfx.t-good img{animation:dfxPop .55s cubic-bezier(.2,1.6,.4,1) both,dfxWiggle 1.4s .55s ease-in-out infinite}
+.dfx.t-okay .dfx-title{color:#2f6db5}
+.dfx.t-okay img{animation:dfxSlide .6s ease-out both,dfxSway 2.4s .6s ease-in-out infinite}
+.dfx.t-low .dfx-title{color:#d0566a}
+.dfx.t-low img{animation:dfxRise .8s ease-out both,dfxFloat 2.6s .8s ease-in-out infinite}
+.dfx-star{animation:dfxTwinkle 1.2s ease-in-out infinite}
+.dfx-heart{animation:dfxHeart 3s ease-in infinite;opacity:0;color:#e5576d}
+@keyframes dfxSpin{to{transform:rotate(360deg)}}
+@keyframes dfxJumpIn{0%{transform:translateY(160px) rotate(-30deg) scale(.4);opacity:0}60%{transform:translateY(-30px) rotate(370deg) scale(1.1);opacity:1}100%{transform:translateY(0) rotate(360deg) scale(1)}}
+@keyframes dfxHop{0%,100%{transform:translateY(0) rotate(360deg) scaleY(1)}15%{transform:translateY(0) rotate(360deg) scaleY(.9) scaleX(1.06)}45%{transform:translateY(-34px) rotate(360deg) scaleY(1.04)}}
+@keyframes dfxPop{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes dfxWiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg) translateY(-6px)}75%{transform:rotate(7deg) translateY(-6px)}}
+@keyframes dfxSlide{0%{transform:translateX(-140px);opacity:0}100%{transform:translateX(0);opacity:1}}
+@keyframes dfxSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes dfxRise{0%{transform:translateY(60px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes dfxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes dfxTwinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.2) rotate(20deg);opacity:1}}
+@keyframes dfxHeart{0%{transform:translateY(40px) scale(.6);opacity:0}20%{opacity:1}100%{transform:translateY(-170px) scale(1.1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.dfx img,.dfx-rays,.dfx-star,.dfx-heart{animation:none!important}.dfx-heart{opacity:1}}
 </style>
 </head>
 <body>
@@ -447,6 +486,41 @@ function sfx(kind) {
     else if (kind === 'perfect') { [523.3, 659.3, 784, 1046.5, 784, 1046.5, 1318.5].forEach((f, k) => tone(f, k * 0.11, k === 6 ? 0.6 : 0.2, 'triangle', 0.2)); }
   } catch (e) {}
 }
+// 디디 결과 축하: right 맞힌 수, n 전체 문제 수
+function didiCelebrate(right, n, opt = {}) {
+  const r = n ? right / n : 0;
+  const tier = r >= 1 ? 'perfect' : r >= 0.7 ? 'good' : r >= 0.4 ? 'okay' : 'low';
+  const T = {
+    perfect: { img: 'yay', title: '100점! 최고예요!', msg: '하나도 안 틀렸어요. 디디가 깜짝 놀랐어요!', sfx: 'perfect' },
+    good: { img: 'cheer', title: '참 잘했어요!', msg: '거의 다 맞혔어요. 조금만 더 하면 100점!', sfx: 'right' },
+    okay: { img: 'main', title: '좋아요, 잘하고 있어요!', msg: '틀린 문제만 디디랑 다시 살펴볼까요?', sfx: 'right' },
+    low: { img: 'heart', title: '괜찮아요!', msg: '처음엔 누구나 어려워요. 디디랑 천천히 다시 해 봐요.', sfx: null }
+  }[tier];
+  const deco = [];
+  if (tier === 'perfect') deco.push('<div class="dfx-rays"></div>');
+  if (tier === 'perfect' || tier === 'good') [[8, 18], [82, 12], [14, 70], [86, 64], [50, 4]].slice(0, tier === 'perfect' ? 5 : 3).forEach(([x, y], k) => deco.push(`<span class="dfx-deco dfx-star" style="left:${x}%;top:${y}%;animation-delay:${k * .2}s;color:${['#f4b400', '#ff8a3d', '#2e9d63', '#3b82f6', '#ef6c8a'][k]}">★</span>`));
+  if (tier === 'low') [20, 38, 62, 80].forEach((x, k) => deco.push(`<span class="dfx-deco dfx-heart" style="left:${x}%;bottom:10px;animation-delay:${k * .7}s">♥</span>`));
+  const el = document.createElement('div');
+  el.className = 'dfx t-' + tier; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', T.title);
+  el.innerHTML = `<div class="dfx-card"><div class="dfx-stage">${deco.join('')}<img src="${opt.base || ''}assets/img/didi/${T.img}.webp" alt="디디"></div>
+    <div class="dfx-title">${T.title}</div><p class="dfx-msg">${T.msg}</p><div class="dfx-score">${n}문제 중 ${right}문제 맞혔어요</div>
+    <div class="dfx-btns">${tier === 'perfect' || tier === 'good' ? '' : '<button class="s" data-a="retry">다시 풀기</button>'}<button class="p" data-a="ok">${tier === 'perfect' ? '야호!' : '확인'}</button></div></div>`;
+  document.body.appendChild(el);
+  const close = () => { el.classList.remove('on'); setTimeout(() => el.remove(), 260); document.removeEventListener('keydown', key); };
+  const key = e => { if (e.key === 'Escape' || e.key === 'Enter') { e.preventDefault(); close(); } };
+  el.addEventListener('click', e => { const a = e.target.closest('[data-a]'); if (a) { close(); if (a.dataset.a === 'retry' && opt.onRetry) opt.onRetry(); } else if (e.target === el) close(); });
+  document.addEventListener('keydown', key);
+  requestAnimationFrame(() => el.classList.add('on'));
+  setTimeout(() => el.querySelector('.dfx-btns .p').focus(), 300);
+  if (T.sfx && typeof sfx === 'function') setTimeout(() => sfx(T.sfx), 250);
+  if (typeof burst === 'function') {
+    const card = el.querySelector('.dfx-card');
+    if (tier === 'perfect') { [400, 1100, 1800].forEach(t => setTimeout(() => el.isConnected && burst(card, 90), t)); }
+    else if (tier === 'good') setTimeout(() => el.isConnected && burst(card, 50), 450);
+  }
+  return tier;
+}
+
 // 버튼에서 색종이가 터지는 효과
 function burst(el, count = 46) {
   if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -509,6 +583,7 @@ function sayChips(text) {
 document.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) { e.stopPropagation(); speak(b.dataset.say, b); } }, true);
 let bookKeys = null;
 async function viewLesson(slug) {
+  window._dfx = null;
   await audioReady;
   const l = (await q('lesson:' + slug, () => sb.from('lessons').select('*').eq('slug', slug)))[0];
   CUR_LANG = l ? (LANG_OF[l.subject] || null) : null;
@@ -564,6 +639,7 @@ async function viewLesson(slug) {
     document.getElementById('eL').hidden = cur === 0; document.getElementById('eR').hidden = last;
     document.getElementById('eR').classList.toggle('nudge', cur === 0);
     clearTimeout(window._nt); if (hasN && autoNarr() && N[pages[cur].nkey]) { const src = N[pages[cur].nkey], nb2 = els[cur].querySelector('.narr'), at = cur; window._nt = setTimeout(() => { if (cur === at) playNarr(src, nb2); }, 650); } else stopNarr();
+    if (last && window._dfx) { const d = window._dfx; window._dfx = null; clearTimeout(window._nt); stopNarr(); setTimeout(() => didiCelebrate(d.r, d.n, { onRetry: () => viewLesson(slug) }), 450); }
     document.getElementById('pCount').textContent = `${cur + 1} / ${pages.length} · ${pages[cur].label}`;
   };
   document.getElementById('pPrev').onclick = () => show(cur - 1);
@@ -594,7 +670,7 @@ async function viewLesson(slug) {
         document.getElementById('score').innerHTML = `<div class="score has-didi"><img class="didi" src="assets/img/didi/${right === n ? 'yay' : 'cheer'}.webp" alt=""><div><b>확인 문제 ${n}개 중 ${right}개 맞혔어요.</b> ${right === n ? '완벽해요!' : right >= n - 1 ? '거의 다 맞혔어요!' : '틀린 문제를 다시 넘겨 보며 설명을 읽어 보세요.'} <button class="lnk" id="retry">처음부터 다시</button>${me ? '' : '<div class="sub" style="font-size:14px;margin-top:4px">로그인하면 점수가 기록돼요.</div>'}</div></div>`;
         document.getElementById('retry').onclick = () => viewLesson(slug);
         fracify(document.getElementById('score'));
-        if (right === n) setTimeout(() => { sfx('perfect'); burst(document.getElementById('score'), 140); }, 650);
+        window._dfx = { r: right, n };
         await logOnce({ kind: 'quiz', ref: slug, title: l.title, score: right, total: n, detail: { answers: answered } });
       }
     });
