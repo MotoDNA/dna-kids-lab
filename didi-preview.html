@@ -1,0 +1,132 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>디디 축하 미리보기</title>
+<meta name="robots" content="noindex">
+<style>body{margin:0;font-family:"Noto Sans KR",system-ui,sans-serif;background:#f4efe4;color:#222;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px}
+h1{font-size:22px;margin:0} .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center} .row button{border:1px solid #1f6b52;background:#fff;color:#1f6b52;border-radius:12px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer} p{color:#666;margin:0}
+canvas.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999}
+/* 디디 결과 축하 애니메이션 */
+.dfx{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;background:rgba(30,40,35,.45);opacity:0;transition:opacity .25s;padding:16px}
+.dfx.on{opacity:1}
+.dfx-card{position:relative;background:#fffdf7;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:min(420px,100%);padding:26px 22px 22px;text-align:center;overflow:hidden;transform:scale(.8);transition:transform .35s cubic-bezier(.2,1.6,.4,1)}
+.dfx.on .dfx-card{transform:scale(1)}
+.dfx-stage{position:relative;height:210px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+.dfx-stage img{position:relative;z-index:2;height:190px;width:auto;transform-origin:50% 100%}
+.dfx-rays{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-160px 0 0 -150px;border-radius:50%;z-index:1;background:repeating-conic-gradient(rgba(255,196,0,.28) 0 10deg,transparent 10deg 20deg);-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:dfxSpin 8s linear infinite}
+.dfx-title{font-size:28px;font-weight:800;margin:4px 0 4px;letter-spacing:-.01em}
+.dfx-msg{font-size:17px;color:#444;margin:0 0 6px;word-break:keep-all}
+.dfx-score{font-size:15px;color:#777;margin-bottom:16px}
+.dfx-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.dfx-btns button{border:0;border-radius:999px;padding:11px 22px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.dfx-btns .p{background:#1f6b52;color:#fff}.dfx-btns .s{background:#eef3f0;color:#1f6b52}
+.dfx-deco{position:absolute;z-index:3;pointer-events:none;font-size:26px;line-height:1}
+/* 단계별 */
+.dfx.t-perfect .dfx-title{color:#e08a00}
+.dfx.t-perfect img{animation:dfxJumpIn .7s cubic-bezier(.2,1.4,.4,1) both,dfxHop 1s .7s ease-in-out infinite}
+.dfx.t-good .dfx-title{color:#1f6b52}
+.dfx.t-good img{animation:dfxPop .55s cubic-bezier(.2,1.6,.4,1) both,dfxWiggle 1.4s .55s ease-in-out infinite}
+.dfx.t-okay .dfx-title{color:#2f6db5}
+.dfx.t-okay img{animation:dfxSlide .6s ease-out both,dfxSway 2.4s .6s ease-in-out infinite}
+.dfx.t-low .dfx-title{color:#d0566a}
+.dfx.t-low img{animation:dfxRise .8s ease-out both,dfxFloat 2.6s .8s ease-in-out infinite}
+.dfx-star{animation:dfxTwinkle 1.2s ease-in-out infinite}
+.dfx-heart{animation:dfxHeart 3s ease-in infinite;opacity:0;color:#e5576d}
+@keyframes dfxSpin{to{transform:rotate(360deg)}}
+@keyframes dfxJumpIn{0%{transform:translateY(160px) rotate(-30deg) scale(.4);opacity:0}60%{transform:translateY(-30px) rotate(370deg) scale(1.1);opacity:1}100%{transform:translateY(0) rotate(360deg) scale(1)}}
+@keyframes dfxHop{0%,100%{transform:translateY(0) rotate(360deg) scaleY(1)}15%{transform:translateY(0) rotate(360deg) scaleY(.9) scaleX(1.06)}45%{transform:translateY(-34px) rotate(360deg) scaleY(1.04)}}
+@keyframes dfxPop{0%{transform:scale(.2);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes dfxWiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg) translateY(-6px)}75%{transform:rotate(7deg) translateY(-6px)}}
+@keyframes dfxSlide{0%{transform:translateX(-140px);opacity:0}100%{transform:translateX(0);opacity:1}}
+@keyframes dfxSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes dfxRise{0%{transform:translateY(60px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes dfxFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes dfxTwinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.2) rotate(20deg);opacity:1}}
+@keyframes dfxHeart{0%{transform:translateY(40px) scale(.6);opacity:0}20%{opacity:1}100%{transform:translateY(-170px) scale(1.1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.dfx img,.dfx-rays,.dfx-star,.dfx-heart{animation:none!important}.dfx-heart{opacity:1}}
+</style></head><body>
+<h1>디디 축하 애니메이션 미리보기</h1><p>확인 문제 5개를 다 풀었다고 생각하고 눌러 보세요.</p>
+<div class="row"><button onclick="didiCelebrate(5,5)">5/5 · 100점</button><button onclick="didiCelebrate(4,5)">4/5 · 잘 풀었을 때</button><button onclick="didiCelebrate(2,5)">2/5 · 잘 못 풀었을 때</button><button onclick="didiCelebrate(0,5)">0/5 · 너무 못 풀었을 때</button></div>
+<script>function sfxOn() { try { return localStorage.getItem('dnakids_sfx') !== '0'; } catch (e) { return true; } }
+let actx = null;
+function sfx(kind) {
+  if (!sfxOn()) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    const t0 = actx.currentTime + 0.01;
+    const tone = (freq, at, dur, type = 'triangle', vol = 0.22) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, t0 + at);
+      g.gain.setValueAtTime(0.0001, t0 + at); g.gain.exponentialRampToValueAtTime(vol, t0 + at + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      o.connect(g).connect(actx.destination); o.start(t0 + at); o.stop(t0 + at + dur + 0.05);
+    };
+    if (kind === 'right') { tone(1046.5, 0, 0.18); tone(1318.5, 0.09, 0.22); tone(1568, 0.18, 0.4); tone(2093, 0.18, 0.35, 'sine', 0.08); }
+    else if (kind === 'wrong') { tone(392, 0, 0.18, 'sine', 0.16); tone(330, 0.15, 0.3, 'sine', 0.14); }
+    else if (kind === 'flip') {
+      // 종이 넘기는 소리: 짧은 잡음을 대역 필터로 쓸어 내려 "사락" 느낌을 낸다
+      const len = 0.32, buf = actx.createBuffer(1, actx.sampleRate * len, actx.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (0.6 + 0.4 * Math.random());
+      const src = actx.createBufferSource(); src.buffer = buf;
+      const bp = actx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 0.9;
+      bp.frequency.setValueAtTime(2600, t0); bp.frequency.exponentialRampToValueAtTime(900, t0 + len);
+      const hp = actx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 400;
+      const g = actx.createGain();
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.12, t0 + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.04, t0 + 0.16); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
+      src.connect(bp).connect(hp).connect(g).connect(actx.destination); src.start(t0); src.stop(t0 + len + 0.02);
+    }
+    else if (kind === 'perfect') { [523.3, 659.3, 784, 1046.5, 784, 1046.5, 1318.5].forEach((f, k) => tone(f, k * 0.11, k === 6 ? 0.6 : 0.2, 'triangle', 0.2)); }
+  } catch (e) {}
+}
+function burst(el, count = 46) {
+  if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const cv = document.createElement('canvas'); cv.className = 'fx';
+  const dpr = window.devicePixelRatio || 1; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+  document.body.appendChild(cv); const g = cv.getContext('2d'); g.scale(dpr, dpr);
+  const cols = ['#f4b400', '#2e9d63', '#3b82f6', '#ef6c8a', '#a855f7', '#ff8a3d'];
+  const ps = Array.from({ length: count }, (_, k) => { const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 7; return { x: cx + (Math.random() - .5) * r.width * .6, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 5, s: 5 + Math.random() * 6, c: cols[k % cols.length], rot: Math.random() * 6, vr: (Math.random() - .5) * .4, star: k % 5 === 0 }; });
+  const star = (x, y, rr) => { g.beginPath(); for (let i = 0; i < 10; i++) { const a = i * Math.PI / 5 - Math.PI / 2, d = i % 2 ? rr * .45 : rr; g.lineTo(x + Math.cos(a) * d, y + Math.sin(a) * d); } g.closePath(); g.fill(); };
+  const start = performance.now();
+  (function frame(now) {
+    const t = now - start; g.clearRect(0, 0, innerWidth, innerHeight); g.globalAlpha = Math.max(0, 1 - t / 1300);
+    ps.forEach(p => { p.vy += .32; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.rot += p.vr; g.fillStyle = p.c; g.save(); g.translate(p.x, p.y); g.rotate(p.rot); if (p.star) star(0, 0, p.s); else g.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); g.restore(); });
+    if (t < 1300) requestAnimationFrame(frame); else cv.remove();
+  })(start);
+  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+}
+
+// 디디 결과 축하: right 맞힌 수, n 전체 문제 수
+function didiCelebrate(right, n, opt = {}) {
+  const r = n ? right / n : 0;
+  const tier = r >= 1 ? 'perfect' : r >= 0.7 ? 'good' : r >= 0.4 ? 'okay' : 'low';
+  const T = {
+    perfect: { img: 'yay', title: '100점! 최고예요!', msg: '하나도 안 틀렸어요. 디디가 깜짝 놀랐어요!', sfx: 'perfect' },
+    good: { img: 'cheer', title: '참 잘했어요!', msg: '거의 다 맞혔어요. 조금만 더 하면 100점!', sfx: 'right' },
+    okay: { img: 'main', title: '좋아요, 잘하고 있어요!', msg: '틀린 문제만 디디랑 다시 살펴볼까요?', sfx: 'right' },
+    low: { img: 'heart', title: '괜찮아요!', msg: '처음엔 누구나 어려워요. 디디랑 천천히 다시 해 봐요.', sfx: null }
+  }[tier];
+  const deco = [];
+  if (tier === 'perfect') deco.push('<div class="dfx-rays"></div>');
+  if (tier === 'perfect' || tier === 'good') [[8, 18], [82, 12], [14, 70], [86, 64], [50, 4]].slice(0, tier === 'perfect' ? 5 : 3).forEach(([x, y], k) => deco.push(`<span class="dfx-deco dfx-star" style="left:${x}%;top:${y}%;animation-delay:${k * .2}s;color:${['#f4b400', '#ff8a3d', '#2e9d63', '#3b82f6', '#ef6c8a'][k]}">★</span>`));
+  if (tier === 'low') [20, 38, 62, 80].forEach((x, k) => deco.push(`<span class="dfx-deco dfx-heart" style="left:${x}%;bottom:10px;animation-delay:${k * .7}s">♥</span>`));
+  const el = document.createElement('div');
+  el.className = 'dfx t-' + tier; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', T.title);
+  el.innerHTML = `<div class="dfx-card"><div class="dfx-stage">${deco.join('')}<img src="${opt.base || ''}assets/img/didi/${T.img}.webp" alt="디디"></div>
+    <div class="dfx-title">${T.title}</div><p class="dfx-msg">${T.msg}</p><div class="dfx-score">${n}문제 중 ${right}문제 맞혔어요</div>
+    <div class="dfx-btns">${tier === 'perfect' || tier === 'good' ? '' : '<button class="s" data-a="retry">다시 풀기</button>'}<button class="p" data-a="ok">${tier === 'perfect' ? '야호!' : '확인'}</button></div></div>`;
+  document.body.appendChild(el);
+  const close = () => { el.classList.remove('on'); setTimeout(() => el.remove(), 260); document.removeEventListener('keydown', key); };
+  const key = e => { if (e.key === 'Escape' || e.key === 'Enter') { e.preventDefault(); close(); } };
+  el.addEventListener('click', e => { const a = e.target.closest('[data-a]'); if (a) { close(); if (a.dataset.a === 'retry' && opt.onRetry) opt.onRetry(); } else if (e.target === el) close(); });
+  document.addEventListener('keydown', key);
+  requestAnimationFrame(() => el.classList.add('on'));
+  setTimeout(() => el.querySelector('.dfx-btns .p').focus(), 300);
+  if (T.sfx && typeof sfx === 'function') setTimeout(() => sfx(T.sfx), 250);
+  if (typeof burst === 'function') {
+    const card = el.querySelector('.dfx-card');
+    if (tier === 'perfect') { [400, 1100, 1800].forEach(t => setTimeout(() => el.isConnected && burst(card, 90), t)); }
+    else if (tier === 'good') setTimeout(() => el.isConnected && burst(card, 50), 450);
+  }
+  return tier;
+}
+</script></body></html>
