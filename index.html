@@ -324,6 +324,7 @@ const fixState = () => {
 };
 fixState();
 const saveState = () => { fixState(); try { localStorage.setItem('dnakids_v2', JSON.stringify(state)); } catch (e) {} };
+function callName(n) { n = (n || '').trim(); if (!n) return ''; const g = /^[가-힣]{3}$/.test(n) ? n.slice(1) : n; const c = g.charCodeAt(g.length - 1); if (c >= 0xAC00 && c <= 0xD7A3) return g + ((c - 0xAC00) % 28 ? '아' : '야'); return g; }
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fbtn = (key, v, label, fn) => `<button class="f" data-k="${key}" data-v="${esc(v)}" aria-pressed="${state[key] === v}">${esc(label || v)}</button>`;
 const short = d => String(d || '').replace(/^난이도\s*/, '').replace(/[★☆]/g, '').trim();
@@ -435,7 +436,7 @@ async function viewHome() {
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
   <div class="home-top"><div>
-  <h1>${name ? esc(name) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
+  <h1>${name ? esc(callName(name)) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
   <div class="intro"><p>초등 1~6학년 국어·수학·과학·영어·중국어·일본어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 1~2학년은 글자를 처음 배우는 아이도 소리를 들으며 따라올 수 있어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 연습문제와 실험으로 다져 보세요.</p>
   ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div></div>
   <img class="didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="120" height="122"></div>
