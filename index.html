@@ -259,7 +259,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color
 .curri{margin-top:22px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px;background:#fff;font-size:15px;line-height:1.6}
 .curri h3{margin:0 0 6px;font-size:15px;color:var(--accent)}.curri .lab{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:6px;background:var(--accent-soft);color:var(--accent);vertical-align:1px}
 .curri ul{margin:4px 0 0;padding-left:0;list-style:none}.curri li{margin:3px 0}.curri code{font-family:inherit;font-weight:700;color:var(--ink);margin-right:4px;white-space:nowrap}
-.curri .refs{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--sub)}.curri .refs a{color:var(--sub)}.curri p{margin:4px 0}
+.chgtag{display:inline-block;margin-top:6px;font-size:14px;background:#fff8e1;border-radius:6px;padding:4px 10px;color:#6b4e00}.curri .chg{background:#fff8e1;border-radius:6px;padding:8px 10px}.curri .refs{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--sub)}.curri .refs a{color:var(--sub)}.curri p{margin:4px 0}
 .b12 .curri{font-size:15px}.page-in .curri p,.b12 .page-in .curri p{font-size:15px;line-height:1.6;margin:4px 0}
 </style>
 </head>
@@ -307,10 +307,16 @@ const MATS = ['우유팩','페트병','종이컵','휴지심','상자','병뚜�
 const SUBJ = ['수학','과학','영어'];
 const LSUBJ = ['국어','수학','과학','영어','중국어','일본어'];
 const BANDS = ['1~2','3~4','5~6'];
-const state = { band: '3~4', subject: '수학', aband: '전체', asubject: '전체', mat: '전체' };
+const GRADES = ['1','2','3','4','5','6'];
+const bandOf = g => (+g <= 2 ? '1~2' : +g <= 4 ? '3~4' : '5~6');
+const semLab = x => x && x.semester ? ` ${x.semester}학기` : '';
+const state = { band: '3~4', grade: '3', subject: '수학', aband: '전체', agrade: '전체', asubject: '전체', mat: '전체' };
 try { Object.assign(state, JSON.parse(localStorage.getItem('dnakids_v2') || '{}')); } catch (e) {}
 const fixState = () => {
   if (!BANDS.includes(state.band)) state.band = '3~4';
+  if (!GRADES.includes(String(state.grade))) state.grade = state.band === '1~2' ? '1' : state.band === '5~6' ? '5' : '3';
+  state.grade = String(state.grade); state.band = bandOf(state.grade);
+  if (!['전체', ...GRADES].includes(String(state.agrade))) state.agrade = '전체';
   if (!LSUBJ.includes(state.subject)) state.subject = '수학';
   if (!['전체','3~4','5~6'].includes(state.aband)) state.aband = '전체';
   if (!['전체', ...SUBJ].includes(state.asubject)) state.asubject = '전체';
@@ -328,9 +334,9 @@ const imgErr = `onerror="this.style.display='none'"`;
 /* ---------- 데이터 ---------- */
 const cache = {};
 async function q(key, fn) { if (cache[key]) return cache[key]; const { data, error } = await fn(); if (error) throw new Error('내용을 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요.'); return (cache[key] = data); }
-const listActs = () => q('acts', () => sb.from('activities').select('slug,subject,band,topic,title,summary,duration,tags,hero_image,hero_is_doc,template_pdf').order('sort_order'));
-const listTopics = () => q('topics', () => sb.from('topics').select('band,subject,name,sort_order,activity_slug,lesson_slug').order('sort_order'));
-const listLessons = () => q('lessons', () => sb.from('lessons').select('slug,band,subject,topic,title,hero_image').order('sort_order'));
+const listActs = () => q('acts', () => sb.from('activities').select('slug,subject,band,grade,semester,topic,title,summary,duration,tags,hero_image,hero_is_doc,template_pdf').order('sort_order'));
+const listTopics = () => q('topics', () => sb.from('topics').select('band,grade,semester,subject,name,sort_order,activity_slug,lesson_slug').order('sort_order'));
+const listLessons = () => q('lessons', () => sb.from('lessons').select('slug,band,grade,semester,subject,topic,title,hero_image').order('sort_order'));
 
 /* ---------- 계정 ---------- */
 let me = null;            // { user, profile }
@@ -342,7 +348,7 @@ async function loadMe() {
   if (!session) { me = null; return; }
   const { data: profile } = await sb.from('profiles').select('*').eq('user_id', session.user.id).maybeSingle();
   me = { user: session.user, profile };
-  if (profile && profile.band) { try { if (!localStorage.getItem('dnakids_band_set')) state.band = profile.band; } catch (e) { state.band = profile.band; } fixState(); }
+  if (profile && (profile.grade || profile.band)) { const pg = profile.grade ? String(profile.grade) : (profile.band === '1~2' ? '1' : profile.band === '5~6' ? '5' : '3'); try { if (!localStorage.getItem('dnakids_band_set')) state.grade = pg; } catch (e) { state.grade = pg; } fixState(); }
 }
 function renderAcct() {
   loadParentMode();
@@ -423,9 +429,9 @@ async function myDone() {
 async function viewHome() {
   const [topics, lessons, done] = await Promise.all([listTopics(), listLessons(), myDone()]);
   const L = Object.fromEntries(lessons.map(l => [l.slug, l]));
-  const subjHere = LSUBJ.filter(s => topics.some(t => t.band === state.band && t.subject === s));
+  const subjHere = LSUBJ.filter(s => topics.some(t => String(t.grade) === state.grade && t.subject === s));
   if (!subjHere.includes(state.subject)) state.subject = subjHere.includes('수학') ? '수학' : subjHere[0];
-  const rows = topics.filter(t => t.band === state.band && t.subject === state.subject);
+  const rows = topics.filter(t => String(t.grade) === state.grade && t.subject === state.subject).sort((a, b) => (a.semester || 0) - (b.semester || 0) || a.sort_order - b.sort_order);
   const name = me && me.profile ? me.profile.child_name : '';
   app.innerHTML = `
   <div class="home-top"><div>
@@ -434,14 +440,14 @@ async function viewHome() {
   ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div></div>
   <img class="didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="120" height="122"></div>
   <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${BANDS.map(b => fbtn('band', b, b + '학년')).join('')}</div>
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${GRADES.map(g => fbtn('grade', g, g + '학년')).join('')}</div>
     <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${subjHere.map(s => fbtn('subject', s)).join('')}</div>
   </div>
   <ol class="units">${rows.map((t, i) => { const l = L[t.lesson_slug]; const d = l && done[l.slug];
-    return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
+    return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${t.semester ? t.semester + '학기 · ' : ''}${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
       : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
-  <p class="sub" style="font-size:14px;margin-top:18px">교과서는 출판사마다 단원 이름과 순서가 달라서, 국가 교육과정에 공통으로 나오는 주제를 기준으로 정리했어요.</p>`;
-  app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'band') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
+  <p class="sub" style="font-size:14px;margin-top:18px">학년·학기는 2022 개정 교육과정 교과서에서 주로 배우는 시기를 기준으로 나눴어요. 교과서 출판사나 학교에 따라 한 학기 정도 차이가 날 수 있어요.</p>`;
+  app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'grade') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
 /* ---------- 분수 1/2 → 위아래로 쌓인 진짜 분수 모양 ---------- */
@@ -554,7 +560,7 @@ function curriBox(key) {
   const c = CURRI[key]; if (!c) return '';
   const [lab, desc] = REL[c.rel] || REL.match;
   return `<section class="curri" aria-label="교육과정 연결"><h3>📚 학교 교육과정과 이렇게 이어져요<span class="lab">${lab}</span></h3>
-    ${desc ? `<p>${desc}</p>` : ''}${c.note ? `<p>${esc(c.note)}</p>` : ''}
+    ${desc ? `<p>${desc}</p>` : ''}${c.note ? `<p${c.changed ? ' class="chg"' : ''}>${c.changed ? '<b>📌 2022 개정 교육과정에서 바뀐 내용</b><br>' : ''}${esc(c.note)}</p>` : ''}
     ${c.codes.length ? `<ul>${c.codes.map(([k, t]) => `<li><code>[${esc(k)}]</code>${esc(t)}</li>`).join('')}</ul>` : ''}
     <div class="refs"><b>참고한 자료</b>${c.refs.map(([n, u]) => `<div>· ${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>` : esc(n)}</div>`).join('')}${c.codes.length ? '<div>· 성취기준 문장은 위 교육부 고시 원문을 그대로 옮겼어요.</div>' : ''}</div></section>`;
 }
@@ -613,7 +619,7 @@ async function viewLesson(slug) {
   const pages = [];
   // 1. 표지
   pages.push({ label: '표지', nkey: 'cover', html: `<div class="pg-cover">${l.hero_image ? `<img src="${esc(l.hero_image)}" alt="" ${imgErr}>` : ''}<div>
-    <div class="meta">${esc(l.subject)} · ${esc(l.band)}학년 · ${esc(l.topic)}</div>
+    <div class="meta">${esc(l.subject)} · ${l.grade ? l.grade + '학년' + semLab(l) : esc(l.band) + '학년'} · ${esc(l.topic)}</div>${CURRI[slug] && CURRI[slug].changed ? '<div class="chgtag">📌 2022 개정 교육과정에서 바뀐 내용이 있어요. 마지막 쪽에서 자세히 볼 수 있어요.</div>' : ''}
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
     <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
@@ -703,16 +709,16 @@ async function viewLesson(slug) {
 /* ---------- 화면: 실험·활동 ---------- */
 async function viewActivities() {
   const all = [...await listActs()].sort((a, b) => SUBJ.indexOf(a.subject) - SUBJ.indexOf(b.subject));
-  const list = all.filter(a => (state.aband === '전체' || a.band === state.aband) && (state.asubject === '전체' || a.subject === state.asubject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
+  const list = all.filter(a => (state.agrade === '전체' || String(a.grade) === String(state.agrade)) && (state.asubject === '전체' || a.subject === state.asubject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
   app.innerHTML = `<h1>실험·활동</h1>
   <div class="intro"><p>단원 개념을 집에 있는 재료로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p></div>
   <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('aband','전체')}${fbtn('aband','3~4','3~4학년')}${fbtn('aband','5~6','5~6학년')}</div>
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('agrade','전체')}${['3','4','5','6'].map(g => fbtn('agrade', g, g + '학년')).join('')}</div>
     <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${['전체', ...SUBJ].map(s => fbtn('asubject', s)).join('')}</div>
     <div class="grp"><label class="lab" for="mat">재료</label><select id="mat" style="width:auto">${['전체', ...MATS].map(m => `<option ${m === state.mat ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
   </div>
   <p class="count">${list.length}개</p>
-  ${list.length ? `<ul class="list">${list.map(a => `<li><a href="#/a/${esc(a.slug)}"><img src="${esc(a.hero_image)}" alt="" loading="lazy" ${imgErr}><div><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.subject)} · ${esc(a.band)}학년 · ${esc(a.topic)} · ${esc(a.duration)}</div><p>${esc(a.summary)}</p></div></a></li>`).join('')}</ul>`
+  ${list.length ? `<ul class="list">${list.map(a => `<li><a href="#/a/${esc(a.slug)}"><img src="${esc(a.hero_image)}" alt="" loading="lazy" ${imgErr}><div><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.subject)} · ${a.grade ? a.grade + '학년' + semLab(a) : esc(a.band) + '학년'} · ${esc(a.topic)} · ${esc(a.duration)}</div><p>${esc(a.summary)}</p></div></a></li>`).join('')}</ul>`
     : `<p class="empty">조건에 맞는 활동이 아직 없어요. 재료나 학년을 바꿔 보세요.</p>`}`;
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; saveState(); viewActivities(); });
   document.getElementById('mat').onchange = e => { state.mat = e.target.value; saveState(); viewActivities(); };
@@ -744,7 +750,7 @@ async function viewActivity(slug) {
   app.innerHTML = `<article class="narrow">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><a class="back" href="#/activities">← 실험·활동 목록</a><button class="sndbtn" id="shareAct">📤 공유</button></div>
     <h1>${esc(a.title)}</h1>
-    <div class="meta">${esc(a.subject)} · ${esc(a.band)}학년 · ${esc(a.topic)} · ${esc(a.duration)} · ${esc(short(a.difficulty))}</div>
+    <div class="meta">${esc(a.subject)} · ${a.grade ? a.grade + '학년' + semLab(a) : esc(a.band) + '학년'} · ${esc(a.topic)} · ${esc(a.duration)} · ${esc(short(a.difficulty))}</div>
     ${t && t.lesson_slug ? `<div class="note" style="font-size:15px">이 실험은 <a href="#/u/${esc(t.lesson_slug)}">‘${esc(t.name)}’ 단원 개념</a>을 확인하는 활동이에요. 개념을 먼저 읽고 오면 더 잘 이해돼요.</div>` : ''}
     <img class="hero ${a.hero_is_doc ? 'doc' : ''}" src="${esc(a.hero_image)}" alt="${esc(a.title)}" ${imgErr}>
     <p style="font-size:18px;margin-top:18px">${esc(a.summary)}</p>
@@ -761,7 +767,7 @@ async function viewDownloads() {
   app.innerHTML = `<div class="narrow"><h1>도안·문제지</h1><p class="sub">A4 용지에 배율 100%(실제 크기)로 인쇄해 주세요.</p>
   ${SUBJ.map(s => `<h2>${s}</h2><table><tbody>${all.filter(a => a.subject === s).map(a => `<tr><td>${esc(a.title)}</td><td style="white-space:nowrap"><a href="${esc(a.template_pdf)}" download>PDF 내려받기</a></td></tr>`).join('')}</tbody></table>`).join('')}
   <h1 style="margin-top:40px" id="workbooks">단원별 연습문제</h1><p class="sub">단원마다 20문제(쉬움 8 · 보통 8 · 도전 4)와 정답·풀이가 들어 있는 A4 문제지예요. 단원 공부를 마친 뒤 연필로 풀어 보세요.</p>
-  ${BANDS.map(b => LSUBJ.map(s => { const ls = lessons.filter(x => x.band === b && x.subject === s); return ls.length ? `<h2>${b}학년 ${s}</h2><table><tbody>${ls.map(x => `<tr><td>${esc(x.title)}<div class="sub" style="font-size:14px">${esc(x.topic)}</div></td><td style="white-space:nowrap"><a href="assets/workbook/${esc(x.slug)}.pdf" download="연습문제_${esc(x.title)}.pdf">연습문제 PDF</a></td></tr>`).join('')}</tbody></table>` : ''; }).join('')).join('')}</div>`;
+  ${GRADES.map(b => LSUBJ.map(s => { const ls = lessons.filter(x => String(x.grade) === b && x.subject === s).sort((p, q) => (p.semester || 0) - (q.semester || 0)); return ls.length ? `<h2>${b}학년 ${s}</h2><table><tbody>${ls.map(x => `<tr><td>${esc(x.title)}<div class="sub" style="font-size:14px">${esc(x.topic)}</div></td><td style="white-space:nowrap"><a href="assets/workbook/${esc(x.slug)}.pdf" download="연습문제_${esc(x.title)}.pdf">연습문제 PDF</a></td></tr>`).join('')}</tbody></table>` : ''; }).join('')).join('')}</div>`;
 }
 
 /* ---------- 화면: 타자 연습 ---------- */
@@ -812,7 +818,7 @@ function viewSignup() {
   <label for="sid">아이디</label><input type="text" id="sid" autocomplete="username" autocapitalize="off" spellcheck="false"><div class="hint">영어 소문자와 숫자 4~20자</div>
   <label for="spw">비밀번호 (아이가 로그인할 때 써요)</label><input type="password" id="spw" autocomplete="new-password"><div class="hint">6자 이상</div>
   <label for="sname">아이 이름 (별명도 괜찮아요)</label><input type="text" id="sname" maxlength="10">
-  <label for="sband">학년</label><select id="sband"><option value="1~2">1~2학년</option><option value="3~4" selected>3~4학년</option><option value="5~6">5~6학년</option></select>
+  <label for="sband">학년</label><select id="sband"><option value="1">1학년</option><option value="2">2학년</option><option value="3" selected>3학년</option><option value="4">4학년</option><option value="5">5학년</option><option value="6">6학년</option></select>
   <label for="spin">부모님 비밀번호</label><input type="password" id="spin" inputmode="numeric" maxlength="6" autocomplete="off"><div class="hint">숫자 4~6자리. 아이 비밀번호와 다르게, 아이가 모르게 정해 주세요.</div>
   <label class="agree"><input type="checkbox" id="sagree"> <span><b>[필수]</b> 부모님이 <a href="privacy.html" target="_blank">개인정보처리방침</a>을 읽고 아이디·아이 이름·학년·학습 기록을 모으는 것에 동의해요. (만 14세 미만 아이는 부모님 동의가 꼭 필요해요)</span></label>
   <p class="err" id="serr" role="alert"></p>
@@ -820,7 +826,7 @@ function viewSignup() {
   <p class="sub" style="font-size:15px;margin-top:20px">이미 가입했나요? <a href="#/login">로그인</a></p></div>`;
   document.getElementById('sf').onsubmit = async ev => {
     ev.preventDefault();
-    const id = document.getElementById('sid').value.trim().toLowerCase(), pw = document.getElementById('spw').value, name = document.getElementById('sname').value.trim(), band = document.getElementById('sband').value, pin = document.getElementById('spin').value;
+    const id = document.getElementById('sid').value.trim().toLowerCase(), pw = document.getElementById('spw').value, name = document.getElementById('sname').value.trim(), grade = +document.getElementById('sband').value, band = bandOf(grade), pin = document.getElementById('spin').value;
     const err = document.getElementById('serr'); err.textContent = '';
     if (!idOk(id)) return err.textContent = '아이디는 영어 소문자와 숫자 4~20자로 만들어 주세요.';
     if (pw.length < 6) return err.textContent = '비밀번호는 6자 이상이어야 해요.';
@@ -830,10 +836,10 @@ function viewSignup() {
     const btn = document.getElementById('sgo'); btn.disabled = true;
     const { data, error } = await sb.auth.signUp({ email: `${id}@${ID_DOMAIN}`, password: pw });
     if (error || !data.session) { btn.disabled = false; return err.textContent = (error && /registered|already/i.test(error.message)) ? '이미 쓰고 있는 아이디예요. 다른 아이디를 골라 주세요.' : '가입하지 못했어요. 잠시 뒤 다시 시도해 주세요.'; }
-    const r1 = await sb.from('profiles').insert({ user_id: data.user.id, login_id: id, child_name: name, band, signup_src: (SRC.src || 'direct').slice(0, 90), signup_campaign: SRC.campaign || null, agreed_at: new Date().toISOString() });
+    const r1 = await sb.from('profiles').insert({ user_id: data.user.id, login_id: id, child_name: name, band, grade, signup_src: (SRC.src || 'direct').slice(0, 90), signup_campaign: SRC.campaign || null, agreed_at: new Date().toISOString() });
     const r2 = await sb.rpc('set_parent_pin', { new_pin: pin });
     if (r1.error || r2.error) { btn.disabled = false; return err.textContent = '가입은 됐지만 정보를 저장하지 못했어요. 로그인 후 다시 시도해 주세요.'; }
-    state.band = band; saveState();
+    state.grade = String(grade); saveState();
     await loadMe(); renderAcct(); await startSession(); location.hash = '#/';
   };
 }
@@ -889,7 +895,7 @@ async function viewParent() {
   <h2>설정</h2>
   <div class="form"><label for="np0">지금 부모님 비밀번호</label><input type="password" id="np0" inputmode="numeric" maxlength="6"><label for="np1">새 부모님 비밀번호</label><input type="password" id="np1" inputmode="numeric" maxlength="6">
   <p class="err" id="nperr" role="status"></p><button class="btn ghost" id="npgo">부모님 비밀번호 바꾸기</button>
-  <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb"><option value="1~2" ${me.profile && me.profile.band === '1~2' ? 'selected' : ''}>1~2학년</option><option value="3~4" ${me.profile && me.profile.band === '3~4' ? 'selected' : ''}>3~4학년</option><option value="5~6" ${me.profile && me.profile.band === '5~6' ? 'selected' : ''}>5~6학년</option></select>
+  <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb">${GRADES.map(g => `<option value="${g}" ${me.profile && String(me.profile.grade || (me.profile.band === '1~2' ? 1 : me.profile.band === '5~6' ? 5 : 3)) === g ? 'selected' : ''}>${g}학년</option>`).join('')}</select>
   <p class="err" id="cerr" role="status"></p><button class="btn ghost" id="cgo">저장</button></div>
   <p class="sub" style="font-size:14px;margin-top:24px">부모님 모드는 30분 뒤 자동으로 아이 화면으로 돌아가요.</p></div>`;
   document.getElementById('npgo').onclick = async () => {
@@ -899,9 +905,9 @@ async function viewParent() {
     e.textContent = error ? '바꾸지 못했어요.' : data ? '바꿨어요.' : '지금 비밀번호가 맞지 않아요.';
   };
   document.getElementById('cgo').onclick = async () => {
-    const n = document.getElementById('cn').value.trim(), b = document.getElementById('cb').value, e = document.getElementById('cerr');
+    const n = document.getElementById('cn').value.trim(), b = document.getElementById('cb').value, bb = bandOf(b), e = document.getElementById('cerr');
     if (!n) return e.textContent = '이름을 적어 주세요.';
-    const { error } = await sb.from('profiles').update({ child_name: n, band: b }).eq('user_id', me.user.id);
+    const { error } = await sb.from('profiles').update({ child_name: n, band: bb, grade: +b }).eq('user_id', me.user.id);
     if (error) return e.textContent = '저장하지 못했어요.';
     e.textContent = '저장했어요.'; await loadMe(); renderAcct();
   };
