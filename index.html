@@ -7,11 +7,11 @@
 <meta name="description" content="초등 1~6학년 국어·수학·과학·영어·중국어·일본어 개념을 책처럼 넘기며 공부하고, 연습문제·실험 도안까지 무료로 인쇄하는 가정 학습 사이트. 한글을 처음 배우는 아이도 소리를 들으며 따라와요.">
 <meta property="og:title" content="DNA Kids Lab · 초등 1~6학년 무료 가정 학습">
 <meta property="og:description" content="한글 떼기부터 중국어·일본어까지, 148개 단원 개념·듣기·연습문제 PDF와 실험 48개를 무료로">
-<meta property="og:image" content="https://motodna.github.io/dna-kids-lab/assets/img/og.jpg">
+<meta property="og:image" content="https://dnakidslab.cloud/assets/img/og.jpg">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://motodna.github.io/dna-kids-lab/">
+<meta property="og:url" content="https://dnakidslab.cloud/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://motodna.github.io/dna-kids-lab/">
+<link rel="canonical" href="https://dnakidslab.cloud/">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 :root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
@@ -278,7 +278,7 @@ const SUPABASE_KEY = 'sb_publishable_tJppUfQ22tu3GjSajvq-4w_CMB87DL4';
 const ID_DOMAIN = 'kids.dnakidslab.com';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 /* ---------- 유입 경로·방문 집계 (개인 정보 없음) ---------- */
-const SITE = 'https://motodna.github.io/dna-kids-lab/';
+const SITE = 'https://dnakidslab.cloud/';
 const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 (function firstTouch() {
