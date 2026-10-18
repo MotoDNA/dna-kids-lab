@@ -264,6 +264,8 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color
 .b12 .curri{font-size:15px}.page-in .curri p,.b12 .page-in .curri p{font-size:15px;line-height:1.6;margin:4px 0}
 
 /* ===== Clean theme (2026-10) ===== */
+a.cp{display:inline-block;margin-left:6px;font-size:13px;font-weight:600;color:var(--accent);border:1px solid var(--accent);border-radius:980px;padding:1px 10px;white-space:nowrap;text-decoration:none}a.cp:hover{background:var(--accent);color:#fff;text-decoration:none}
+.cp-note{font-size:13px;color:var(--sub);background:var(--bg2);border-radius:12px;padding:10px 14px;margin:10px 0 0;line-height:1.55}
 :root{--ink:#1d1d1f;--sub:#6e6e73;--line:#e3e3e8;--accent:#0071e3;--accent-soft:#e8f1fc;--bg2:#f5f5f7;--good:#1d8348;--bad:#d70015;--note:#fbf6e9}
 body{background:#fff;font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:17px;line-height:1.7;letter-spacing:-.01em}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
@@ -392,6 +394,7 @@ const SUPABASE_KEY = 'sb_publishable_tJppUfQ22tu3GjSajvq-4w_CMB87DL4';
 const ID_DOMAIN = 'kids.dnakidslab.com';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 /* ---------- 유입 경로·방문 집계 (개인 정보 없음) ---------- */
+const CPANG = { '자석 1개': 'hW3rPS4mL6', '풍선 2개': 'hW3uPH5oaG', 'LED 1개': 'hW3vcq1jC8', '건전지 끼우개': 'hW3wt6oWZz', '할핀 2개, 클립 1개': 'hW3wRr3cmA', '각설탕 1봉지': 'hW3xdlLOLc', '배추흰나비 애벌레': 'hW3ykkbDxI', '강낭콩 6~8알': 'hW3yGwAzgy' }; // 쿠팡 파트너스 검색 링크
 const SITE = 'https://dnakidslab.cloud/';
 const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
 const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
@@ -852,7 +855,7 @@ async function viewActivities() {
 }
 function block(c) {
   switch (c.type) {
-    case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit ? '<span class="kit">· 키트 예정</span>' : ''}</td></tr>`).join('')}</tbody></table></div>${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
+    case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit && CPANG[r.name] ? ` <a class="cp" href="https://link.coupang.com/a/${CPANG[r.name]}" target="_blank" rel="sponsored nofollow noopener">쿠팡에서 보기</a>` : ''}</td></tr>`).join('')}</tbody></table></div>${c.rows.some(r => r.kit && CPANG[r.name]) ? '<p class="cp-note">부모님께: 집에 없는 준비물은 쿠팡에서 찾아볼 수 있어요. 이 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>' : ''}${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
     case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li class="${s.image ? 'has-img' : ''}"><div><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}${sayChips(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}</div>${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)} 장면" loading="lazy" ${imgErr}>` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
     case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}${hasAudio(x) ? sayBtn(x) : sayChips(x)}</li>`).join('')}</ul>`;
     case 'explain': return `${c.title ? `<h2>${esc(c.title)}</h2>` : '<h2>부모님께</h2>'}${c.boxes.map(b => `<h3 style="margin-top:18px">${esc(b.label)}</h3>${b.paras.map(p => `<p>${esc(p)}</p>`).join('')}`).join('')}`;
