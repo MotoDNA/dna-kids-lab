@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://dnakidslab.cloud/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://dnakidslab.cloud/">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 :root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
@@ -261,6 +262,119 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color
 .curri ul{margin:4px 0 0;padding-left:0;list-style:none}.curri li{margin:3px 0}.curri code{font-family:inherit;font-weight:700;color:var(--ink);margin-right:4px;white-space:nowrap}
 .chgtag{display:inline-block;margin-top:6px;font-size:14px;background:#fff8e1;border-radius:6px;padding:4px 10px;color:#6b4e00}.curri .chg{background:#fff8e1;border-radius:6px;padding:8px 10px}.curri .refs{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px;color:var(--sub)}.curri .refs a{color:var(--sub)}.curri p{margin:4px 0}
 .b12 .curri{font-size:15px}.page-in .curri p,.b12 .page-in .curri p{font-size:15px;line-height:1.6;margin:4px 0}
+
+/* ===== Clean theme (2026-10) ===== */
+:root{--ink:#1d1d1f;--sub:#6e6e73;--line:#e3e3e8;--accent:#0071e3;--accent-soft:#e8f1fc;--bg2:#f5f5f7;--good:#1d8348;--bad:#d70015;--note:#fbf6e9}
+body{background:#fff;font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:17px;line-height:1.7;letter-spacing:-.01em}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+header .w{max-width:1024px;flex-wrap:nowrap;padding-block:0;min-height:52px;gap:24px}
+.brand{font-size:17px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.brand small{display:none}
+nav{flex:1;justify-content:center;gap:4px 26px;flex-wrap:nowrap}
+nav a{font-size:14px;color:#333;opacity:.88;white-space:nowrap}
+nav a:hover{opacity:1;text-decoration:none}
+nav a.on{text-decoration:none;opacity:1;font-weight:600;color:var(--ink)}
+.acct{width:auto;min-height:0;font-size:13px;gap:8px;white-space:nowrap}
+.acct a,.acct .lnk{font-size:13px;color:var(--ink);text-decoration:none}
+.acct.parent{background:#fff4e5}
+.lnk{text-decoration:none}
+@media (max-width:760px){header .w{flex-wrap:wrap;gap:0 14px;padding-block:8px 0}nav{order:3;flex:0 0 100%;width:100%;justify-content:flex-start;overflow-x:auto;gap:22px;padding:8px 0 10px;scrollbar-width:none}nav::-webkit-scrollbar{display:none}.acct{margin-left:auto}}
+main{padding-block:40px 96px}
+h1{font-size:40px;line-height:1.2;letter-spacing:-.03em;font-weight:700}
+h2{font-size:28px;letter-spacing:-.025em;font-weight:700;line-height:1.25}
+.btn{background:var(--accent);border-radius:980px;padding:11px 22px;font-weight:600;font-size:16px}
+.btn:hover{background:#0077ed}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+select,input[type=text],input[type=password]{border:1px solid #d2d2d7;border-radius:12px;padding:10px 14px;min-height:48px}
+select:focus,input:focus{border-color:var(--accent);outline:3px solid rgba(0,113,227,.18);outline-offset:0}
+.f{border-radius:980px;padding:6px 14px;min-height:36px;color:var(--ink)}
+.f:hover{background:rgba(0,0,0,.05)}
+.f[aria-pressed="true"]{text-decoration:none;background:var(--ink);color:#fff;font-weight:600}
+.filters{border:0;padding:6px 0 18px;gap:12px 28px}
+ul.list{background:#fff;border-radius:18px;padding:4px 20px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 0 0 1px rgba(0,0,0,.05)}
+ul.list li:last-child{border-bottom:0}
+ul.list img{border-radius:12px}
+ul.list a:hover .t{text-decoration:none;color:var(--accent)}
+.hero{border-radius:18px}
+.note,.ex,details,.dl,.try,.stat div,.score,.curri{border-radius:14px}
+.ex{background:var(--bg2);border-left:0;padding:14px 18px}
+.try{border-color:var(--line)}.try:hover .t{text-decoration:none;color:var(--accent)}
+.curri{border-left:1px solid var(--line);background:var(--bg2);border-color:transparent}
+.curri h3{color:var(--ink)}
+.ch button{border-radius:12px;border-color:#d2d2d7;padding:12px 16px}
+.ch button:hover:not(:disabled){border-color:var(--accent);background:#fafcff}
+.ch button.right{border-color:var(--good);background:#eaf6ee}
+.ch button.wrong{border-color:var(--bad);background:#fdecee}
+.say,.sndbtn{border-radius:980px;border-color:#d2d2d7}
+.say.playing{background:var(--accent-soft)}
+.narr{border-color:var(--accent);border-width:1px;font-weight:600}
+.wb{border:1px solid var(--line);border-radius:14px;background:var(--bg2)}.wb b{color:var(--ink)}.wb:hover{background:#eeeef0;text-decoration:none}
+iframe.typing{border-radius:18px;border-color:var(--line)}
+/* 단원 책 */
+.page{background:#fff;border:0;border-radius:22px;box-shadow:0 2px 6px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.08)}
+.page-in{padding:36px 44px 18px}
+.pg-cover img{border-radius:14px}
+.pg-kicker{color:var(--sub);font-weight:600;letter-spacing:0}
+.pg-title{font-size:34px;letter-spacing:-.03em;line-height:1.22}
+.pg-toc{border-top-color:var(--line)}
+.folio{color:#aeaeb2}
+.edge{border:0;box-shadow:0 2px 10px rgba(0,0,0,.12);color:var(--ink);font-family:inherit;font-size:24px;line-height:40px}
+.dot{border-color:#c7c7cc;width:8px;height:8px}.dot.q{border-radius:2px}
+.dot.on{background:var(--ink);border-color:var(--ink);transform:scale(1.3)}
+.dot.seen{background:#d1d1d6}
+.book-nav .btn.ghost{border-color:#d2d2d7;color:var(--ink)}
+.swipe-hint{background:rgba(29,29,31,.86)}
+#toast{background:rgba(29,29,31,.92)}
+.dfx-btns .p{background:var(--accent)}.dfx-btns .s{background:var(--bg2);color:var(--accent)}
+footer{background:var(--bg2);border-top:1px solid #d2d2d7;font-size:12px;color:#86868b;padding:28px 0 44px}
+footer .w{max-width:1024px}
+footer a{color:#424245}
+/* 홈 */
+.ah{margin-top:-40px}
+html,body{overflow-x:clip}
+.ah-band{scroll-margin-top:52px;margin-bottom:-96px}
+footer nav.flinks{display:block;flex:none}
+.ah-hero{text-align:center;padding:72px 0 0}
+.ah-hero h1{font-size:clamp(36px,6.4vw,64px);line-height:1.08;letter-spacing:-.045em;margin:0 0 16px}
+.ah-sub{font-size:clamp(18px,2.4vw,23px);line-height:1.45;color:var(--sub);max-width:30em;margin:0 auto 26px;letter-spacing:-.02em}
+.ah-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:center}
+.ah-cta .btn{min-width:150px}
+.ah-cta a.more{font-size:17px}
+.ah-didi{width:min(300px,62vw);height:auto;margin:30px auto 0}
+.ah-login{font-size:14px;color:var(--sub);margin:18px 0 0}
+.ah-band{background:var(--bg2);margin-inline:calc(50% - 50vw);padding:64px calc(50vw - 50%) 72px;margin-top:8px}
+.ah-band>.in{max-width:840px;margin:0 auto}
+.ah-band h2{margin:0 0 6px;text-align:center}
+.ah-band .lead{text-align:center;color:var(--sub);margin:0 0 26px}
+.seg{display:flex;gap:4px;background:#e8e8ed;border-radius:980px;padding:4px;width:max-content;max-width:100%;margin:0 auto 14px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg .f{min-height:34px;padding:6px 16px;font-size:15px;white-space:nowrap}
+.seg .f[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.subj{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 22px}
+.subj .f{font-size:15px;border:1px solid #d2d2d7;background:#fff}
+.subj .f[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.ah .units{background:#fff;border-radius:18px;padding:6px 22px;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+.ah .units li{border-bottom:1px solid var(--line)}.ah .units li:last-child{border-bottom:0}
+.ah .units a{grid-template-columns:30px 1fr auto 14px;padding:16px 0;align-items:center}
+.ah .units a::after{content:"";width:8px;height:8px;border-right:2px solid #c7c7cc;border-top:2px solid #c7c7cc;transform:rotate(45deg)}
+.ah .units a:hover{text-decoration:none}.ah .units a:hover .t{text-decoration:none;color:var(--accent)}
+.ah .units .t{font-weight:600;font-size:17px;letter-spacing:-.02em}
+.ah .units .n{color:#aeaeb2;font-size:14px}
+.ah .note2{font-size:13px;color:#86868b;text-align:center;margin:18px 0 0}
+.ah-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:56px 0 0}
+.tile{display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;color:var(--ink);text-decoration:none;min-height:340px}
+.tile:hover{text-decoration:none}
+.tile .tx{padding:26px 24px 14px;text-align:center}
+.tile h3{font-size:24px;letter-spacing:-.03em;margin:0 0 4px}
+.tile p{font-size:15px;color:var(--sub);margin:0 0 8px;line-height:1.5}
+.tile .go{font-size:15px;color:var(--accent)}
+.tile:hover .go{text-decoration:underline}
+.tile .im{flex:1;display:flex;align-items:flex-end;justify-content:center;min-height:170px}
+.tile .im img{width:100%;height:100%;max-height:200px;object-fit:cover}
+.tile .im img.didi{object-fit:contain;width:auto;height:170px;margin-bottom:12px}
+@media (max-width:760px){.ah-didi{width:200px}.seg{width:100%}.seg .f{flex:1;padding:6px 0;font-size:14px}.ah-tiles{grid-template-columns:1fr}.tile{min-height:0}.ah-hero{padding-top:44px}.ah-band{padding-top:44px;padding-bottom:52px}.ah .units{padding:2px 16px}.page-in{padding:22px 20px 12px}}
+@media (max-width:640px){.pg-title{font-size:26px}h1{font-size:30px}.book{height:calc(100vh - 245px);height:calc(100dvh - 245px)}}
 </style>
 </head>
 <body>
@@ -435,20 +549,31 @@ async function viewHome() {
   if (!subjHere.includes(state.subject)) state.subject = subjHere.includes('수학') ? '수학' : subjHere[0];
   const rows = topics.filter(t => String(t.grade) === state.grade && t.subject === state.subject).sort((a, b) => (a.semester || 0) - (b.semester || 0) || a.sort_order - b.sort_order);
   const name = me && me.profile ? me.profile.child_name : '';
-  app.innerHTML = `
-  <div class="home-top"><div>
-  <h1>${name ? esc(callName(name)) + ', 오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념, 집에서 쉽게'}</h1>
-  <div class="intro"><p>초등 1~6학년 국어·수학·과학·영어·중국어·일본어의 단원별 핵심 개념을 쉬운 말로 정리했어요. 1~2학년은 글자를 처음 배우는 아이도 소리를 들으며 따라올 수 있어요. 개념을 읽고 확인 문제를 풀어 본 뒤, 연습문제와 실험으로 다져 보세요.</p>
-  ${me ? '' : `<p class="sub" style="font-size:15px">로그인하면 공부한 기록과 접속 시간이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}</div></div>
-  <img class="didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="120" height="122"></div>
-  <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${GRADES.map(g => fbtn('grade', g, g + '학년')).join('')}</div>
-    <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${subjHere.map(s => fbtn('subject', s)).join('')}</div>
-  </div>
-  <ol class="units">${rows.map((t, i) => { const l = L[t.lesson_slug]; const d = l && done[l.slug];
-    return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${t.semester ? t.semester + '학기 · ' : ''}${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
-      : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
-  <p class="sub" style="font-size:14px;margin-top:18px">학년·학기는 2022 개정 교육과정 교과서에서 주로 배우는 시기를 기준으로 나눴어요. 교과서 출판사나 학교에 따라 한 학기 정도 차이가 날 수 있어요.</p>`;
+  const nL = lessons.length;
+  app.innerHTML = `<div class="ah">
+  <section class="ah-hero">
+    <h1>${name ? esc(callName(name)) + ',<br>오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
+    <p class="ah-sub">초등 1~6학년 국어·수학·과학·영어·중국어·일본어 ${nL}개 단원을 쉬운 말로 정리했어요. 읽고, 듣고, 문제를 풀며 다져 보세요.</p>
+    <div class="ah-cta"><button class="btn" type="button" id="goUnits">단원 고르기</button><a class="more" href="#/activities">실험·활동 보기 ›</a></div>
+    ${me ? '' : `<p class="ah-login">로그인하면 공부 기록이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}
+    <img class="ah-didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="300" height="305">
+  </section>
+  <section class="ah-band" id="units"><div class="in">
+    <h2>몇 학년이에요?</h2>
+    <p class="lead">학년과 과목을 고르면 그 단원만 보여요.</p>
+    <div class="seg" role="group" aria-label="학년">${GRADES.map(g => fbtn('grade', g, g + '학년')).join('')}</div>
+    <div class="subj" role="group" aria-label="과목">${subjHere.map(s => fbtn('subject', s)).join('')}</div>
+    <ol class="units">${rows.map((t, i) => { const l = L[t.lesson_slug]; const d = l && done[l.slug];
+      return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${t.semester ? t.semester + '학기 · ' : ''}${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
+        : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
+    <p class="note2">학년·학기는 2022 개정 교육과정 교과서에서 주로 배우는 시기를 기준으로 나눴어요. 출판사나 학교에 따라 한 학기 정도 차이가 날 수 있어요.</p>
+    <div class="ah-tiles">
+      <a class="tile" href="#/activities"><div class="tx"><h3>실험·활동</h3><p>집에 있는 재료로 단원 개념을 직접 확인해요.</p><span class="go">활동 보기 ›</span></div><div class="im"><img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" loading="lazy"></div></a>
+      <a class="tile" href="#/typing"><div class="tx"><h3>타자 연습</h3><p>손가락 자리를 보며 한글·영어 타자를 익혀요.</p><span class="go">연습하기 ›</span></div><div class="im"><img class="didi" src="assets/img/didi/cheer.webp" alt="응원하는 디디" loading="lazy"></div></a>
+      <a class="tile" href="#/downloads"><div class="tx"><h3>도안·문제지</h3><p>단원 학습지와 활동 도안을 인쇄해서 써요.</p><span class="go">내려받기 ›</span></div><div class="im"><img src="assets/img/n_tangram.jpg" alt="칠교판 도안" loading="lazy"></div></a>
+    </div>
+  </div></section></div>`;
+  const gu = document.getElementById('goUnits'); if (gu) gu.onclick = () => document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'grade') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
