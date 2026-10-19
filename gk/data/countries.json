@@ -1,0 +1,1496 @@
+[
+ {
+  "iso2": "kr",
+  "ko": "대한민국",
+  "en": "South Korea",
+  "capital": "서울",
+  "capitalEn": "Seoul",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "한글을 쓰는 나라예요.",
+  "greet": {
+   "text": "안녕하세요",
+   "lang": "ko-KR"
+  }
+ },
+ {
+  "iso2": "jp",
+  "ko": "일본",
+  "en": "Japan",
+  "capital": "도쿄",
+  "capitalEn": "Tokyo",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "후지산이 있어요.",
+  "greet": {
+   "text": "こんにちは",
+   "lang": "ja-JP"
+  }
+ },
+ {
+  "iso2": "cn",
+  "ko": "중국",
+  "en": "China",
+  "capital": "베이징",
+  "capitalEn": "Beijing",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "만리장성이 있어요.",
+  "greet": {
+   "text": "你好",
+   "lang": "zh-CN"
+  }
+ },
+ {
+  "iso2": "mn",
+  "ko": "몽골",
+  "en": "Mongolia",
+  "capital": "울란바토르",
+  "capitalEn": "Ulaanbaatar",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "고비 사막이 있어요.",
+  "greet": {
+   "text": "Сайн байна уу",
+   "lang": "mn-MN"
+  }
+ },
+ {
+  "iso2": "vn",
+  "ko": "베트남",
+  "en": "Vietnam",
+  "capital": "하노이",
+  "capitalEn": "Hanoi",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "쌀국수 '퍼'가 유명해요.",
+  "greet": {
+   "text": "Xin chào",
+   "lang": "vi-VN"
+  }
+ },
+ {
+  "iso2": "th",
+  "ko": "태국",
+  "en": "Thailand",
+  "capital": "방콕",
+  "capitalEn": "Bangkok",
+  "cont": "아시아",
+  "level": 1,
+  "greet": {
+   "text": "สวัสดี",
+   "lang": "th-TH"
+  }
+ },
+ {
+  "iso2": "ph",
+  "ko": "필리핀",
+  "en": "Philippines",
+  "capital": "마닐라",
+  "capitalEn": "Manila",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "7,000개가 넘는 섬으로 이루어져 있어요."
+ },
+ {
+  "iso2": "sg",
+  "ko": "싱가포르",
+  "en": "Singapore",
+  "capital": "싱가포르",
+  "capitalEn": "Singapore",
+  "cont": "아시아",
+  "level": 1,
+  "capitalNote": "나라 이름과 수도 이름이 같아요.",
+  "fact": "머라이언 조각상이 있어요."
+ },
+ {
+  "iso2": "id",
+  "ko": "인도네시아",
+  "en": "Indonesia",
+  "capital": "자카르타",
+  "capitalEn": "Jakarta",
+  "cont": "아시아",
+  "level": 1,
+  "capitalNote": "새 수도 누산타라를 짓고 있어요.",
+  "fact": "섬이 아주 많은 나라예요.",
+  "greet": {
+   "text": "Halo",
+   "lang": "id-ID"
+  }
+ },
+ {
+  "iso2": "in",
+  "ko": "인도",
+  "en": "India",
+  "capital": "뉴델리",
+  "capitalEn": "New Delhi",
+  "cont": "아시아",
+  "level": 1,
+  "fact": "타지마할이 있어요.",
+  "greet": {
+   "text": "नमस्ते",
+   "lang": "hi-IN"
+  }
+ },
+ {
+  "iso2": "tr",
+  "ko": "튀르키예",
+  "en": "Türkiye",
+  "capital": "앙카라",
+  "capitalEn": "Ankara",
+  "cont": "아시아",
+  "level": 1,
+  "capitalNote": "가장 큰 도시는 이스탄불이에요.",
+  "fact": "아시아와 유럽에 걸쳐 있어요.",
+  "greet": {
+   "text": "Merhaba",
+   "lang": "tr-TR"
+  }
+ },
+ {
+  "iso2": "sa",
+  "ko": "사우디아라비아",
+  "en": "Saudi Arabia",
+  "capital": "리야드",
+  "capitalEn": "Riyadh",
+  "cont": "아시아",
+  "level": 1,
+  "greet": {
+   "text": "مرحبا",
+   "lang": "ar-SA"
+  }
+ },
+ {
+  "iso2": "my",
+  "ko": "말레이시아",
+  "en": "Malaysia",
+  "capital": "쿠알라룸푸르",
+  "capitalEn": "Kuala Lumpur",
+  "cont": "아시아",
+  "level": 2,
+  "capitalNote": "정부 기관 상당수는 행정 수도 푸트라자야에 있어요."
+ },
+ {
+  "iso2": "kh",
+  "ko": "캄보디아",
+  "en": "Cambodia",
+  "capital": "프놈펜",
+  "capitalEn": "Phnom Penh",
+  "cont": "아시아",
+  "level": 2,
+  "fact": "앙코르 와트가 있어요."
+ },
+ {
+  "iso2": "la",
+  "ko": "라오스",
+  "en": "Laos",
+  "capital": "비엔티안",
+  "capitalEn": "Vientiane",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "mm",
+  "ko": "미얀마",
+  "en": "Myanmar",
+  "capital": "네피도",
+  "capitalEn": "Naypyidaw",
+  "cont": "아시아",
+  "level": 2,
+  "capitalNote": "가장 큰 도시는 양곤이에요."
+ },
+ {
+  "iso2": "np",
+  "ko": "네팔",
+  "en": "Nepal",
+  "capital": "카트만두",
+  "capitalEn": "Kathmandu",
+  "cont": "아시아",
+  "level": 2,
+  "fact": "세계에서 가장 높은 에베레스트산이 있어요."
+ },
+ {
+  "iso2": "pk",
+  "ko": "파키스탄",
+  "en": "Pakistan",
+  "capital": "이슬라마바드",
+  "capitalEn": "Islamabad",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "bd",
+  "ko": "방글라데시",
+  "en": "Bangladesh",
+  "capital": "다카",
+  "capitalEn": "Dhaka",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "lk",
+  "ko": "스리랑카",
+  "en": "Sri Lanka",
+  "capital": "스리자야와르데네푸라코테",
+  "capitalEn": "Sri Jayawardenepura Kotte",
+  "cont": "아시아",
+  "level": 2,
+  "capitalNote": "가장 큰 도시는 콜롬보예요."
+ },
+ {
+  "iso2": "kz",
+  "ko": "카자흐스탄",
+  "en": "Kazakhstan",
+  "capital": "아스타나",
+  "capitalEn": "Astana",
+  "cont": "아시아",
+  "level": 2,
+  "fact": "바다와 닿지 않은 나라 중 가장 넓어요."
+ },
+ {
+  "iso2": "uz",
+  "ko": "우즈베키스탄",
+  "en": "Uzbekistan",
+  "capital": "타슈켄트",
+  "capitalEn": "Tashkent",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "ir",
+  "ko": "이란",
+  "en": "Iran",
+  "capital": "테헤란",
+  "capitalEn": "Tehran",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "ae",
+  "ko": "아랍에미리트",
+  "en": "United Arab Emirates",
+  "capital": "아부다비",
+  "capitalEn": "Abu Dhabi",
+  "cont": "아시아",
+  "level": 2,
+  "fact": "세계에서 가장 높은 건물 부르즈 할리파가 있어요."
+ },
+ {
+  "iso2": "qa",
+  "ko": "카타르",
+  "en": "Qatar",
+  "capital": "도하",
+  "capitalEn": "Doha",
+  "cont": "아시아",
+  "level": 2
+ },
+ {
+  "iso2": "bn",
+  "ko": "브루나이",
+  "en": "Brunei",
+  "capital": "반다르스리브가완",
+  "capitalEn": "Bandar Seri Begawan",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "tl",
+  "ko": "동티모르",
+  "en": "Timor-Leste",
+  "capital": "딜리",
+  "capitalEn": "Dili",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "bt",
+  "ko": "부탄",
+  "en": "Bhutan",
+  "capital": "팀푸",
+  "capitalEn": "Thimphu",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "mv",
+  "ko": "몰디브",
+  "en": "Maldives",
+  "capital": "말레",
+  "capitalEn": "Malé",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "af",
+  "ko": "아프가니스탄",
+  "en": "Afghanistan",
+  "capital": "카불",
+  "capitalEn": "Kabul",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "tj",
+  "ko": "타지키스탄",
+  "en": "Tajikistan",
+  "capital": "두샨베",
+  "capitalEn": "Dushanbe",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "iq",
+  "ko": "이라크",
+  "en": "Iraq",
+  "capital": "바그다드",
+  "capitalEn": "Baghdad",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "sy",
+  "ko": "시리아",
+  "en": "Syria",
+  "capital": "다마스쿠스",
+  "capitalEn": "Damascus",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "lb",
+  "ko": "레바논",
+  "en": "Lebanon",
+  "capital": "베이루트",
+  "capitalEn": "Beirut",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "jo",
+  "ko": "요르단",
+  "en": "Jordan",
+  "capital": "암만",
+  "capitalEn": "Amman",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "om",
+  "ko": "오만",
+  "en": "Oman",
+  "capital": "무스카트",
+  "capitalEn": "Muscat",
+  "cont": "아시아",
+  "level": 3
+ },
+ {
+  "iso2": "gb",
+  "ko": "영국",
+  "en": "United Kingdom",
+  "capital": "런던",
+  "capitalEn": "London",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "빅벤 시계탑이 있어요.",
+  "greet": {
+   "text": "Hello",
+   "lang": "en-GB"
+  }
+ },
+ {
+  "iso2": "fr",
+  "ko": "프랑스",
+  "en": "France",
+  "capital": "파리",
+  "capitalEn": "Paris",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "에펠탑이 있어요.",
+  "greet": {
+   "text": "Bonjour",
+   "lang": "fr-FR"
+  }
+ },
+ {
+  "iso2": "de",
+  "ko": "독일",
+  "en": "Germany",
+  "capital": "베를린",
+  "capitalEn": "Berlin",
+  "cont": "유럽",
+  "level": 1,
+  "greet": {
+   "text": "Hallo",
+   "lang": "de-DE"
+  }
+ },
+ {
+  "iso2": "it",
+  "ko": "이탈리아",
+  "en": "Italy",
+  "capital": "로마",
+  "capitalEn": "Rome",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "피사의 사탑이 있어요.",
+  "greet": {
+   "text": "Ciao",
+   "lang": "it-IT"
+  }
+ },
+ {
+  "iso2": "es",
+  "ko": "스페인",
+  "en": "Spain",
+  "capital": "마드리드",
+  "capitalEn": "Madrid",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "사그라다 파밀리아 성당이 있어요.",
+  "greet": {
+   "text": "Hola",
+   "lang": "es-ES"
+  }
+ },
+ {
+  "iso2": "ru",
+  "ko": "러시아",
+  "en": "Russia",
+  "capital": "모스크바",
+  "capitalEn": "Moscow",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "세계에서 가장 넓은 나라예요.",
+  "greet": {
+   "text": "Здравствуйте",
+   "lang": "ru-RU"
+  }
+ },
+ {
+  "iso2": "ch",
+  "ko": "스위스",
+  "en": "Switzerland",
+  "capital": "베른",
+  "capitalEn": "Bern",
+  "cont": "유럽",
+  "level": 1,
+  "capitalNote": "법으로 정한 수도는 없지만, 정부가 있는 베른을 수도로 불러요.",
+  "fact": "알프스산맥이 있어요."
+ },
+ {
+  "iso2": "gr",
+  "ko": "그리스",
+  "en": "Greece",
+  "capital": "아테네",
+  "capitalEn": "Athens",
+  "cont": "유럽",
+  "level": 1,
+  "fact": "올림픽이 처음 시작된 나라예요.",
+  "greet": {
+   "text": "Γεια σας",
+   "lang": "el-GR"
+  }
+ },
+ {
+  "iso2": "nl",
+  "ko": "네덜란드",
+  "en": "Netherlands",
+  "capital": "암스테르담",
+  "capitalEn": "Amsterdam",
+  "cont": "유럽",
+  "level": 1,
+  "capitalNote": "헌법상 수도는 암스테르담이지만, 정부와 국회는 헤이그에 있어요.",
+  "fact": "풍차와 튤립으로 유명해요.",
+  "greet": {
+   "text": "Hallo",
+   "lang": "nl-NL"
+  }
+ },
+ {
+  "iso2": "pt",
+  "ko": "포르투갈",
+  "en": "Portugal",
+  "capital": "리스본",
+  "capitalEn": "Lisbon",
+  "cont": "유럽",
+  "level": 2,
+  "greet": {
+   "text": "Olá",
+   "lang": "pt-PT"
+  }
+ },
+ {
+  "iso2": "be",
+  "ko": "벨기에",
+  "en": "Belgium",
+  "capital": "브뤼셀",
+  "capitalEn": "Brussels",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "at",
+  "ko": "오스트리아",
+  "en": "Austria",
+  "capital": "빈",
+  "capitalEn": "Vienna",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "모차르트의 고향 잘츠부르크가 있어요."
+ },
+ {
+  "iso2": "ie",
+  "ko": "아일랜드",
+  "en": "Ireland",
+  "capital": "더블린",
+  "capitalEn": "Dublin",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "is",
+  "ko": "아이슬란드",
+  "en": "Iceland",
+  "capital": "레이캬비크",
+  "capitalEn": "Reykjavik",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "화산과 빙하가 있는 섬나라예요."
+ },
+ {
+  "iso2": "no",
+  "ko": "노르웨이",
+  "en": "Norway",
+  "capital": "오슬로",
+  "capitalEn": "Oslo",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "피오르라는 좁고 긴 바닷골짜기가 많아요.",
+  "greet": {
+   "text": "Hei",
+   "lang": "nb-NO"
+  }
+ },
+ {
+  "iso2": "se",
+  "ko": "스웨덴",
+  "en": "Sweden",
+  "capital": "스톡홀름",
+  "capitalEn": "Stockholm",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "노벨상을 만든 노벨의 나라예요.",
+  "greet": {
+   "text": "Hej",
+   "lang": "sv-SE"
+  }
+ },
+ {
+  "iso2": "fi",
+  "ko": "핀란드",
+  "en": "Finland",
+  "capital": "헬싱키",
+  "capitalEn": "Helsinki",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "호수가 아주 많은 나라예요.",
+  "greet": {
+   "text": "Hei",
+   "lang": "fi-FI"
+  }
+ },
+ {
+  "iso2": "dk",
+  "ko": "덴마크",
+  "en": "Denmark",
+  "capital": "코펜하겐",
+  "capitalEn": "Copenhagen",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "레고가 처음 만들어진 나라예요."
+ },
+ {
+  "iso2": "pl",
+  "ko": "폴란드",
+  "en": "Poland",
+  "capital": "바르샤바",
+  "capitalEn": "Warsaw",
+  "cont": "유럽",
+  "level": 2,
+  "fact": "음악가 쇼팽이 태어난 나라예요.",
+  "greet": {
+   "text": "Dzień dobry",
+   "lang": "pl-PL"
+  }
+ },
+ {
+  "iso2": "cz",
+  "ko": "체코",
+  "en": "Czechia",
+  "capital": "프라하",
+  "capitalEn": "Prague",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "hu",
+  "ko": "헝가리",
+  "en": "Hungary",
+  "capital": "부다페스트",
+  "capitalEn": "Budapest",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "ua",
+  "ko": "우크라이나",
+  "en": "Ukraine",
+  "capital": "키이우",
+  "capitalEn": "Kyiv",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "hr",
+  "ko": "크로아티아",
+  "en": "Croatia",
+  "capital": "자그레브",
+  "capitalEn": "Zagreb",
+  "cont": "유럽",
+  "level": 2
+ },
+ {
+  "iso2": "sk",
+  "ko": "슬로바키아",
+  "en": "Slovakia",
+  "capital": "브라티슬라바",
+  "capitalEn": "Bratislava",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "ro",
+  "ko": "루마니아",
+  "en": "Romania",
+  "capital": "부쿠레슈티",
+  "capitalEn": "Bucharest",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "bg",
+  "ko": "불가리아",
+  "en": "Bulgaria",
+  "capital": "소피아",
+  "capitalEn": "Sofia",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "si",
+  "ko": "슬로베니아",
+  "en": "Slovenia",
+  "capital": "류블랴나",
+  "capitalEn": "Ljubljana",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "rs",
+  "ko": "세르비아",
+  "en": "Serbia",
+  "capital": "베오그라드",
+  "capitalEn": "Belgrade",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "ba",
+  "ko": "보스니아헤르체고비나",
+  "en": "Bosnia and Herzegovina",
+  "capital": "사라예보",
+  "capitalEn": "Sarajevo",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "me",
+  "ko": "몬테네그로",
+  "en": "Montenegro",
+  "capital": "포드고리차",
+  "capitalEn": "Podgorica",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "mk",
+  "ko": "북마케도니아",
+  "en": "North Macedonia",
+  "capital": "스코페",
+  "capitalEn": "Skopje",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "al",
+  "ko": "알바니아",
+  "en": "Albania",
+  "capital": "티라나",
+  "capitalEn": "Tirana",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "ee",
+  "ko": "에스토니아",
+  "en": "Estonia",
+  "capital": "탈린",
+  "capitalEn": "Tallinn",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "lv",
+  "ko": "라트비아",
+  "en": "Latvia",
+  "capital": "리가",
+  "capitalEn": "Riga",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "lt",
+  "ko": "리투아니아",
+  "en": "Lithuania",
+  "capital": "빌뉴스",
+  "capitalEn": "Vilnius",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "by",
+  "ko": "벨라루스",
+  "en": "Belarus",
+  "capital": "민스크",
+  "capitalEn": "Minsk",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "lu",
+  "ko": "룩셈부르크",
+  "en": "Luxembourg",
+  "capital": "룩셈부르크",
+  "capitalEn": "Luxembourg",
+  "cont": "유럽",
+  "level": 3,
+  "capitalNote": "나라 이름과 수도 이름이 같아요."
+ },
+ {
+  "iso2": "mt",
+  "ko": "몰타",
+  "en": "Malta",
+  "capital": "발레타",
+  "capitalEn": "Valletta",
+  "cont": "유럽",
+  "level": 3
+ },
+ {
+  "iso2": "eg",
+  "ko": "이집트",
+  "en": "Egypt",
+  "capital": "카이로",
+  "capitalEn": "Cairo",
+  "cont": "아프리카",
+  "level": 1,
+  "fact": "피라미드가 있어요.",
+  "greet": {
+   "text": "مرحبا",
+   "lang": "ar-EG"
+  }
+ },
+ {
+  "iso2": "za",
+  "ko": "남아프리카공화국",
+  "en": "South Africa",
+  "capital": "프리토리아",
+  "capitalEn": "Pretoria",
+  "cont": "아프리카",
+  "level": 1,
+  "capitalNote": "수도가 세 곳이에요. 행정은 프리토리아, 입법(국회)은 케이프타운, 사법은 블룸폰테인이에요.",
+  "fact": "아프리카 대륙의 가장 남쪽에 있어요."
+ },
+ {
+  "iso2": "ke",
+  "ko": "케냐",
+  "en": "Kenya",
+  "capital": "나이로비",
+  "capitalEn": "Nairobi",
+  "cont": "아프리카",
+  "level": 2,
+  "fact": "넓은 초원에 사자·코끼리 같은 야생 동물이 많아요.",
+  "greet": {
+   "text": "Jambo",
+   "lang": "sw-KE"
+  }
+ },
+ {
+  "iso2": "tz",
+  "ko": "탄자니아",
+  "en": "Tanzania",
+  "capital": "도도마",
+  "capitalEn": "Dodoma",
+  "cont": "아프리카",
+  "level": 2,
+  "capitalNote": "가장 큰 도시는 다르에스살람이에요.",
+  "fact": "아프리카에서 가장 높은 킬리만자로산이 있어요."
+ },
+ {
+  "iso2": "et",
+  "ko": "에티오피아",
+  "en": "Ethiopia",
+  "capital": "아디스아바바",
+  "capitalEn": "Addis Ababa",
+  "cont": "아프리카",
+  "level": 2
+ },
+ {
+  "iso2": "ng",
+  "ko": "나이지리아",
+  "en": "Nigeria",
+  "capital": "아부자",
+  "capitalEn": "Abuja",
+  "cont": "아프리카",
+  "level": 2,
+  "capitalNote": "가장 큰 도시는 라고스예요."
+ },
+ {
+  "iso2": "gh",
+  "ko": "가나",
+  "en": "Ghana",
+  "capital": "아크라",
+  "capitalEn": "Accra",
+  "cont": "아프리카",
+  "level": 2
+ },
+ {
+  "iso2": "ma",
+  "ko": "모로코",
+  "en": "Morocco",
+  "capital": "라바트",
+  "capitalEn": "Rabat",
+  "cont": "아프리카",
+  "level": 2
+ },
+ {
+  "iso2": "mg",
+  "ko": "마다가스카르",
+  "en": "Madagascar",
+  "capital": "안타나나리보",
+  "capitalEn": "Antananarivo",
+  "cont": "아프리카",
+  "level": 2,
+  "fact": "바오바브나무와 여우원숭이로 유명해요."
+ },
+ {
+  "iso2": "dz",
+  "ko": "알제리",
+  "en": "Algeria",
+  "capital": "알제",
+  "capitalEn": "Algiers",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "tn",
+  "ko": "튀니지",
+  "en": "Tunisia",
+  "capital": "튀니스",
+  "capitalEn": "Tunis",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ly",
+  "ko": "리비아",
+  "en": "Libya",
+  "capital": "트리폴리",
+  "capitalEn": "Tripoli",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ug",
+  "ko": "우간다",
+  "en": "Uganda",
+  "capital": "캄팔라",
+  "capitalEn": "Kampala",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "rw",
+  "ko": "르완다",
+  "en": "Rwanda",
+  "capital": "키갈리",
+  "capitalEn": "Kigali",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ci",
+  "ko": "코트디부아르",
+  "en": "Côte d'Ivoire",
+  "capital": "야무수크로",
+  "capitalEn": "Yamoussoukro",
+  "cont": "아프리카",
+  "level": 3,
+  "capitalNote": "가장 큰 도시이자 경제 중심지는 아비장이에요."
+ },
+ {
+  "iso2": "sn",
+  "ko": "세네갈",
+  "en": "Senegal",
+  "capital": "다카르",
+  "capitalEn": "Dakar",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ml",
+  "ko": "말리",
+  "en": "Mali",
+  "capital": "바마코",
+  "capitalEn": "Bamako",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ne",
+  "ko": "니제르",
+  "en": "Niger",
+  "capital": "니아메",
+  "capitalEn": "Niamey",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "td",
+  "ko": "차드",
+  "en": "Chad",
+  "capital": "은자메나",
+  "capitalEn": "N'Djamena",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "cm",
+  "ko": "카메룬",
+  "en": "Cameroon",
+  "capital": "야운데",
+  "capitalEn": "Yaoundé",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "cd",
+  "ko": "콩고민주공화국",
+  "en": "DR Congo",
+  "capital": "킨샤사",
+  "capitalEn": "Kinshasa",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "cg",
+  "ko": "콩고공화국",
+  "en": "Republic of the Congo",
+  "capital": "브라자빌",
+  "capitalEn": "Brazzaville",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ga",
+  "ko": "가봉",
+  "en": "Gabon",
+  "capital": "리브르빌",
+  "capitalEn": "Libreville",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "ao",
+  "ko": "앙골라",
+  "en": "Angola",
+  "capital": "루안다",
+  "capitalEn": "Luanda",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "zm",
+  "ko": "잠비아",
+  "en": "Zambia",
+  "capital": "루사카",
+  "capitalEn": "Lusaka",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "zw",
+  "ko": "짐바브웨",
+  "en": "Zimbabwe",
+  "capital": "하라레",
+  "capitalEn": "Harare",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "mz",
+  "ko": "모잠비크",
+  "en": "Mozambique",
+  "capital": "마푸투",
+  "capitalEn": "Maputo",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "na",
+  "ko": "나미비아",
+  "en": "Namibia",
+  "capital": "빈트후크",
+  "capitalEn": "Windhoek",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "bw",
+  "ko": "보츠와나",
+  "en": "Botswana",
+  "capital": "가보로네",
+  "capitalEn": "Gaborone",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "mw",
+  "ko": "말라위",
+  "en": "Malawi",
+  "capital": "릴롱궤",
+  "capitalEn": "Lilongwe",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "mu",
+  "ko": "모리셔스",
+  "en": "Mauritius",
+  "capital": "포트루이스",
+  "capitalEn": "Port Louis",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "gn",
+  "ko": "기니",
+  "en": "Guinea",
+  "capital": "코나크리",
+  "capitalEn": "Conakry",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "bf",
+  "ko": "부르키나파소",
+  "en": "Burkina Faso",
+  "capital": "와가두구",
+  "capitalEn": "Ouagadougou",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "lr",
+  "ko": "라이베리아",
+  "en": "Liberia",
+  "capital": "몬로비아",
+  "capitalEn": "Monrovia",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "sl",
+  "ko": "시에라리온",
+  "en": "Sierra Leone",
+  "capital": "프리타운",
+  "capitalEn": "Freetown",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "tg",
+  "ko": "토고",
+  "en": "Togo",
+  "capital": "로메",
+  "capitalEn": "Lomé",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "er",
+  "ko": "에리트레아",
+  "en": "Eritrea",
+  "capital": "아스마라",
+  "capitalEn": "Asmara",
+  "cont": "아프리카",
+  "level": 3
+ },
+ {
+  "iso2": "dj",
+  "ko": "지부티",
+  "en": "Djibouti",
+  "capital": "지부티",
+  "capitalEn": "Djibouti",
+  "cont": "아프리카",
+  "level": 3,
+  "capitalNote": "나라 이름과 수도 이름이 같아요."
+ },
+ {
+  "iso2": "us",
+  "ko": "미국",
+  "en": "United States",
+  "capital": "워싱턴 D.C.",
+  "capitalEn": "Washington, D.C.",
+  "cont": "북아메리카",
+  "level": 1,
+  "capitalNote": "가장 큰 도시는 뉴욕이에요.",
+  "fact": "자유의 여신상이 있어요.",
+  "greet": {
+   "text": "Hello",
+   "lang": "en-US"
+  }
+ },
+ {
+  "iso2": "ca",
+  "ko": "캐나다",
+  "en": "Canada",
+  "capital": "오타와",
+  "capitalEn": "Ottawa",
+  "cont": "북아메리카",
+  "level": 1,
+  "fact": "국기에 단풍잎이 그려져 있어요."
+ },
+ {
+  "iso2": "mx",
+  "ko": "멕시코",
+  "en": "Mexico",
+  "capital": "멕시코시티",
+  "capitalEn": "Mexico City",
+  "cont": "북아메리카",
+  "level": 1,
+  "fact": "타코가 유명해요.",
+  "greet": {
+   "text": "Hola",
+   "lang": "es-MX"
+  }
+ },
+ {
+  "iso2": "cu",
+  "ko": "쿠바",
+  "en": "Cuba",
+  "capital": "아바나",
+  "capitalEn": "Havana",
+  "cont": "북아메리카",
+  "level": 2
+ },
+ {
+  "iso2": "pa",
+  "ko": "파나마",
+  "en": "Panama",
+  "capital": "파나마시티",
+  "capitalEn": "Panama City",
+  "cont": "북아메리카",
+  "level": 2,
+  "fact": "파나마 운하가 있어요."
+ },
+ {
+  "iso2": "jm",
+  "ko": "자메이카",
+  "en": "Jamaica",
+  "capital": "킹스턴",
+  "capitalEn": "Kingston",
+  "cont": "북아메리카",
+  "level": 2
+ },
+ {
+  "iso2": "cr",
+  "ko": "코스타리카",
+  "en": "Costa Rica",
+  "capital": "산호세",
+  "capitalEn": "San José",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "gt",
+  "ko": "과테말라",
+  "en": "Guatemala",
+  "capital": "과테말라시티",
+  "capitalEn": "Guatemala City",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "hn",
+  "ko": "온두라스",
+  "en": "Honduras",
+  "capital": "테구시갈파",
+  "capitalEn": "Tegucigalpa",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "sv",
+  "ko": "엘살바도르",
+  "en": "El Salvador",
+  "capital": "산살바도르",
+  "capitalEn": "San Salvador",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "ni",
+  "ko": "니카라과",
+  "en": "Nicaragua",
+  "capital": "마나과",
+  "capitalEn": "Managua",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "do",
+  "ko": "도미니카공화국",
+  "en": "Dominican Republic",
+  "capital": "산토도밍고",
+  "capitalEn": "Santo Domingo",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "ht",
+  "ko": "아이티",
+  "en": "Haiti",
+  "capital": "포르토프랭스",
+  "capitalEn": "Port-au-Prince",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "bs",
+  "ko": "바하마",
+  "en": "Bahamas",
+  "capital": "나소",
+  "capitalEn": "Nassau",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "tt",
+  "ko": "트리니다드토바고",
+  "en": "Trinidad and Tobago",
+  "capital": "포트오브스페인",
+  "capitalEn": "Port of Spain",
+  "cont": "북아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "br",
+  "ko": "브라질",
+  "en": "Brazil",
+  "capital": "브라질리아",
+  "capitalEn": "Brasília",
+  "cont": "남아메리카",
+  "level": 1,
+  "capitalNote": "가장 큰 도시는 상파울루예요.",
+  "fact": "아마존 열대 우림이 있어요.",
+  "greet": {
+   "text": "Olá",
+   "lang": "pt-BR"
+  }
+ },
+ {
+  "iso2": "ar",
+  "ko": "아르헨티나",
+  "en": "Argentina",
+  "capital": "부에노스아이레스",
+  "capitalEn": "Buenos Aires",
+  "cont": "남아메리카",
+  "level": 1
+ },
+ {
+  "iso2": "cl",
+  "ko": "칠레",
+  "en": "Chile",
+  "capital": "산티아고",
+  "capitalEn": "Santiago",
+  "cont": "남아메리카",
+  "level": 2,
+  "fact": "남북으로 아주 길쭉한 나라예요."
+ },
+ {
+  "iso2": "pe",
+  "ko": "페루",
+  "en": "Peru",
+  "capital": "리마",
+  "capitalEn": "Lima",
+  "cont": "남아메리카",
+  "level": 2,
+  "fact": "마추픽추 유적이 있어요."
+ },
+ {
+  "iso2": "co",
+  "ko": "콜롬비아",
+  "en": "Colombia",
+  "capital": "보고타",
+  "capitalEn": "Bogotá",
+  "cont": "남아메리카",
+  "level": 2
+ },
+ {
+  "iso2": "ve",
+  "ko": "베네수엘라",
+  "en": "Venezuela",
+  "capital": "카라카스",
+  "capitalEn": "Caracas",
+  "cont": "남아메리카",
+  "level": 2,
+  "fact": "세계에서 가장 높은 폭포인 앙헬 폭포가 있어요."
+ },
+ {
+  "iso2": "ec",
+  "ko": "에콰도르",
+  "en": "Ecuador",
+  "capital": "키토",
+  "capitalEn": "Quito",
+  "cont": "남아메리카",
+  "level": 2,
+  "fact": "갈라파고스 제도가 있어요."
+ },
+ {
+  "iso2": "bo",
+  "ko": "볼리비아",
+  "en": "Bolivia",
+  "capital": "수크레",
+  "capitalEn": "Sucre",
+  "cont": "남아메리카",
+  "level": 2,
+  "capitalNote": "헌법상 수도는 수크레이고, 정부는 라파스에 있어요.",
+  "fact": "우유니 소금사막이 있어요."
+ },
+ {
+  "iso2": "uy",
+  "ko": "우루과이",
+  "en": "Uruguay",
+  "capital": "몬테비데오",
+  "capitalEn": "Montevideo",
+  "cont": "남아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "py",
+  "ko": "파라과이",
+  "en": "Paraguay",
+  "capital": "아순시온",
+  "capitalEn": "Asunción",
+  "cont": "남아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "gy",
+  "ko": "가이아나",
+  "en": "Guyana",
+  "capital": "조지타운",
+  "capitalEn": "Georgetown",
+  "cont": "남아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "sr",
+  "ko": "수리남",
+  "en": "Suriname",
+  "capital": "파라마리보",
+  "capitalEn": "Paramaribo",
+  "cont": "남아메리카",
+  "level": 3
+ },
+ {
+  "iso2": "au",
+  "ko": "호주",
+  "en": "Australia",
+  "capital": "캔버라",
+  "capitalEn": "Canberra",
+  "cont": "오세아니아",
+  "level": 1,
+  "capitalNote": "가장 큰 도시는 시드니예요.",
+  "fact": "캥거루와 코알라가 살아요.",
+  "greet": {
+   "text": "Hello",
+   "lang": "en-AU"
+  }
+ },
+ {
+  "iso2": "nz",
+  "ko": "뉴질랜드",
+  "en": "New Zealand",
+  "capital": "웰링턴",
+  "capitalEn": "Wellington",
+  "cont": "오세아니아",
+  "level": 1,
+  "fact": "키위새가 사는 나라예요."
+ },
+ {
+  "iso2": "pg",
+  "ko": "파푸아뉴기니",
+  "en": "Papua New Guinea",
+  "capital": "포트모르즈비",
+  "capitalEn": "Port Moresby",
+  "cont": "오세아니아",
+  "level": 2
+ },
+ {
+  "iso2": "fj",
+  "ko": "피지",
+  "en": "Fiji",
+  "capital": "수바",
+  "capitalEn": "Suva",
+  "cont": "오세아니아",
+  "level": 2
+ },
+ {
+  "iso2": "ws",
+  "ko": "사모아",
+  "en": "Samoa",
+  "capital": "아피아",
+  "capitalEn": "Apia",
+  "cont": "오세아니아",
+  "level": 3
+ },
+ {
+  "iso2": "to",
+  "ko": "통가",
+  "en": "Tonga",
+  "capital": "누쿠알로파",
+  "capitalEn": "Nukuʻalofa",
+  "cont": "오세아니아",
+  "level": 3
+ },
+ {
+  "iso2": "vu",
+  "ko": "바누아투",
+  "en": "Vanuatu",
+  "capital": "포트빌라",
+  "capitalEn": "Port Vila",
+  "cont": "오세아니아",
+  "level": 3
+ }
+]

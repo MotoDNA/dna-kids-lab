@@ -1,0 +1,92 @@
+[
+ {
+  "ko": "나일강",
+  "en": "Nile",
+  "len": 6650,
+  "where": "아프리카 북동부(이집트 등)",
+  "kr": false,
+  "approx": true,
+  "note": "흔히 세계에서 가장 긴 강으로 꼽혀요."
+ },
+ {
+  "ko": "아마존강",
+  "en": "Amazon",
+  "len": 6400,
+  "where": "남아메리카(페루·브라질 등)",
+  "kr": false,
+  "approx": true,
+  "note": "흐르는 물의 양이 세계에서 가장 많은 강이에요."
+ },
+ {
+  "ko": "양쯔강",
+  "en": "Yangtze",
+  "len": 6300,
+  "where": "중국",
+  "kr": false,
+  "approx": true,
+  "note": "아시아에서 가장 긴 강이에요. 창장강이라고도 해요."
+ },
+ {
+  "ko": "메콩강",
+  "en": "Mekong",
+  "len": 4350,
+  "where": "동남아시아(라오스·태국·캄보디아·베트남 등)",
+  "kr": false,
+  "approx": true,
+  "note": "여러 나라를 지나 남중국해로 흘러가요."
+ },
+ {
+  "ko": "미시시피강",
+  "en": "Mississippi",
+  "len": 3770,
+  "where": "미국",
+  "kr": false,
+  "approx": true,
+  "note": "북아메리카에서 가장 긴 강이에요."
+ },
+ {
+  "ko": "볼가강",
+  "en": "Volga",
+  "len": 3530,
+  "where": "러시아",
+  "kr": false,
+  "approx": true,
+  "note": "유럽에서 가장 긴 강이에요."
+ },
+ {
+  "ko": "다뉴브강",
+  "en": "Danube",
+  "len": 2850,
+  "where": "유럽(독일·오스트리아·헝가리 등 10개 나라)",
+  "kr": false,
+  "approx": true,
+  "note": "도나우강이라고도 해요. 10개 나라를 지나 흘러요."
+ },
+ {
+  "ko": "압록강",
+  "en": "Amnokgang (Yalu)",
+  "len": 800,
+  "where": "북한·중국",
+  "kr": true,
+  "approx": true,
+  "note": "한반도에서 가장 긴 강이에요."
+ },
+ {
+  "ko": "낙동강",
+  "en": "Nakdonggang",
+  "len": 510,
+  "where": "경상북도·경상남도·부산",
+  "kr": true,
+  "approx": true,
+  "note": "남한에서 가장 긴 강이에요."
+ },
+ {
+  "ko": "한강",
+  "en": "Hangang",
+  "len": 494,
+  "where": "강원·충북·경기·서울",
+  "kr": true,
+  "approx": true,
+  "note": "서울 한가운데를 흘러요."
+ }
+]
