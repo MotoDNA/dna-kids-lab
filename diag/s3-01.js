@@ -94,7 +94,7 @@
           setGrains(el, 'gb', 150, 22, e, 2800, 5100, fin(e));
           op(el, '.hA,.lA', e > 1200 ? 1 : 0); op(el, '.hB,.lB', e > 3700 ? 1 : 0);
           q('.wA').setAttribute('d', wave(30, 210, 272, 22, 36, dgP(e, 500, 1600)));
-          q('.wB').setAttribute('d', wave(270, 450, 272, 6, 36, dgP(e, 3000, 1600)));
+          q('.wB').setAttribute('d', wave(270, 450, 272, 9, 36, dgP(e, 3000, 1600)));
         });
       }
     },

@@ -6,8 +6,8 @@
     <ellipse cx="5" cy="-24" rx="8" ry="4" fill="${DG_C.r}"/><circle cx="-12" cy="14" r="13" fill="${RED}"/><circle cx="13" cy="18" r="13" fill="${RED}"/></g>`;
   const hand = (x, y) => `<g transform="translate(${x},${y})" fill="${DG_C.a}" stroke="${DG_C.c}" stroke-width="3" stroke-linejoin="round">
     ${[[-17, -34], [-6, -42], [5, -40], [16, -32]].map(([fx, fy]) => `<rect x="${fx - 5}" y="${fy}" width="10" height="${-fy + 4}" rx="5"/>`).join('')}
-    <rect x="-24" y="-10" width="46" height="44" rx="14"/>
-    <rect x="-44" y="-8" width="10" height="32" rx="5" transform="rotate(-38 -39 8)"/></g>`;
+    <rect x="-28" y="-14" width="11" height="40" rx="5.5" transform="rotate(-40 -22 22)"/>
+    <rect x="-24" y="-10" width="46" height="44" rx="14"/></g>`;
   const badge = (x, y, n, col, cls) => `<g class="${cls}"><circle cx="${x}" cy="${y}" r="18" fill="${col}"/>${T(x, y + 7, n, { s: 20, w: 800, f: '#fff' })}</g>`;
   const cup = (x, y) => `<path d="M${x - 36} ${y - 30} L${x + 36} ${y - 30} L${x + 26} ${y + 30} L${x - 26} ${y + 30} Z" fill="${DG_C.b}" fill-opacity=".6" stroke="${DG_C.d}" stroke-width="3.5" stroke-linejoin="round"/>`;
   const dots5 = (x, y) => [[-12, -12], [12, -12], [0, 0], [-12, 12], [12, 12]].map(([a, b]) => `<circle cx="${x + a}" cy="${y + b}" r="6" fill="${DG_C.d}"/>`).join('');

@@ -74,7 +74,7 @@
         <g class="b10"><rect x="-22" y="-24" width="44" height="30" rx="8" fill="#fff" stroke="#ff3b30" stroke-width="2.5"/>${T(0, 0, '10', { s: 22, w: 800, f: '#ff3b30' })}</g>
         <text class="r0" x="${OX}" y="${YA}" text-anchor="middle" font-size="44" font-weight="800" fill="${DG_C.d}">5</text>
         <text class="r1" x="${TX}" y="${YA}" text-anchor="middle" font-size="44" font-weight="800" fill="${DG_C.c}">2</text>
-        <g class="n0">${T(276, 82, '2 − 7 은 안 돼요', { a: 'start', s: 20, w: 800, f: '#ff3b30' })}</g>
+        <g class="n0">${T(276, 82, '2에서 7을 뺄 수 없어요', { a: 'start', s: 18, w: 800, f: '#ff3b30' })}</g>
         <g class="n1">${T(276, 126, '10 빌려 오기', { a: 'start', s: 20, w: 800, f: '#ff3b30' })}</g>
         <g class="n2">${T(276, 170, '12 − 7 = 5', { a: 'start', s: 22, w: 800, f: DG_C.d })}</g>
         <g class="n3">${T(276, 210, '4 − 2 = 2', { a: 'start', s: 22, w: 800, f: DG_C.c })}</g>

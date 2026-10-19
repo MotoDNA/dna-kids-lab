@@ -17,7 +17,7 @@
     'm3-02:0': {
       alt: '사과가 4개씩 담긴 접시 3줄을 4 + 4 + 4 = 4 × 3 = 12로 세고, 세로로 3개씩 4줄로 보면 3 × 4 = 12로 결과가 같은 것을 보여 주는 그림',
       svg: `<svg viewBox="0 0 480 270" class="dg-svg" role="img">
-        ${[0, 1, 2].map(r => `<g class="pl${r}"><rect x="24" y="${48 + r * 62}" width="232" height="50" rx="25" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="2.5"/>
+        ${[0, 1, 2].map(r => `<g class="pl${r}"><rect x="24" y="${48 + r * 62}" width="232" height="50" rx="25" fill="#f5f5f7" stroke="${DG_C.c}" stroke-width="3"/>
           ${[0, 1, 2, 3].map(c => apple(64 + c * 52, 75 + r * 62)).join('')}</g>`).join('')}
         ${[0, 1, 2, 3].map(c => `<rect class="col${c}" x="${64 + c * 52 - 22}" y="40" width="44" height="190" rx="22" fill="none" stroke="${DG_C.d}" stroke-width="3.5"/>`).join('')}
         <text class="e1" x="276" y="84" font-size="24" font-weight="800" fill="${DG_C.ink}">4 + 4 + 4 = 12</text>
@@ -101,7 +101,7 @@
     },
 
     'm3-02:3': {
-      alt: '30 × 40은 3 × 4 = 12를 구한 뒤 0 두 개를 붙여 1200이 되고, 198 × 3은 198을 약 200으로 어림해 200 × 3 = 600쯤이라고 생각하는 그림',
+      alt: '30 × 40은 3 × 4 = 12를 구한 뒤 0 두 개를 붙여 1200이 되고, 198 × 3은 198을 약 200으로 어림해 200 × 3 = 약 600이라고 생각하는 그림',
       svg: `<svg viewBox="0 0 480 290" class="dg-svg" role="img">
         <text x="130" y="76" text-anchor="middle" font-size="32" font-weight="800" fill="${DG_C.ink}">3<tspan fill="${DG_C.c}">0</tspan> × 4<tspan fill="${DG_C.c}">0</tspan></text>
         <g class="s1"><text x="130" y="140" text-anchor="middle" font-size="28" font-weight="800" fill="${DG_C.d}">3 × 4 = 12</text></g>
@@ -110,8 +110,8 @@
         <g class="s3">${T(130, 254, '0이 2개 → 1200', { s: 20, w: 800, f: DG_C.c })}</g>
         <line x1="262" y1="40" x2="262" y2="270" stroke="#e5e5ea" stroke-width="2"/>
         <g class="r0">${T(370, 82, '198 × 3', { s: 28, w: 800 })}</g>
-        <g class="r1">${T(370, 130, '≈ 200 × 3', { s: 24, w: 800, f: DG_C.r })}</g>
-        <g class="r2">${T(370, 174, '= 600쯤', { s: 24, w: 800, f: DG_C.r })}</g>
+        <g class="r1">${T(370, 130, '약 200 × 3', { s: 24, w: 800, f: DG_C.r })}</g>
+        <g class="r2">${T(370, 174, '→ 약 600', { s: 24, w: 800, f: DG_C.r })}</g>
         <line x1="296" y1="232" x2="452" y2="232" stroke="${DG_C.ink}" stroke-width="3"/>
         ${[190, 200, 210].map(v => `<line x1="${296 + (v - 190) * 7.8}" y1="224" x2="${296 + (v - 190) * 7.8}" y2="240" stroke="${DG_C.ink}" stroke-width="3"/>${T(296 + (v - 190) * 7.8, 266, v, { s: 18, f: v === 200 ? DG_C.r : DG_C.sub, w: 800 })}`).join('')}
         <circle class="dot" cx="${296 + 8 * 7.8}" cy="232" r="8" fill="${DG_C.c}"/>

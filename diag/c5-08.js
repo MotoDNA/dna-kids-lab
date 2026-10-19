@@ -131,7 +131,7 @@
 
     'c5-08:3': {
       alt: '장소 낱말 카드: 学校(xuéxiào) 학교, 图书馆(túshūguǎn) 도서관, 医院(yīyuàn) 병원, 超市(chāoshì) 마트, 家(jiā) 집',
-      svg: `<svg viewBox="0 0 480 362" class="dg-svg" role="img"><g transform="translate(0,38)">
+      svg: `<svg viewBox="0 0 480 376" class="dg-svg" role="img"><g transform="translate(0,38)">
         ${PL.map((p, i) => { const x = i < 3 ? 10 + i * 156 : 88 + (i - 3) * 156, y = i < 3 ? 0 : 166; return `<g class="cd${i}">
           <rect x="${x}" y="${y}" width="148" height="158" rx="16" fill="#f5f5f7"/>
           <g transform="translate(${x + 74},${y + 46})">${ICON[p.k]}</g>

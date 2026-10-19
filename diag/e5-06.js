@@ -24,7 +24,7 @@
         ${A0.map(([w, k], i) => item('a' + i, 40, 134 + i * 48, 'a', w, k, false)).join('')}
         ${N0.map(([w, k], i) => item('n' + i, 272, 134 + i * 48, 'an', w, k, true)).join('')}
         <g class="vw"><text x="356" y="258" text-anchor="middle" fill="${C.ink}" font-size="18" font-weight="800">모음 소리로 시작</text>
-          <text x="356" y="290" text-anchor="middle" fill="${C.c}" font-size="22" font-weight="800">a e i o u</text></g>
+          <text x="356" y="288" text-anchor="middle" fill="${C.c}" font-size="18" font-weight="800">(아·에·이·오·어 소리)</text></g>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

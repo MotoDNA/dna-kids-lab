@@ -106,17 +106,18 @@
     },
 
     'k1-18:3': {
-      alt: '어른께는 밥 대신 진지, 집 대신 댁이라는 높이는 낱말을 쓰고, 말끝에 -요를 붙여 할머니, 진지 드세요라고 말하는 그림',
+      alt: '어른께는 밥 대신 진지, 집 대신 댁이라는 높이는 낱말을 쓰고, 먹다 대신 드시다처럼 높이는 말과 말끝 -요를 붙여 할머니, 진지 드세요라고 말하는 그림',
       svg: SV(308, `<g transform="translate(0,18)">
         ${[['밥', '진지'], ['집', '댁']].map(([a, b], i) => { const x = 120 + i * 240; return `
           ${g(200 + i * 1300, card(x - 60, 70, a, { fs: 26, w: 72, h: 56, f: BG }))}
           ${g(700 + i * 1300, arrow(x - 18, 70, x + 14, 70, C.sub, 3.5))}
           ${g(900 + i * 1300, card(x + 60, 70, b, { fs: 26, w: 84, h: 56, f: C.b, s: C.d, c: C.d }), { dx: -24 })}`; }).join('')}
-        ${g(400, tx(120, 132, '보통 말 → 높임 말', { fs: 18, c: C.sub }))}
+        ${g(400, tx(120, 132, '보통 말 → 높임말', { fs: 18, c: C.sub }))}
         <line x1="20" y1="158" x2="460" y2="158" stroke="${LG}" stroke-width="2"/>
-        ${g(3000, `<text x="240" y="214" text-anchor="middle" font-size="30" font-weight="800" fill="${C.ink}">할머니, <tspan fill="${C.d}">진지</tspan> 드세<tspan fill="${C.c}">요</tspan>.</text>`, { dy: 10 })}
-        ${g(3800, `${tx(205, 260, '높이는 낱말', { fs: 18, c: C.d, w: 800 })}${tx(345, 260, '말끝 -요', { fs: 18, c: C.c, w: 800 })}
-          <path d="M205 236 V226 M332 236 V226" stroke="${C.sub}" stroke-width="2.5" stroke-linecap="round"/>`)}
+        ${g(3000, `<text x="240" y="214" text-anchor="middle" font-size="30" font-weight="800" fill="${C.ink}">할머니, <tspan fill="${C.d}">진지</tspan> <tspan fill="${C.d}">드세</tspan><tspan fill="${C.c}">요</tspan>.</text>`, { dy: 10 })}
+        ${g(3800, `${tx(266, 262, '높이는 말', { fs: 18, c: C.d, w: 800 })}${tx(372, 262, '말끝 -요', { fs: 18, c: C.c, w: 800 })}
+          <path d="M228 226 V234 H304 V226 M266 234 V240" fill="none" stroke="${C.d}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M336 226 V240" stroke="${C.c}" stroke-width="2.5" stroke-linecap="round"/>`)}
       </g>`),
       play: play(4600),
     },

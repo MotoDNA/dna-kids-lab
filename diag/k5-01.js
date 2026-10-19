@@ -84,7 +84,7 @@
         ${G({ t: 900, d: 500, dy: 12 }, `<ellipse cx="370" cy="104" rx="78" ry="38" fill="${C.b}" stroke="${C.d}" stroke-width="4"/>
           <path d="M326 100 q11 -8 22 0 t22 0 M362 116 q11 -8 22 0 t22 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
           ${T(370, 172, '호수', { s: 22, w: 800, f: C.c })}`)}
-        ${G({ t: 1700, d: 500 }, `${T(240, 120, '=', { s: 56, w: 800 })}${T(240, 70, '처럼 없이', { s: 18, f: C.sub })}`)}
+        ${G({ t: 1700, d: 500 }, `${T(240, 120, '=', { s: 56, w: 800 })}${T(240, 70, '‘~처럼’, ‘~같이’ 없이', { s: 18, f: C.sub })}`)}
         ${G({ t: 2400, d: 600, dy: 12 }, `${B(70, 192, 340, 48, { f: SOFT, rx: 24 })}<text x="240" y="225" text-anchor="middle" font-size="24" font-weight="800" fill="${C.ink}">내 <tspan fill="${C.d}">마음</tspan>은 <tspan fill="${C.c}">호수</tspan>예요</text>`)}
         ${G({ t: 3500, d: 600, dy: 10 }, `${T(240, 280, '닮은 점은? → 넓고 고요해요', { s: 21, w: 800, f: '#1e7a3a' })}`)}
       `),

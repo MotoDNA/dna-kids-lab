@@ -69,7 +69,7 @@
 
     'e5-02:1': {
       alt: '해가 뜬 아침부터 달이 뜬 밤까지 get up, eat breakfast, go to school, do my homework, go to bed 순서로 하루 일과가 이어지는 그림',
-      svg: `<svg viewBox="0 0 480 340" class="dg-svg" role="img">
+      svg: `<svg viewBox="0 0 480 354" class="dg-svg" role="img">
         <line x1="44" y1="${ry(0)}" x2="44" y2="${ry(4)}" stroke="#e5e5ea" stroke-width="5" stroke-linecap="round"/>
         <line class="trk" x1="44" y1="${ry(0)}" x2="44" y2="${ry(4)}" stroke="${C.c}" stroke-width="5" stroke-linecap="round"/>
         ${R1.map((r, i) => `<g class="it${i}">
@@ -99,10 +99,10 @@
     },
 
     'e5-02:2': {
-      alt: 'What time do you go to bed? 질문에 10시 시계 옆 I go to bed at 10., 7시 시계 옆 I get up at 7. 문장이 있고, 시각 앞에 붙는 at은 ~시에라는 뜻임을 보여 주는 그림',
+      alt: 'What time do you ~? 질문에 10시 시계 옆 I go to bed at 10., 7시 시계 옆 I get up at 7. 문장이 있고, 시각 앞에 붙는 at은 ~시에라는 뜻임을 보여 주는 그림',
       svg: `<svg viewBox="0 0 480 310" class="dg-svg" role="img">
         <g class="qq"><rect x="16" y="50" width="396" height="48" rx="24" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="2.5"/>
-          <text x="214" y="82" text-anchor="middle" fill="${C.ink}" font-size="22" font-weight="700">What time do you go to bed?</text></g>
+          <text x="214" y="82" text-anchor="middle" fill="${C.ink}" font-size="22" font-weight="700">What time do you ~?</text></g>
         ${S2.map((s, i) => { const x0 = 120, wp = tw(s.pre, 22); return `<g class="row${i}">
           ${clock(56, s.y, 38, 'c' + i, s.h, 0, false)}
           <text x="${x0}" y="${s.y + 8}" fill="${C.ink}" font-size="22" font-weight="800">${s.pre}</text>

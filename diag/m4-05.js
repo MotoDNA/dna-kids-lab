@@ -70,7 +70,7 @@
       alt: '막대그래프 그리는 순서: 가로(과일)와 세로(학생 수)를 정하고, 한 칸을 1명으로 하여 10칸 눈금을 그리고, 사과 8칸·귤 5칸·포도 7칸·딸기 10칸 막대를 같은 폭으로 그린 뒤 제목을 붙이는 그림',
       svg: `<svg viewBox="0 0 480 330" class="dg-svg" role="img">
         <g class="ttl">${T(200, 30, '좋아하는 과일별 학생 수', { s: 20, f: C.ink })}</g>
-        <g class="ax"><path d="M${OX} ${by(10) - 16} V${OY} H${OX + 346}" fill="none" stroke="${C.ink}" stroke-width="3"/>${names()}</g>
+        <g class="ax"><path d="M${OX} ${by(10) - 16} V${OY} H${OX + 346}" fill="none" stroke="${C.ink}" stroke-width="3"/>${T(OX - 10, by(10) - 24, '(명)', { s: 18, f: C.sub, w: 700, a: 'start' })}${names()}</g>
         <g class="tk">${Array.from({ length: 10 }, (_, k) => `<line x1="${OX}" y1="${by(k + 1)}" x2="${OX + 340}" y2="${by(k + 1)}" stroke="#e5e5ea" stroke-width="1.5"/>`).join('')}
           ${[0, 2, 4, 6, 8, 10].map(v => T(OX - 12, by(v) + 6, v, { s: 18, f: C.sub, w: 700, a: 'end' })).join('')}</g>
         ${bars('d', C.a, C.c)}

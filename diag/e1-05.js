@@ -28,11 +28,11 @@
   const LIP = '#ff3b30';
   const lipsB = cx => `<path d="M${cx - 50} 104 Q${cx - 25} 82 ${cx} 90 Q${cx + 25} 82 ${cx + 50} 104 Q${cx + 25} 106 ${cx} 104 Q${cx - 25} 106 ${cx - 50} 104Z" fill="${LIP}" fill-opacity=".3" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>
     <path d="M${cx - 50} 104 Q${cx - 25} 102 ${cx} 104 Q${cx + 25} 102 ${cx + 50} 104 Q${cx + 25} 130 ${cx} 130 Q${cx - 25} 130 ${cx - 50} 104Z" fill="${LIP}" fill-opacity=".3" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>`;
-  const lipsV = cx => `<path d="M${cx - 48} 102 Q${cx} 84 ${cx + 48} 102 Q${cx} 116 ${cx - 48} 102Z" fill="${DG_C.ink}"/>
-    <path d="M${cx - 50} 98 Q${cx - 25} 72 ${cx} 80 Q${cx + 25} 72 ${cx + 50} 98 Q${cx + 25} 90 ${cx} 92 Q${cx - 25} 90 ${cx - 50} 98Z" fill="${LIP}" fill-opacity=".3" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M${cx - 50} 104 Q${cx - 25} 106 ${cx} 106 Q${cx + 25} 106 ${cx + 50} 104 Q${cx + 25} 132 ${cx} 132 Q${cx - 25} 132 ${cx - 50} 104Z" fill="${LIP}" fill-opacity=".3" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>
-    <path class="teeth" d="M${cx - 26} 91 h52 v18 q0 3 -3 3 h-46 q-3 0 -3 -3Z" fill="#fff" stroke="${DG_C.sub}" stroke-width="2"/>
-    <path class="teeth" d="M${cx - 9} 91 v20 M${cx + 9} 91 v20" stroke="${DG_C.sub}" stroke-width="1.5"/>`;
+  const lipsV = cx => `<path d="M${cx - 46} 90 Q${cx} 78 ${cx + 46} 90 Q${cx} 108 ${cx - 46} 90Z" fill="${DG_C.ink}"/>
+    <path d="M${cx - 50} 106 Q${cx - 25} 104 ${cx} 104 Q${cx + 25} 104 ${cx + 50} 106 Q${cx + 25} 134 ${cx} 134 Q${cx - 25} 134 ${cx - 50} 106Z" fill="${LIP}" fill-opacity=".3" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>
+    <path class="teeth" d="M${cx - 26} 78 h52 v31 q0 3 -3 3 h-46 q-3 0 -3 -3Z" fill="#fff" stroke="${DG_C.sub}" stroke-width="2"/>
+    <path class="teeth" d="M${cx - 9} 80 v31 M${cx + 9} 80 v31" stroke="${DG_C.sub}" stroke-width="1.5"/>
+    <path d="M${cx - 50} 84 Q${cx - 25} 58 ${cx} 66 Q${cx + 25} 58 ${cx + 50} 84 Q${cx + 25} 78 ${cx} 82 Q${cx - 25} 78 ${cx - 50} 84Z" fill="#ffc4c1" stroke="${LIP}" stroke-width="3" stroke-linejoin="round"/>`;
   let wave = 'M40 236', zig = 'M270 236';
   for (let i = 1; i <= 40; i++) wave += ` L${40 + i * 4.5} ${(236 - 9 * Math.sin(i * Math.PI / 10)).toFixed(1)}`;
   for (let i = 1; i <= 18; i++) zig += ` L${270 + i * 10} ${i % 2 ? 222 : 250}`;

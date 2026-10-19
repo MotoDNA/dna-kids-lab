@@ -13,7 +13,7 @@
   const SW = ['I', 'you', 'the', 'a'];
 
   /* 3: I see ___. */
-  const END = [['a cat.', '고양이'], ['the sun.', '해'], ['you.', '너']];
+  const END = [['a cat.', '고양이 한 마리'], ['the sun.', '해'], ['you.', '너']];
 
   Object.assign(DIAG, {
     'e1-07:0': {
@@ -102,7 +102,7 @@
           <text x="105" y="${y + 9}" text-anchor="middle" fill="${DG_C.ink}" font-size="28" font-weight="800">I see</text>
           <g class="en${k}"><rect x="188" y="${y - 28}" width="150" height="54" rx="16" fill="${DG_C.a}" stroke="${DG_C.c}" stroke-width="2.5"/>
             <text x="263" y="${y + 9}" text-anchor="middle" fill="${DG_C.ink}" font-size="28" font-weight="800">${w}</text>
-            <text x="356" y="${y + 8}" fill="${DG_C.sub}" font-size="20" font-weight="700">${m}</text></g>`; }).join('')}
+            <text x="350" y="${y + 8}" fill="${DG_C.sub}" font-size="18" font-weight="700">${m}</text></g>`; }).join('')}
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

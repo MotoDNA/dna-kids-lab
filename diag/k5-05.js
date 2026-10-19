@@ -74,7 +74,7 @@
         ${Array.from({ length: 30 }, (_, i) => { const x = 105 + (i % 10) * 30, y = 64 + Math.floor(i / 10) * 40;
           return `<g class="pp" data-i="${i}"><circle cx="${x}" cy="${y - 7}" r="7"/><path d="M${x - 10} ${y + 16} a10 10 0 0 1 20 0 Z"/></g>`; }).join('')}
         <text class="cnt" x="240" y="214" text-anchor="middle" font-size="26" font-weight="800" fill="${C.c}">25명 / 30명</text>
-        ${T(240, 246, '"여름엔 미끄럼틀이 뜨거워요"', { s: 20, w: 700 })}
+        ${T(240, 246, '"여름에는 미끄럼틀이 뜨거워 탈 수 없어요"', { s: 20, w: 700 })}
         ${T(240, 282, '조사 결과 = 믿을 만한 근거', { s: 18, f: C.sub, w: 700, t: 3600, d: 400 })}
       `),
       play: seq(4200, (el, e) => {

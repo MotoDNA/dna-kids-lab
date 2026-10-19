@@ -41,7 +41,7 @@
           <text class="me${i}" x="${SX[i] + BW / 2}" y="${Y1 + 2}" text-anchor="middle" fill="${C.ink}" font-size="24" font-weight="800">${r.e}</text>
           <text x="${SX[i] + BW / 2}" y="${Y1 + 24}" text-anchor="middle" fill="${r.s}" font-size="18" font-weight="800">${r.r}</text></g>`).join('')}
         <g class="pl" fill="${C.sub}" font-size="22" font-weight="800" text-anchor="middle"><text x="${SX[1] - 12}" y="${Y1 + 8}">+</text><text x="${SX[2] - 12}" y="${Y1 + 8}">+</text></g>
-        <text class="note" x="240" y="${Y1 + 76}" text-anchor="middle" fill="${C.c}" font-size="20" font-weight="800">영어는 '한다'가 먼저!</text>
+        <text class="note" x="240" y="${Y1 + 76}" text-anchor="middle" fill="${C.c}" font-size="20" font-weight="800">영어는 '한다'가 '무엇을'보다 먼저!</text>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

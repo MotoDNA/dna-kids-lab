@@ -1,4 +1,4 @@
-/* 1학년 수학 · 시계 바늘이 알려 주는 시각은? (m1-07) */
+/* 1학년 수학 · 시곗바늘이 알려 주는 시각은? (m1-07) */
 (() => {
   const T = (x, y, s, o = {}) => `<text ${o.c ? `class="${o.c}"` : ''} x="${x}" y="${y}" text-anchor="${o.a || 'middle'}" fill="${o.f || DG_C.ink}" font-size="${o.s || 20}" font-weight="${o.w || 700}">${s}</text>`;
   const R = Math.PI / 180;

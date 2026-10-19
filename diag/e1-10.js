@@ -72,12 +72,12 @@
       alt: 'How are you?(잘 지내?)라고 물으면 I\'m fine, thank you. 또는 기분이 좋을 때 I\'m good!이라고 대답하는 그림',
       svg: `<svg viewBox="0 0 480 310" class="dg-svg" role="img">
         ${face(56, 84, DG_C.a, DG_C.c, 38)}
-        ${face(424, 176, DG_C.b, DG_C.d, 32)}
+        ${face(424, 200, DG_C.b, DG_C.d, 32)}
         <g class="q">${bubble(114, 58, 196, 'How are you?', GRY, GST, 'L')}
           <text x="212" y="134" text-anchor="middle" fill="${DG_C.sub}" font-size="18" font-weight="700">잘 지내?</text></g>
-        <g class="a1">${bubble(110, 152, 260, 'I\'m fine, thank you.', DG_C.b, DG_C.d, 'R')}</g>
-        <g class="a2"><text x="198" y="262" text-anchor="end" fill="${DG_C.sub}" font-size="18" font-weight="700">기분 좋으면</text>
-          ${bubble(210, 228, 140, 'I\'m good!', DG_C.a, DG_C.c, '')}</g>
+        <g class="a1">${bubble(110, 150, 260, 'I\'m fine, thank you.', DG_C.b, DG_C.d, 'R')}</g>
+        <g class="a2"><text x="218" y="256" text-anchor="end" fill="${DG_C.sub}" font-size="18" font-weight="700">또는 기분 좋으면</text>
+          ${bubble(230, 224, 140, 'I\'m good!', DG_C.b, DG_C.d, 'R')}</g>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

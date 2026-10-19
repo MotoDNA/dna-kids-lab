@@ -39,7 +39,7 @@
   const FX = [-19, -6, 7, 20]; // 검지 중지 약지 새끼
   const H3 = [
     { h: '六', py: 'liù', n: 6, g: knuck([FX[0], FX[1], FX[2]]) + fing(FX[3], -2, FX[3] + 4, -38) + palm + fing(-20, 22, -46, -2) },
-    { h: '七', py: 'qī', n: 7, g: knuck([FX[2], FX[3]]) + fing(-19, -2, -9, -42) + fing(-4, -2, -6, -44) + palm + fing(-22, 22, -11, -38) },
+    { h: '七', py: 'qī', n: 7, g: knuck([FX[2], FX[3]]) + fpath('M-20 -2 Q-22 -30 -9 -46') + fpath('M-5 -2 Q2 -30 -7 -46') + palm + fpath('M-24 20 Q-48 -14 -10 -45') + `<circle cx="-8" cy="-46" r="4" fill="${C.c}"/>` },
     { h: '八', py: 'bā', n: 8, g: knuck([FX[1], FX[2], FX[3]]) + fing(FX[0], -2, FX[0], -48) + palm + fing(-20, 22, -52, 12) },
     { h: '九', py: 'jiǔ', n: 9, g: knuck([FX[1], FX[2], FX[3]]) + fpath(`M${FX[0]} -2 L${FX[0]} -34 Q${FX[0]} -48 -6 -46 L-4 -36`) + palm + fing(-20, 22, -6, 18) },
     { h: '十', py: 'shí', n: 10, g: fing(0, 30, 0, -46) + fing(-34, -10, 34, -10) },

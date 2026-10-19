@@ -70,7 +70,7 @@
           <path d="M329 140 L338 270 H446 L455 140 Z" fill="${DG_C.b}" fill-opacity=".7"/>
           <line x1="329" y1="140" x2="455" y2="140" stroke="${DG_C.d}" stroke-width="2.5"/>
           <line x1="352" y1="40" x2="398" y2="140" stroke="#a2845e" stroke-width="8" stroke-linecap="round"/>
-          <line x1="398" y1="140" x2="440" y2="210" stroke="#a2845e" stroke-width="8" stroke-linecap="round"/>
+          <line x1="398" y1="140" x2="442" y2="174" stroke="#a2845e" stroke-width="8" stroke-linecap="round"/>
           <text x="392" y="296" text-anchor="middle" fill="${DG_C.ink}" font-size="18" font-weight="700">꺾여 보여요</text>
         </g>
       </svg>`,

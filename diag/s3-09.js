@@ -36,7 +36,7 @@
 
   Object.assign(DIAG, {
     's3-09:0': {
-      alt: '지구가 둥글기 때문에 멀리서 다가오는 배는 둥근 바다면에 가려 돛 꼭대기부터 보이기 시작하는 모습과, 지구 표면의 약 70%가 바다인 것을 나타낸 그림',
+      alt: '지구가 둥글기 때문에 멀리서 다가오는 배는 둥근 바다면에 가려 돛 꼭대기부터 보이기 시작하는 모습과, 지구 표면을 10칸으로 나누면 바다가 약 7칸, 육지가 약 3칸인 것을 나타낸 그림',
       svg: `<svg viewBox="0 0 480 330" class="dg-svg" role="img">
         <defs><clipPath id="s309sea"><rect x="0" y="0" width="480" height="236"/></clipPath><clipPath id="s309vis"><path d="M${EYE.x} ${EYE.y} L${f2(lx)} ${f2(ly)} L480 -40 L0 -40 L0 ${EYE.y} Z"/></clipPath></defs>
         <circle cx="${C.x}" cy="${C.y}" r="${RR}" fill="${SEA}" stroke="${DG_C.d}" stroke-width="3" clip-path="url(#s309sea)"/>
@@ -47,8 +47,8 @@
         <text class="msg" x="250" y="56" text-anchor="middle" fill="${DG_C.c}" font-size="22" font-weight="800">돛부터 보여요</text>
         <g class="bar">
           ${Array.from({ length: 10 }, (_, i) => `<rect class="cell" x="${40 + i * 40}" y="250" width="38" height="30" rx="6" fill="${i < 7 ? DG_C.d : DG_C.r}"/>`).join('')}
-          <text x="${40 + 140}" y="312" text-anchor="middle" fill="${DG_C.d}" font-size="20" font-weight="800">바다 약 70%</text>
-          <text x="${40 + 340}" y="312" text-anchor="middle" fill="${DG_C.r}" font-size="20" font-weight="800">육지 약 30%</text>
+          <text x="${40 + 140}" y="312" text-anchor="middle" fill="${DG_C.d}" font-size="20" font-weight="800">바다 약 7칸</text>
+          <text x="${40 + 340}" y="312" text-anchor="middle" fill="${DG_C.r}" font-size="20" font-weight="800">육지 약 3칸</text>
         </g>
       </svg>`,
       play(el) {
@@ -91,7 +91,7 @@
     },
 
     's3-09:2': {
-      alt: '달의 지름은 지구의 약 4분의 1이어서 달 네 개를 늘어놓으면 지구 지름과 비슷하고, 달 표면에는 어둡게 보이는 달의 바다와 둥근 충돌 구덩이가 있는 그림',
+      alt: '달의 지름은 지구의 약 4분의 1이어서 달 네 개를 늘어놓으면 지구 지름과 비슷하고, 달 표면(확대한 모습)에는 어둡게 보이는 달의 바다와 둥근 충돌 구덩이가 있는 그림',
       svg: `<svg viewBox="0 0 480 330" class="dg-svg" role="img">
         <g transform="translate(90,124)">${earth(64, 's309e2')}</g>
         <text x="90" y="42" text-anchor="middle" fill="${DG_C.d}" font-size="20" font-weight="800">지구</text>
@@ -101,6 +101,7 @@
         <text class="qt" x="90" y="304" text-anchor="middle" fill="${DG_C.sub}" font-size="18" font-weight="700">지름 약 1/4</text>
         <line x1="190" y1="40" x2="190" y2="300" stroke="#e5e5ea" stroke-width="2"/>
         <g class="big" transform="translate(345,165)">${moon(88, true)}</g>
+        <text class="zm" x="470" y="50" text-anchor="end" fill="${DG_C.sub}" font-size="18" font-weight="700">확대한 모습</text>
         <g class="lb1"><path d="M310 140 L262 88" stroke="${DG_C.ink}" stroke-width="2.5"/><circle cx="310" cy="140" r="4" fill="${DG_C.ink}"/>
           <text x="206" y="50" fill="${DG_C.ink}" font-size="20" font-weight="800">달의 바다</text>
           <text x="206" y="76" fill="${DG_C.sub}" font-size="18" font-weight="700">(물 없음)</text></g>
@@ -119,6 +120,7 @@
           }
           qa('.qt').forEach(t => t.setAttribute('opacity', e > 2500 ? 1 : 0));
           q('.big').setAttribute('opacity', dgP(e, 2900, 600));
+          q('.zm').setAttribute('opacity', dgP(e, 2900, 600));
           q('.lb1').setAttribute('opacity', e > 3800 ? 1 : 0);
           q('.lb2').setAttribute('opacity', e > 4700 ? 1 : 0);
         });

@@ -50,10 +50,10 @@
   /* 1: 문장마다 바뀌는 고양이 */
   const P1 = [
     { en: 'a cat', ko: '고양이', g: () => `<g transform="translate(0,6) scale(.8)">${CAT(false)}</g>` },
-    { en: 'big', ko: '커요', g: () => `<g transform="scale(1.25)">${CAT(false)}</g>` },
+    { en: 'big', ko: '커요', g: () => `<g transform="scale(1.25)">${CAT(true)}</g>` },
     { en: 'black', ko: '까매요', g: () => `<g transform="scale(1.25)">${CAT(true)}</g>` },
-    { en: 'can run', ko: '달릴 수 있어', g: () => `<g transform="translate(6,14) scale(.92)">${RUN()}</g>` },
-    { en: 'like', ko: '좋아요', g: () => `<g transform="translate(-4,4) scale(1.1)">${CAT(true)}</g>${HEART(26, -44, 1.3)}` },
+    { en: 'can run', ko: '달릴 수 있어', g: () => `<g transform="translate(10,8)">${RUN()}</g>` },
+    { en: 'like', ko: '좋아요', g: () => `<g transform="translate(-4,0) scale(1.25)">${CAT(true)}</g>${HEART(28, -50, 1.3)}` },
   ];
 
   /* 2: It = my cat */

@@ -81,8 +81,8 @@
     'm1-05:1': {
       alt: '10부터 100까지 몇십의 두 가지 읽는 법: 10 십·열, 20 이십·스물, 30 삼십·서른, 40 사십·마흔, 50 오십·쉰, 60 육십·예순, 70 칠십·일흔, 80 팔십·여든, 90 구십·아흔, 100 백',
       svg: `<svg viewBox="0 0 480 334" class="dg-svg" role="img">${RD.map((_, k) => card(k)).join('')}
-        <g class="lg"><circle cx="70" cy="320" r="7" fill="${DG_C.d}"/>${T(84, 326, '이십', { a: 'start', s: 18, f: DG_C.d })}
-          <circle cx="170" cy="320" r="7" fill="${DG_C.c}"/>${T(184, 326, '스물 (개수를 셀 때)', { a: 'start', s: 18, f: DG_C.c })}</g>
+        <g class="lg"><circle cx="22" cy="320" r="7" fill="${DG_C.d}"/>${T(34, 326, '이십, 삼십… (수를 읽을 때)', { a: 'start', s: 17, f: DG_C.d })}
+          <circle cx="252" cy="320" r="7" fill="${DG_C.c}"/>${T(264, 326, '스물, 서른… (개수를 셀 때)', { a: 'start', s: 17, f: DG_C.c })}</g>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

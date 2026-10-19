@@ -7,6 +7,8 @@
   };
   const rnd = s => { const x = Math.sin(s * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
   const ICE = '#e3f1ff', WATER = DG_C.b, RED = '#ff3b30';
+  // 시험관 안쪽(둥근 바닥) 모양에 맞춘 물·얼음 모양
+  const liqD = (x, top) => `M${x - 22} ${f2(top)} V214 A22 22 0 0 0 ${x + 22} 214 V${f2(top)} Z`;
 
   /* 0: 세 가지 상태 (알갱이 배열) */
   const NX = [64, 240, 416], NY = 150;
@@ -66,7 +68,7 @@
       svg: `<svg viewBox="0 0 480 320" class="dg-svg" role="img">
         ${[0, 1].map(k => { const x = k ? 290 : 120; return `<g>
           <text x="${x}" y="40" text-anchor="middle" fill="${k ? DG_C.d : DG_C.ink}" font-size="22" font-weight="800">${k ? '얼린 뒤' : '처음'}</text>
-          <rect class="liq${k}" x="${x - 22}" y="140" width="44" height="90" fill="${WATER}"/>
+          <path class="liq${k}" d="${liqD(x, 140)}" fill="${WATER}"/>
           <path d="M${x - 24} 56 V214 A24 24 0 0 0 ${x + 24} 214 V56" fill="none" stroke="${DG_C.sub}" stroke-width="3.5"/>
           <path d="M${x - 40} 140 H${x + 40}" stroke="${DG_C.c}" stroke-width="3" stroke-dasharray="6 5"/>
           <rect x="${x - 60}" y="252" width="120" height="22" rx="6" fill="#f5f5f7" stroke="${DG_C.sub}" stroke-width="2.5"/>
@@ -85,7 +87,7 @@
           const f = dgEase(dgP(e, 800, 1800));
           const top = 140 - 22 * f;
           const l = q('.liq1');
-          l.setAttribute('y', f2(top)); l.setAttribute('height', f2(230 - top));
+          l.setAttribute('d', liqD(290, top));
           l.setAttribute('fill', f > 0.5 ? ICE : WATER);
           l.setAttribute('stroke', f > 0.5 ? DG_C.d : 'none'); l.setAttribute('stroke-width', 2);
           q('.up').setAttribute('opacity', e > 2700 ? 1 : 0);

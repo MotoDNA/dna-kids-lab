@@ -119,13 +119,13 @@
     },
 
     's3-02:2': {
-      alt: 'N극과 S극처럼 다른 극끼리 마주 보면 두 자석이 서로 끌어당기고, N극과 N극처럼 같은 극끼리 마주 보면 서로 밀어 내는 그림',
+      alt: 'N극과 S극처럼 다른 극끼리 마주 보면 두 자석이 서로 끌어당기고, N극과 N극처럼 같은 극끼리 마주 보면 서로 밀어내는 그림',
       svg: `<svg viewBox="0 0 480 300" class="dg-svg" role="img">
         <text x="240" y="40" text-anchor="middle" fill="${DG_C.r}" font-size="22" font-weight="800">다른 극: 끌어당겨요</text>
         <g class="a1">${bar(140, 40, 'S')}</g><g class="a2">${bar(140, 40, 'S')}</g>
         <path class="aa" d="" fill="none" stroke="${DG_C.r}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="20" y1="150" x2="460" y2="150" stroke="#e5e5ea" stroke-width="2"/>
-        <text x="240" y="192" text-anchor="middle" fill="${DG_C.c}" font-size="22" font-weight="800">같은 극: 밀어 내요</text>
+        <text x="240" y="192" text-anchor="middle" fill="${DG_C.c}" font-size="22" font-weight="800">같은 극: 밀어내요</text>
         <g class="b1">${bar(140, 40, 'S')}</g><g class="b2">${bar(140, 40, 'N')}</g>
         <path class="bb" d="" fill="none" stroke="${DG_C.c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>`,

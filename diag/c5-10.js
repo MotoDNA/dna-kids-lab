@@ -70,7 +70,7 @@
     },
 
     'c5-10:1': {
-      alt: '덥다 앞에는 是를 쓰지 않고 很을 써서 今天很热。라고 하는 그림과, 冷(춥다) 凉快(시원하다) 暖和(따뜻하다) 热(덥다)를 차가운 쪽부터 더운 쪽까지 줄 세운 온도 눈금',
+      alt: '덥다 앞에는 是를 쓰지 않고 很을 써서 今天很热。라고 하는 그림과, 冷(춥다) 凉快(시원하다) 暖和(따뜻하다) 热(덥다)를 추운 쪽부터 더운 쪽까지 줄 세운 온도 눈금',
       svg: `<svg viewBox="0 0 480 330" class="dg-svg" role="img"><g transform="translate(0,40)">
         <g class="wr">${['今', '天', '是', '热', '。'].map((c, i) => `<text ${ZH} x="${45 + i * 30}" y="34" text-anchor="middle" fill="${i === 2 ? RED : DG_C.sub}" font-size="30" font-weight="700">${c}</text>`).join('')}
           <line class="x1" x1="90" y1="8" x2="120" y2="40" stroke="${RED}" stroke-width="4" stroke-linecap="round"/>
@@ -87,8 +87,8 @@
           <text ${ZH} x="${x}" y="176" text-anchor="middle" fill="${DG_C.ink}" font-size="32" font-weight="700">${t.h}</text>
           <text x="${x}" y="206" text-anchor="middle" fill="${t.tc || t.col}" font-size="20" font-weight="700">${t.py}</text>
           <text x="${x}" y="232" text-anchor="middle" fill="${DG_C.sub}" font-size="18" font-weight="700">${t.m}</text></g>`; }).join('')}
-        <text x="40" y="270" fill="${DG_C.d}" font-size="18" font-weight="700">차가워요</text>
-        <text x="440" y="270" text-anchor="end" fill="${RED}" font-size="18" font-weight="700">뜨거워요</text>
+        <text x="40" y="270" fill="${DG_C.d}" font-size="18" font-weight="700">추워요</text>
+        <text x="440" y="270" text-anchor="end" fill="${RED}" font-size="18" font-weight="700">더워요</text>
       </g></svg>`,
       play(el) {
         const q = s => el.querySelector(s);

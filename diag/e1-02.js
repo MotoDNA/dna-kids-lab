@@ -95,14 +95,14 @@
     },
 
     'e1-02:3': {
-      alt: '알파벳 노래처럼 A부터 G, H I J K, 빨리 지나가는 L M N O P, Q R S, T U V, W X, Y and Z로 묶어 차례로 짚는 그림',
+      alt: '알파벳 노래처럼 A부터 G, H I J K, 빨리 지나가니 천천히 짚는 L M N O P, Q R S, T U V, W X, Y and Z로 묶어 차례로 짚는 그림',
       svg: `<svg viewBox="0 0 480 300" class="dg-svg" role="img">
         ${SG.map((g, k) => `<g class="g${k}">
           <rect class="bx${k}" x="${g.x0 - 20}" y="${g.y - 34}" width="${grpW(g)}" height="46" rx="14" fill="#f5f5f7"/>
           ${g.sp ? g.s.split('').map((c, i) => `<text x="${g.x0 + i * g.sp}" y="${g.y}" text-anchor="middle" fill="${DG_C.ink}" font-size="26" font-weight="800">${c}</text>`).join('')
           : `<text x="${g.x0 - 20 + g.w / 2}" y="${g.y}" text-anchor="middle" fill="${DG_C.ink}" font-size="26" font-weight="800">Y <tspan fill="${DG_C.sub}" font-size="22" font-weight="700">and</tspan> Z</text>`}
         </g>`).join('')}
-        <text class="fast" x="${SG[2].x0 + 4 * SG[2].sp + 26}" y="${SG[2].y - 4}" text-anchor="start" fill="${DG_C.c}" font-size="18" font-weight="800" opacity="0">빨리!</text>
+        <text class="fast" x="${SG[2].x0 + 4 * SG[2].sp + 26}" y="${SG[2].y - 4}" text-anchor="start" fill="${DG_C.c}" font-size="18" font-weight="800" opacity="0">천천히!</text>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s);

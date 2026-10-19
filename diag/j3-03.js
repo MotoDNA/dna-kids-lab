@@ -57,7 +57,7 @@
 
     'j3-03:2': {
       alt: 'な행 な(na 나) に(ni 니) ぬ(nu 누) ね(ne 네) の(no 노). ぬ와 ね는 둘 다 끝에 작은 고리가 있지만 ね는 왼쪽에 세로 막대가 있다는 것을 표시한 그림',
-      svg: `<svg viewBox="0 0 480 340" class="dg-svg" role="img"><g transform="translate(0,44)">
+      svg: `<svg viewBox="0 0 480 360" class="dg-svg" role="img"><g transform="translate(0,44)">
         ${row(NA, [2, 3])}
         <g class="cmp"><line x1="20" y1="152" x2="460" y2="152" stroke="#e5e5ea" stroke-width="2"/>
           ${card(130, 168, 100, 'ぬ', '#f5f5f7', '#d2d2d7')}${card(300, 168, 100, 'ね', '#f5f5f7', '#d2d2d7')}

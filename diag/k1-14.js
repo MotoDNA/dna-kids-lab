@@ -40,7 +40,7 @@
   const R3 = [
     { p: '.', col: DG_C.d, d: 'M0 0 H34 Q52 0 64 20', t: '알려 주는 말' },
     { p: '?', col: DG_C.r, d: 'M0 14 H34 Q52 14 64 -8', t: '묻는 말' },
-    { p: '!', col: DG_C.c, d: 'M0 14 Q14 -10 34 -4 H50 Q62 -4 64 -14', t: '놀람, 기쁨' },
+    { p: '!', col: DG_C.c, d: 'M0 14 Q14 -10 34 -4 H50 Q62 -4 64 -14', t: '힘주어 말해요' },
   ];
 
   Object.assign(DIAG, {
@@ -63,7 +63,7 @@
     }),
 
     'k1-14:3': {
-      alt: '같은 말 밥 먹어요도 마침표를 쓰면 알려 주는 말, 물음표를 쓰면 묻는 말, 느낌표를 쓰면 놀람이나 기쁨을 나타내는 말이 되는 그림',
+      alt: '같은 말 밥 먹어요도 마침표를 쓰면 알려 주는 말, 물음표를 쓰면 묻는 말, 느낌표를 쓰면 힘주어 말하는 말이 되는 그림',
       svg: `<svg viewBox="0 0 480 280" class="dg-svg" role="img">
         ${R3.map((r, i) => { const y = 92 + i * 74; return `<g>
           <text x="170" y="${y}" text-anchor="end" fill="${DG_C.ink}" font-size="30" font-weight="800">밥 먹어요</text>

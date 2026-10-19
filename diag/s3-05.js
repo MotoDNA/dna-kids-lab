@@ -124,38 +124,42 @@
     },
 
     's3-05:3': {
-      alt: '소금과 모래를 물에 넣어 저은 뒤 거름종이를 끼운 깔때기에 부으면 녹지 않는 모래는 거름종이 위에 남고, 소금물만 아래 비커로 빠져나오는 거름 장치 그림',
+      alt: '소금과 모래를 물에 넣어 저은 뒤, 유리 막대를 따라 거름종이를 끼운 깔때기에 부으면 녹지 않는 모래는 거름종이 위에 남고, 소금물만 비커 옆면에 닿은 깔때기 끝을 따라 비커로 빠져나오는 거름 장치 그림',
       svg: `<svg viewBox="0 0 480 330" class="dg-svg" role="img">
-        <path class="pour" d="M120 70 Q150 64 176 84" fill="none" stroke="${DG_C.b}" stroke-width="8" stroke-linecap="round"/>
-        <g transform="translate(96,40) rotate(30)"><path d="M-30 -24 V24 H24 V-24" fill="${DG_C.b}" fill-opacity=".5" stroke="${DG_C.sub}" stroke-width="3"/></g>
-        <path d="M150 96 H290 L230 176 V232 H210 V176 Z" fill="#fff" stroke="${DG_C.sub}" stroke-width="3.5" stroke-linejoin="round"/>
-        <path d="M160 102 H280 L220 182 Z" fill="#f5f5f7" stroke="${DG_C.c}" stroke-width="2.5" stroke-dasharray="6 4" stroke-linejoin="round"/>
+        <path class="pour" d="M236 42 L199 132" fill="none" stroke="${DG_C.b}" stroke-width="8" stroke-linecap="round"/>
+        <line x1="250" y1="8" x2="197" y2="140" stroke="${DG_C.sub}" stroke-width="4" stroke-linecap="round"/>
+        <g transform="translate(276,44) rotate(-30)"><path d="M-30 -24 V24 H24 V-24" fill="${DG_C.b}" fill-opacity=".5" stroke="${DG_C.sub}" stroke-width="3"/></g>
+        <path d="M94 96 H234 L174 176 V248 L154 262 V176 Z" fill="#fff" stroke="${DG_C.sub}" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M104 102 H224 L164 182 Z" fill="#f5f5f7" stroke="${DG_C.c}" stroke-width="2.5" stroke-dasharray="6 4" stroke-linejoin="round"/>
         <path class="liq" d="" fill="${DG_C.b}" fill-opacity=".75"/>
-        <path class="sand" d="M196 160 L220 182 L244 160 Q220 150 196 160 Z" fill="${SAND}" stroke="${DG_C.c}" stroke-width="2"/>
-        ${Array.from({ length: 9 }, (_, i) => `<circle class="sd" cx="${f2(204 + rnd(i) * 32)}" cy="${f2(164 + rnd(i + 3) * 10)}" r="2.6" fill="${DG_C.c}"/>`).join('')}
-        <path d="M160 222 V308 Q160 316 168 316 H272 Q280 316 280 308 V222" fill="none" stroke="${DG_C.sub}" stroke-width="3.5"/>
-        <rect class="bk" x="162" y="300" width="116" height="14" fill="${DG_C.b}"/>
+        <path class="sand" d="M140 160 L164 182 L188 160 Q164 150 140 160 Z" fill="${SAND}" stroke="${DG_C.c}" stroke-width="2"/>
+        ${Array.from({ length: 9 }, (_, i) => `<circle class="sd" cx="${f2(148 + rnd(i) * 32)}" cy="${f2(164 + rnd(i + 3) * 10)}" r="2.6" fill="${DG_C.c}"/>`).join('')}
+        <path d="M150 222 V308 Q150 316 158 316 H262 Q270 316 270 308 V222" fill="none" stroke="${DG_C.sub}" stroke-width="3.5"/>
+        <rect class="bk" x="152" y="300" width="116" height="14" fill="${DG_C.b}"/>
         ${DRP.map(i => `<path class="dp${i}" d="M0 -6 Q5 1 0 5 Q-5 1 0 -6 Z" fill="${DG_C.d}"/>`).join('')}
         <g class="lab">
-          <path d="M282 112 L322 96" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="102" fill="${DG_C.ink}" font-size="20" font-weight="800">거름종이</text>
-          <path d="M240 166 L322 156" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="162" fill="${DG_C.c}" font-size="20" font-weight="800">모래가 남아요</text>
-          <path d="M278 296 L322 280" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="286" fill="${DG_C.d}" font-size="20" font-weight="800">소금물</text>
+          <text x="236" y="30" text-anchor="end" fill="${DG_C.ink}" font-size="20" font-weight="800">유리 막대</text>
+          <path d="M222 110 L322 96" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="102" fill="${DG_C.ink}" font-size="20" font-weight="800">거름종이</text>
+          <path d="M184 164 L322 156" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="162" fill="${DG_C.c}" font-size="20" font-weight="800">모래가 남아요</text>
+          <path d="M156 252 L322 226" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="226" fill="${DG_C.ink}" font-size="18" font-weight="700"><tspan x="326">깔때기 끝은</tspan><tspan x="326" dy="22">비커 벽에 닿게</tspan></text>
+          <path d="M262 300 L322 286" stroke="${DG_C.ink}" stroke-width="2"/><text x="326" y="292" fill="${DG_C.d}" font-size="20" font-weight="800">소금물</text>
         </g>
       </svg>`,
       play(el) {
         const q = s => el.querySelector(s), qa = s => [...el.querySelectorAll(s)];
         dgAnim(el, 6000, e => {
-          const pour = dgP(e, 300, 1400), fil = dgEase(dgP(e, 600, 1200)), drain = dgP(e, 1800, 2800);
+          const fil = dgEase(dgP(e, 600, 1200)), drain = dgP(e, 1800, 2800);
           q('.pour').setAttribute('opacity', e > 300 && e < 1800 ? 1 : 0);
           // 깔때기 속 액체: 차올랐다가 빠짐
           const lv = fil * (1 - drain);
           const top = 176 - 60 * lv, hw = (176 - top) * 0.75 + 4;
-          q('.liq').setAttribute('d', lv > 0.02 ? `M${f2(220 - hw)} ${f2(top)} H${f2(220 + hw)} L220 180 Z` : '');
+          q('.liq').setAttribute('d', lv > 0.02 ? `M${f2(164 - hw)} ${f2(top)} H${f2(164 + hw)} L164 180 Z` : '');
           q('.sand').setAttribute('opacity', dgP(e, 900, 500));
           qa('.sd').forEach(c => c.setAttribute('opacity', dgP(e, 900, 500)));
+          // 소금물은 깔때기 끝에서 비커 옆면을 타고 흘러내림
           DRP.forEach(i => {
             const t = dgP(e, 1900 + i * 500, 600), d = q('.dp' + i);
-            d.setAttribute('transform', `translate(220,${f2(238 + 54 * t)})`);
+            d.setAttribute('transform', `translate(157,${f2(264 + 34 * t)})`);
             d.setAttribute('opacity', t > 0 && t < 1 ? 1 : 0);
           });
           const b = 14 + 36 * drain;

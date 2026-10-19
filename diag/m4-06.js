@@ -3,7 +3,7 @@
   const C = DG_C;
   const T = (x, y, s, o = {}) => `<text${o.c ? ` class="${o.c}"` : ''} x="${x}" y="${y}" text-anchor="${o.a || 'middle'}" fill="${o.f || C.ink}" font-size="${o.s || 22}" font-weight="${o.w || 800}">${s}</text>`;
   const trike = (x, y) => `<g transform="translate(${x},${y})" fill="none" stroke="${C.d}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="16" cy="8" r="9"/><circle cx="-14" cy="11" r="6"/><circle cx="-4" cy="11" r="6"/><path d="M-9 4 L10 -6 L16 8 M10 -6 l2 -10 h-6 M-6 4 l-4 -12 h8"/></g>`;
+    <circle cx="20" cy="8" r="10"/><circle cx="-24" cy="12" r="6"/><circle cx="-4" cy="12" r="6"/><path d="M-24 12 H-4 M-14 12 L-10 -4 M-16 -4 h10 M-10 -4 L14 -8 M20 8 L14 -8 l-2 -9 M7 -17 h10"/></g>`;
 
   /* 0: 표 */
   const COL = ['1', '2', '3', '4', '…', '6'], WH = ['3', '6', '9', '12', '…', '18'];
@@ -25,7 +25,7 @@
 
   Object.assign(DIAG, {
     'm4-06:0': {
-      alt: '세발자전거가 1대, 2대, 3대, 4대로 늘어날 때 바퀴는 3개, 6개, 9개, 12개로 늘어나 자전거 수에 3을 곱하면 바퀴 수가 되고, 6대면 6×3=18개인 것을 표로 보여 주는 그림',
+      alt: '세발자전거가 1대, 2대, 3대, 4대로 늘어날 때 바퀴는 3개, 6개, 9개, 12개로 늘어나 세발자전거 수에 3을 곱하면 바퀴 수가 되고, 6대면 6×3=18개인 것을 표로 보여 주는 그림',
       svg: `<svg viewBox="0 0 480 300" class="dg-svg" role="img">
         <rect x="16" y="56" width="390" height="120" rx="12" fill="#fff" stroke="#d2d2d7" stroke-width="2"/>
         <line x1="16" y1="116" x2="406" y2="116" stroke="#d2d2d7" stroke-width="2"/>
@@ -34,7 +34,7 @@
         ${COL.map((s, i) => `<g class="cl cl${i}">${T(CXc(i), 96, s, { s: 24, f: i === 5 ? C.d : C.ink })}${T(CXc(i), 156, WH[i], { s: 24, f: i === 5 ? C.c : C.c })}</g>`).join('')}
         <g class="x3"><path d="M424 84 Q452 116 424 148" fill="none" stroke="${C.r}" stroke-width="3" stroke-linecap="round"/><path d="M432 138 l-8 10 l12 3" fill="none" stroke="${C.r}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           ${T(452, 122, '×3', { s: 20, f: C.r })}</g>
-        <g class="rl">${T(210, 226, '자전거 수 × 3 = 바퀴 수', { s: 22, f: C.r })}</g>
+        <g class="rl">${T(210, 226, '세발자전거 수 × 3 = 바퀴 수', { s: 22, f: C.r })}</g>
         <g class="ex">${T(210, 270, '6대 → 6 × 3 = 18(개)', { s: 22, f: C.ink })}</g>
       </svg>`,
       play(el) {

@@ -78,13 +78,14 @@
     },
 
     'e3-07:2': {
-      alt: 'Are you tired?(너 피곤해?)라는 물음에 맞으면 Yes, I am., 아니면 No, I\'m not.이라고 대답하고, 슬퍼 보이는 친구에게는 What\'s wrong?이라고 묻는 그림',
+      alt: '웃는 아이가 피곤해 보이는 친구에게 Are you tired?(너 피곤해?)라고 묻고, 피곤한 친구는 맞으면 Yes, I am., 아니면 No, I\'m not.이라고 대답하며, 다른 아이가 슬퍼 보이는 친구에게 What\'s wrong?(무슨 일 있어?)이라고 묻는 그림',
       svg: `<svg viewBox="0 0 480 300" class="dg-svg" role="img">
-        <g transform="translate(70,70) scale(.75)">${MOOD('tired')}</g>
-        ${BUB(110, 46, 210, 48, 'l', 'Are you tired?', { s: 22, bg: C.b })}
-        <g class="y">${ARROW(200, 104, 140, 136, C.r)}${CHECK(64, 158, 15)}${T(88, 165, '맞으면', { s: 20, f: C.r, a: 'start' })}${B(116, 184, 'Yes, I am.', { k: 'grn' })}</g>
-        <g class="n">${ARROW(250, 104, 320, 136, RED)}${CROSS(300, 158, 15)}${T(324, 165, '아니면', { s: 20, f: RED, a: 'start' })}${B(350, 184, "No, I'm not.", { k: 'red' })}</g>
-        <g class="w"><g transform="translate(40,266) scale(.6)">${MOOD('sad')}</g>${T(76, 274, `What's wrong? ${HL('무슨 일 있어?', C.sub)}`, { s: 20, w: 800, a: 'start' })}</g>
+        <g transform="translate(60,62) scale(.75)">${MOOD('tired')}</g>
+        <g transform="translate(424,58) scale(.75)">${MOOD('happy')}</g>
+        ${BUB(176, 34, 210, 48, 'r', 'Are you tired?', { s: 22, bg: C.b })}
+        <g class="y">${ARROW(60, 94, 70, 132, C.r)}${CHECK(64, 158, 15)}${T(88, 165, '맞으면', { s: 20, f: C.r, a: 'start' })}${B(116, 184, 'Yes, I am.', { k: 'grn' })}</g>
+        <g class="n">${ARROW(88, 86, 290, 136, RED)}${CROSS(300, 158, 15)}${T(324, 165, '아니면', { s: 20, f: RED, a: 'start' })}${B(350, 184, "No, I'm not.", { k: 'red' })}</g>
+        <g class="w">${FACE(32, 270, 20, { k: 'boy' })}<path d="M72 258 L56 270 L72 282Z" fill="${C.b}"/>${BUB(70, 250, 300, 40, '', `What's wrong? ${HL('(무슨 일 있어?)', C.sub)}`, { s: 18, bg: C.b })}<g transform="translate(436,270) scale(.6)">${MOOD('sad')}</g></g>
       </svg>`,
       play(el) {
         dgAnim(el, 4400, e => {

@@ -180,7 +180,7 @@
         <circle class="s2" r="7" fill="${DG_C.c}"/>
         <g class="ball"><circle r="18" fill="#fff" stroke="${DG_C.ink}" stroke-width="3"/><path d="M-16 -8 Q0 4 16 -8 M-16 8 Q0 -4 16 8" fill="none" stroke="${RED}" stroke-width="2"/></g>
         <g class="l1"><text x="210" y="66" fill="${DG_C.d}" font-size="20" font-weight="800">① 눈: 공을 봐요</text></g>
-        <g class="l2"><text x="14" y="190" fill="#d6608a" font-size="20" font-weight="800">② 뇌: 판단</text></g>
+        <g class="l2"><text x="130" y="26" text-anchor="middle" fill="#d6608a" font-size="20" font-weight="800">② 뇌: 판단</text></g>
         <g class="l3"><text x="230" y="290" fill="${DG_C.c}" font-size="20" font-weight="800">③ 손: 공을 잡아요</text></g>
       </svg>`,
       play(el) {

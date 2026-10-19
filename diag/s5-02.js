@@ -128,7 +128,6 @@
         <text x="230" y="88" fill="${DG_C.sub}" font-size="18" font-weight="700">한 방울씩</text>
         <rect x="244" y="168" width="70" height="26" fill="${YEL}"/><rect x="314" y="168" width="70" height="26" fill="${GRN}"/><rect x="384" y="168" width="70" height="26" fill="${BLU}"/>
         <text x="279" y="222" text-anchor="middle" fill="${RED}" font-size="18" font-weight="800">산성</text>
-        <text x="349" y="222" text-anchor="middle" fill="${GRN}" font-size="18" font-weight="800">중성</text>
         <text x="419" y="222" text-anchor="middle" fill="${BLU}" font-size="18" font-weight="800">염기성</text>
         <path class="pt" d="M0 0 l-10 -16 h20 Z" fill="${DG_C.ink}"/>
         <text class="msg" x="349" y="262" text-anchor="middle" fill="${DG_C.ink}" font-size="20" font-weight="800">산성이 약해지다가</text>

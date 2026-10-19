@@ -44,20 +44,20 @@ Object.assign(DIAG, {
   'm5-07:1': {
     alt: '지름 10cm인 원과, 그 원주를 곧게 펼친 31.4cm 선분',
     svg: `<svg viewBox="0 0 640 260" class="dg-svg" role="img">
-      <circle cx="110" cy="110" r="70" fill="none" stroke="#e5e5ea" stroke-width="3"/><circle class="ring" cx="110" cy="110" r="70" fill="none" stroke="${DG_C.c}" stroke-width="5" stroke-dasharray="440" stroke-dashoffset="0" transform="rotate(90 110 110)"/>
-      <line class="dia" x1="40" y1="110" x2="180" y2="110" stroke="${DG_C.d}" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="110" cy="110" r="4" fill="${DG_C.ink}"/>
-      <text x="110" y="100" text-anchor="middle" fill="${DG_C.d}" font-size="26" font-weight="700">지름 10 cm</text>
-      <line class="flat" x1="200" y1="210" x2="200" y2="210" stroke="${DG_C.c}" stroke-width="6" stroke-linecap="round"/>
-      <line x1="40" y1="210" x2="180" y2="210" stroke="${DG_C.d}" stroke-width="6" stroke-linecap="round" opacity=".35"/>
-      <text x="110" y="240" text-anchor="middle" fill="${DG_C.sub}" font-size="22">지름 10 cm</text>
-      <text class="lab" x="420" y="240" text-anchor="middle" fill="${DG_C.c}" font-size="26" font-weight="700" opacity="0">원주 = 10 × 3.14 = 31.4 cm</text>
+      <circle cx="95" cy="115" r="55" fill="none" stroke="#e5e5ea" stroke-width="3"/><circle class="ring" cx="95" cy="115" r="55" fill="none" stroke="${DG_C.c}" stroke-width="5" stroke-dasharray="346" stroke-dashoffset="0" transform="rotate(90 95 115)"/>
+      <line class="dia" x1="40" y1="115" x2="150" y2="115" stroke="${DG_C.d}" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="95" cy="115" r="4" fill="${DG_C.ink}"/>
+      <text x="95" y="44" text-anchor="middle" fill="${DG_C.d}" font-size="26" font-weight="700">지름 10 cm</text>
+      <line class="flat" x1="175" y1="210" x2="175" y2="210" stroke="${DG_C.c}" stroke-width="6" stroke-linecap="round"/>
+      <line x1="40" y1="210" x2="150" y2="210" stroke="${DG_C.d}" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+      <text x="95" y="240" text-anchor="middle" fill="${DG_C.sub}" font-size="22">지름 10 cm</text>
+      <text class="lab" x="348" y="240" text-anchor="middle" fill="${DG_C.c}" font-size="26" font-weight="700" opacity="0">원주 = 10 × 3.14 = 31.4 cm</text>
     </svg>`,
     play(el) {
       const ring = el.querySelector('.ring'), flat = el.querySelector('.flat'), lab = el.querySelector('.lab');
-      const C = 2 * Math.PI * 70, W = 440; // 원주 그림 길이(지름 140px × 3.14)
+      const C = 2 * Math.PI * 55, W = 345.4; // 원주 그림 길이(지름 110px × 3.14)
       ring.setAttribute('stroke-dasharray', C);
-      const set = t => { ring.setAttribute('stroke-dashoffset', C * t); flat.setAttribute('x2', 200 + W * t); lab.setAttribute('opacity', t >= 1 ? 1 : 0); };
+      const set = t => { ring.setAttribute('stroke-dashoffset', C * t); flat.setAttribute('x2', 175 + W * t); lab.setAttribute('opacity', t >= 1 ? 1 : 0); };
       if (DG_RM()) { set(1); return; }
       const t0 = performance.now(), id = el.dataset.run = String(Math.random());
       const tick = now => { if (el.dataset.run !== id) return; const t = Math.min(1, Math.max(0, (now - t0 - 500) / 2200)); set(t); if (t < 1) requestAnimationFrame(tick); };
@@ -101,7 +101,7 @@ Object.assign(DIAG, {
       <circle cx="120" cy="115" r="90" fill="${DG_C.a}" stroke="${DG_C.c}" stroke-width="4"/>
       <line class="rad" x1="120" y1="115" x2="120" y2="115" stroke="${DG_C.r}" stroke-width="5" stroke-linecap="round"/>
       <circle cx="120" cy="115" r="4" fill="${DG_C.ink}"/>
-      <text class="rl" x="165" y="142" text-anchor="middle" fill="${DG_C.r}" font-size="26" font-weight="700" opacity="0">반지름 5 cm</text>
+      <text class="rl" x="122" y="150" text-anchor="middle" fill="${DG_C.r}" font-size="22" font-weight="700" opacity="0">반지름 5 cm</text>
       ${['① 5 × 5 = 25', '② 25 × 3.14 = 78.5', '넓이 78.5 cm²'].map((t, i) => `<text class="st" x="260" y="${80 + i * 40}" fill="${i === 2 ? DG_C.c : DG_C.ink}" font-size="${i === 2 ? 30 : 25}" font-weight="${i === 2 ? 800 : 600}" opacity="0">${t}</text>`).join('')}
     </svg>`,
     play(el) {
