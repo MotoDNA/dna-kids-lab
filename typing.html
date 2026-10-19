@@ -319,7 +319,7 @@ body.fs .overlay{gap:6px}
     <div class="controls">
       <label class="name-box"><span>이름</span><input id="nameInput" maxlength="8" autocomplete="off"></label>
       <div class="seg" id="langSeg" role="group" aria-label="연습 글자">
-        <button data-lang="ko" class="on">한글</button><button data-lang="en">ABC</button>
+        <button data-lang="ko" class="on">한글</button><button data-lang="en">영어</button>
       </div>
       <div class="seg" id="levelSeg" role="group" aria-label="난이도">
         <button data-level="easy" class="on">쉬움</button><button data-level="mid">보통</button><button data-level="hard">어려움</button>
@@ -1173,6 +1173,7 @@ function applyFs(){
 }
 const toParent = m => { try{ window.parent.postMessage(Object.assign({dnakids:'fsctl'},m), location.origin); }catch(e){} };
 window.addEventListener('message', e=>{ if(e.origin===location.origin && e.data && e.data.dnakids==='setfs'){ parentFs=!!e.data.on; applyFs(); } });
+try{ const ql=new URLSearchParams(location.search).get('lang'); if(ql==='en'||ql==='ko') setLang(ql); }catch(e){}
 $('fsBtn').addEventListener('click', async ()=>{
   $('fsBtn').blur();
   if(inFrame){ toParent({on: !parentFs}); return; }
