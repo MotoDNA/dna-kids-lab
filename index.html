@@ -264,6 +264,9 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px;color
 .b12 .curri{font-size:15px}.page-in .curri p,.b12 .page-in .curri p{font-size:15px;line-height:1.6;margin:4px 0}
 
 /* ===== Clean theme (2026-10) ===== */
+.dg{margin:18px 0 6px;position:relative}.dg-svg{width:100%;height:auto;display:block;max-height:300px;font-family:inherit}.dg-re{position:absolute;right:0;top:0;background:#fff;border:1px solid #d2d2d7;border-radius:980px;padding:2px 12px;font-size:13px;color:var(--sub);cursor:pointer}.dg-re:hover{color:var(--accent);border-color:var(--accent)}
+
+a.kitcard{display:flex;flex-direction:column;gap:2px;background:var(--bg2);border-radius:14px;padding:14px 18px;margin:4px 0 14px;color:var(--ink);text-decoration:none}a.kitcard b{font-size:16px}a.kitcard span{font-size:15px;color:var(--accent)}a.kitcard:hover{background:#ececf0;text-decoration:none}a.kitcard:hover span{text-decoration:underline}
 a.cp{display:inline-block;margin-left:6px;font-size:13px;font-weight:600;color:var(--accent);border:1px solid var(--accent);border-radius:980px;padding:1px 10px;white-space:nowrap;text-decoration:none}a.cp:hover{background:var(--accent);color:#fff;text-decoration:none}
 .cp-note{font-size:13px;color:var(--sub);background:var(--bg2);border-radius:12px;padding:10px 14px;margin:10px 0 0;line-height:1.55}
 :root{--ink:#1d1d1f;--sub:#6e6e73;--line:#e3e3e8;--accent:#0071e3;--accent-soft:#e8f1fc;--bg2:#f5f5f7;--good:#1d8348;--bad:#d70015;--note:#fbf6e9}
@@ -394,6 +397,7 @@ const SUPABASE_KEY = 'sb_publishable_tJppUfQ22tu3GjSajvq-4w_CMB87DL4';
 const ID_DOMAIN = 'kids.dnakidslab.com';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 /* ---------- 유입 경로·방문 집계 (개인 정보 없음) ---------- */
+const CPKIT = {"string-phone": ["실전화 만들기 키트", ""], "cabbage-indicator": ["산염기 지시약 실험 키트", ""], "floating-compass": ["나침반 만들기 키트", ""], "rubber-band-scale": ["용수철저울 만들기 키트", ""], "shadow-theater": ["그림자극 만들기 키트", ""], "marker-chromatography": ["크로마토그래피 실험 키트", ""], "bottle-lung": ["폐 모형 만들기 키트", ""], "water-lens": ["물돋보기 만들기", ""], "star-projector": ["별자리 투영기 만들기", ""], "milk-carton-torch": ["손전등 만들기 키트", ""], "butterfly-life-cycle": ["배추흰나비 사육 키트", ""], "egg-tray-beans": ["강낭콩 키우기 키트", ""], "colored-celery": ["식물 물관 실험 키트", ""], "moon-phase-calendar": ["달의 위상 변화 교구", ""], "bottle-rain-gauge": ["우량계 만들기 키트", ""], "bottle-terrarium": ["테라리움 만들기 키트", ""], "candle-jar": ["연소 실험 키트", ""], "pizza-fractions": ["원형 분수 교구", ""], "fraction-strips": ["분수 막대 교구", ""], "egg-tray-arrays": ["곱셈 교구", ""], "cube-nets": ["전개도 교구", ""], "sugar-cube-volume": ["쌓기나무", ""], "place-value-cups": ["자릿값 교구", ""], "carton-capacity": ["들이 측정 교구", ""], "hundred-chart-multiples": ["수 배열판 100", ""], "tangram": ["칠교놀이", ""], "plate-circle-area": ["원의 넓이 교구", ""], "alphabet-blocks": ["알파벳 블록", ""]}; // 실험별 쿠팡 키트 검색 링크 [검색어, 코드]
 const CPANG = { '자석 1개': 'hW3rPS4mL6', '풍선 2개': 'hW3uPH5oaG', 'LED 1개': 'hW3vcq1jC8', '건전지 끼우개': 'hW3wt6oWZz', '할핀 2개, 클립 1개': 'hW3wRr3cmA', '각설탕 1봉지': 'hW3xdlLOLc', '배추흰나비 애벌레': 'hW3ykkbDxI', '강낭콩 6~8알': 'hW3yGwAzgy' }; // 쿠팡 파트너스 검색 링크
 const SITE = 'https://dnakidslab.cloud/';
 const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
@@ -571,7 +575,7 @@ async function viewHome() {
         : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
     <p class="note2">학년·학기는 2022 개정 교육과정 교과서에서 주로 배우는 시기를 기준으로 나눴어요. 출판사나 학교에 따라 한 학기 정도 차이가 날 수 있어요.</p>
     <div class="ah-tiles">
-      <a class="tile" href="#/activities"><div class="tx"><h3>실험·활동</h3><p>집에 있는 재료로 단원 개념을 직접 확인해요.</p><span class="go">활동 보기 ›</span></div><div class="im"><img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" loading="lazy"></div></a>
+      <a class="tile" href="#/activities"><div class="tx"><h3>실험·활동</h3><p>집에 있는 재료로 단원 개념을 직접 확인해요.</p><!--KITTILE--><span class="go">활동 보기 ›</span></div><div class="im"><img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" loading="lazy"></div></a>
       <a class="tile" href="#/typing"><div class="tx"><h3>타자 연습</h3><p>손가락 자리를 보며 한글·영어 타자를 익혀요.</p><span class="go">연습하기 ›</span></div><div class="im"><img class="didi" src="assets/img/didi/cheer.webp" alt="응원하는 디디" loading="lazy"></div></a>
       <a class="tile" href="#/downloads"><div class="tx"><h3>도안·문제지</h3><p>단원 학습지와 활동 도안을 인쇄해서 써요.</p><span class="go">내려받기 ›</span></div><div class="im"><img src="assets/img/n_tangram.jpg" alt="칠교판 도안" loading="lazy"></div></a>
     </div>
@@ -734,6 +738,133 @@ function sayChips(text) {
 }
 document.addEventListener('click', e => { const b = e.target.closest('[data-say]'); if (b) { e.stopPropagation(); speak(b.dataset.say, b); } }, true);
 let bookKeys = null;
+/* ---------- 단원 그림(다이어그램·애니메이션) ---------- */
+const DG_C = { ink: '#1d1d1f', sub: '#6e6e73', d: '#0071e3', c: '#ff9500', r: '#34a853', a: '#ffd6a5', b: '#bfdcff' };
+const DG_RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DIAG = {
+  /* 원주와 원주율: 지름 긋기 → 원을 한 바퀴 굴려 원주 펼치기 → 지름 3개와 비교 */
+  'm5-07:0': {
+    alt: '원을 한 바퀴 굴려 펼친 원주가 지름 3개보다 조금 더 긴 것을 보여 주는 그림',
+    svg: `<svg viewBox="0 0 640 300" class="dg-svg" role="img">
+      <line x1="30" y1="170" x2="610" y2="170" stroke="#d2d2d7" stroke-width="2"/>
+      <line class="trail" x1="100" y1="170" x2="100" y2="170" stroke="${DG_C.c}" stroke-width="6" stroke-linecap="round"/>
+      <g class="wheel" transform="translate(100,120)">
+        <circle r="50" fill="#fff" stroke="${DG_C.c}" stroke-width="5"/>
+        <g class="spin"><line class="dia" x1="-50" y1="0" x2="-50" y2="0" stroke="${DG_C.d}" stroke-width="4" stroke-linecap="round"/><circle cx="0" cy="50" r="6" fill="${DG_C.c}"/></g>
+        <circle r="4" fill="${DG_C.ink}"/>
+      </g>
+      <text class="lab-d" x="100" y="108" text-anchor="middle" fill="${DG_C.d}" font-size="20" font-weight="700" opacity="0">지름</text>
+      <text class="lab-c" x="257" y="196" text-anchor="middle" fill="${DG_C.c}" font-size="20" font-weight="700" opacity="0">펼친 원주</text>
+      ${[0, 1, 2].map(i => `<g class="seg" opacity="0"><line x1="${100 + i * 100}" y1="232" x2="${200 + i * 100}" y2="232" stroke="${DG_C.d}" stroke-width="6" stroke-linecap="butt"/><line x1="${100 + i * 100}" y1="222" x2="${100 + i * 100}" y2="242" stroke="#fff" stroke-width="3"/><text x="${150 + i * 100}" y="262" text-anchor="middle" fill="${DG_C.d}" font-size="18" font-weight="600">지름 ${i + 1}</text></g>`).join('')}
+      <g class="seg" opacity="0"><line x1="400" y1="232" x2="414" y2="232" stroke="${DG_C.c}" stroke-width="6"/><text x="452" y="238" fill="${DG_C.c}" font-size="18" font-weight="700">조금 더</text></g>
+      <text class="lab-f" x="320" y="292" text-anchor="middle" fill="${DG_C.ink}" font-size="20" font-weight="700" opacity="0">원주 = 지름 × 약 3.14</text>
+    </svg>`,
+    play(el) {
+      const $ = s => el.querySelector(s), $$ = s => [...el.querySelectorAll(s)];
+      const R = 50, X0 = 100, L = 2 * Math.PI * R;
+      const set = (t1, t2, t3) => { // 각 단계 진행도 0~1
+        $('.dia').setAttribute('x2', -R + 2 * R * t1);
+        $('.lab-d').setAttribute('opacity', t1 >= 1 && t2 < .05 ? 1 : 0);
+        const x = X0 + L * t2;
+        $('.wheel').setAttribute('transform', `translate(${x},120)`);
+        $('.spin').setAttribute('transform', `rotate(${360 * t2})`);
+        $('.trail').setAttribute('x2', x);
+        $('.lab-c').setAttribute('opacity', t2 >= 1 ? 1 : 0);
+        $$('.seg').forEach((g, i) => g.setAttribute('opacity', t3 * 4 > i ? 1 : 0));
+        $('.lab-f').setAttribute('opacity', t3 >= 1 ? 1 : 0);
+      };
+      if (DG_RM()) { set(1, 1, 1); return; }
+      const T = [1000, 3000, 2000], t0 = performance.now(), id = el.dataset.run = String(Math.random());
+      const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      const tick = now => { if (el.dataset.run !== id) return; const e = now - t0;
+        const a = Math.min(1, e / T[0]), b = Math.min(1, Math.max(0, (e - T[0] - 300) / T[1])), c = Math.min(1, Math.max(0, (e - T[0] - T[1] - 600) / T[2]));
+        set(ease(a), ease(b), c); if (c < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }
+  },
+  /* 원주 구하기: 지름 10cm → 원주 31.4cm */
+  'm5-07:1': {
+    alt: '지름 10cm인 원과, 그 원주를 곧게 펼친 31.4cm 선분',
+    svg: `<svg viewBox="0 0 640 260" class="dg-svg" role="img">
+      <circle cx="110" cy="110" r="70" fill="none" stroke="#e5e5ea" stroke-width="3"/><circle class="ring" cx="110" cy="110" r="70" fill="none" stroke="${DG_C.c}" stroke-width="5" stroke-dasharray="440" stroke-dashoffset="0" transform="rotate(90 110 110)"/>
+      <line class="dia" x1="40" y1="110" x2="180" y2="110" stroke="${DG_C.d}" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="110" cy="110" r="4" fill="${DG_C.ink}"/>
+      <text x="110" y="100" text-anchor="middle" fill="${DG_C.d}" font-size="20" font-weight="700">지름 10 cm</text>
+      <line class="flat" x1="200" y1="210" x2="200" y2="210" stroke="${DG_C.c}" stroke-width="6" stroke-linecap="round"/>
+      <line x1="40" y1="210" x2="180" y2="210" stroke="${DG_C.d}" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+      <text x="110" y="240" text-anchor="middle" fill="${DG_C.sub}" font-size="17">지름 10 cm</text>
+      <text class="lab" x="420" y="240" text-anchor="middle" fill="${DG_C.c}" font-size="20" font-weight="700" opacity="0">원주 = 10 × 3.14 = 31.4 cm</text>
+    </svg>`,
+    play(el) {
+      const ring = el.querySelector('.ring'), flat = el.querySelector('.flat'), lab = el.querySelector('.lab');
+      const C = 2 * Math.PI * 70, W = 440; // 원주 그림 길이(지름 140px × 3.14)
+      ring.setAttribute('stroke-dasharray', C);
+      const set = t => { ring.setAttribute('stroke-dashoffset', C * t); flat.setAttribute('x2', 200 + W * t); lab.setAttribute('opacity', t >= 1 ? 1 : 0); };
+      if (DG_RM()) { set(1); return; }
+      const t0 = performance.now(), id = el.dataset.run = String(Math.random());
+      const tick = now => { if (el.dataset.run !== id) return; const t = Math.min(1, Math.max(0, (now - t0 - 500) / 2200)); set(t); if (t < 1) requestAnimationFrame(tick); };
+      set(0); requestAnimationFrame(tick);
+    }
+  },
+  /* 원을 잘라 직사각형 만들기: 16조각이 원에서 직사각형 모양으로 이동 */
+  'm5-07:2': {
+    alt: '원을 16조각으로 잘라 위아래로 엇갈려 붙이면 가로가 원주의 반, 세로가 반지름인 직사각형 모양이 되는 그림',
+    svg: (() => {
+      const r = 70, th = Math.PI / 16, w = 2 * r * Math.sin(th), h = r * Math.cos(th);
+      const wedge = `M0 0 L${-r * Math.sin(th)} ${r * Math.cos(th)} A${r} ${r} 0 0 0 ${r * Math.sin(th)} ${r * Math.cos(th)} Z`;
+      let g = '';
+      for (let k = 0; k < 16; k++) g += `<path class="wd" data-k="${k}" d="${wedge}" fill="${k % 2 ? DG_C.b : DG_C.a}" stroke="#fff" stroke-width="1.5"/>`;
+      return `<svg viewBox="0 0 640 270" class="dg-svg" role="img">${g}
+        <g class="rlab" opacity="0">
+          <line x1="160" y1="${200 + 14}" x2="${160 + 8 * w}" y2="${200 + 14}" stroke="${DG_C.c}" stroke-width="4"/>
+          <text x="${160 + 4 * w}" y="${200 + 42}" text-anchor="middle" fill="${DG_C.c}" font-size="19" font-weight="700">가로 = 원주 × ½ = 반지름 × 3.14</text>
+          <line x1="146" y1="${200 - h}" x2="146" y2="200" stroke="${DG_C.r}" stroke-width="4"/>
+          <text x="136" y="${200 - h / 2 + 6}" text-anchor="end" fill="${DG_C.r}" font-size="19" font-weight="700">세로 = 반지름</text>
+        </g></svg>`;
+    })(),
+    play(el) {
+      const r = 70, th = Math.PI / 16, w = 2 * r * Math.sin(th), h = r * Math.cos(th), cx = 120, cy = 110;
+      const ws = [...el.querySelectorAll('.wd')], lab = el.querySelector('.rlab');
+      const circ = k => `translate(${cx}px,${cy}px) rotate(${k * 22.5}deg)`;
+      const rect = k => { const i = k >> 1; return k % 2 === 0 ? `translate(${160 + w / 2 + i * w}px,${200 - h}px) rotate(0deg)` : `translate(${160 + w + i * w}px,200px) rotate(180deg)`; };
+      ws.forEach((p, k) => { p.style.transition = 'none'; p.style.transform = circ(k); });
+      lab.setAttribute('opacity', 0);
+      if (DG_RM()) { ws.forEach((p, k) => p.style.transform = rect(k)); lab.setAttribute('opacity', 1); return; }
+      const id = el.dataset.run = String(Math.random());
+      setTimeout(() => { if (el.dataset.run !== id) return;
+        ws.forEach((p, k) => { p.style.transition = `transform 1.2s cubic-bezier(.5,0,.2,1) ${k * 70}ms`; p.style.transform = rect(k); });
+        setTimeout(() => { if (el.dataset.run === id) lab.setAttribute('opacity', 1); }, 1200 + 16 * 70); }, 900);
+    }
+  },
+  /* 원의 넓이 구하기: 반지름 5cm */
+  'm5-07:3': {
+    alt: '반지름 5cm인 원과 넓이 계산 과정',
+    svg: `<svg viewBox="0 0 640 230" class="dg-svg" role="img">
+      <circle cx="120" cy="115" r="90" fill="${DG_C.a}" stroke="${DG_C.c}" stroke-width="4"/>
+      <line class="rad" x1="120" y1="115" x2="120" y2="115" stroke="${DG_C.r}" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="120" cy="115" r="4" fill="${DG_C.ink}"/>
+      <text class="rl" x="165" y="142" text-anchor="middle" fill="${DG_C.r}" font-size="20" font-weight="700" opacity="0">반지름 5 cm</text>
+      ${['① 반지름 × 반지름 = 5 × 5 = 25', '② 25 × 3.14 = 78.5', '넓이 = 78.5 cm²'].map((t, i) => `<text class="st" x="260" y="${80 + i * 40}" fill="${i === 2 ? DG_C.c : DG_C.ink}" font-size="${i === 2 ? 24 : 20}" font-weight="${i === 2 ? 800 : 600}" opacity="0">${t}</text>`).join('')}
+    </svg>`,
+    play(el) {
+      const rad = el.querySelector('.rad'), rl = el.querySelector('.rl'), st = [...el.querySelectorAll('.st')];
+      const set = (t, n) => { rad.setAttribute('x2', 120 + 90 * t); rl.setAttribute('opacity', t >= 1 ? 1 : 0); st.forEach((s, i) => s.setAttribute('opacity', i < n ? 1 : 0)); };
+      if (DG_RM()) { set(1, 3); return; }
+      const t0 = performance.now(), id = el.dataset.run = String(Math.random());
+      const tick = now => { if (el.dataset.run !== id) return; const e = now - t0; const t = Math.min(1, Math.max(0, (e - 400) / 900)); const n = Math.min(3, Math.max(0, Math.floor((e - 1500) / 900) + 1)); set(t, n); if (n < 3) requestAnimationFrame(tick); };
+      set(0, 0); requestAnimationFrame(tick);
+    }
+  }
+};
+function diagHtml(slug, i) {
+  const d = DIAG[slug + ':' + i]; if (!d) return '';
+  return `<figure class="dg" data-dg="${slug}:${i}"><div aria-label="${esc(d.alt)}" role="img">${d.svg}</div><button type="button" class="dg-re">↻ 다시 보기</button></figure>`;
+}
+function playDiag(root) {
+  if (!root) return;
+  root.querySelectorAll('figure.dg').forEach(f => { const d = DIAG[f.dataset.dg]; if (!d) return; d.play(f); const b = f.querySelector('.dg-re'); b.onclick = () => d.play(f); });
+}
+
 async function viewLesson(slug) {
   window._dfx = null;
   await audioReady; await curriReady;
@@ -753,7 +884,7 @@ async function viewLesson(slug) {
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
     <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
-  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
+  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${diagHtml(slug, i)}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
   // 3. 표현·낱말
   if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}${sayBtn(e.en)}</td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
   if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', nkey: 'kw', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
@@ -790,7 +921,7 @@ async function viewLesson(slug) {
     const nb = document.getElementById('pNext'); nb.textContent = last ? '단원 목록 ▶' : '다음 ▶';
     document.getElementById('eL').hidden = cur === 0; document.getElementById('eR').hidden = last;
     document.getElementById('eR').classList.toggle('nudge', cur === 0);
-    clearTimeout(window._nt); if (hasN && autoNarr() && N[pages[cur].nkey]) { const src = N[pages[cur].nkey], nb2 = els[cur].querySelector('.narr'), at = cur; window._nt = setTimeout(() => { if (cur === at) playNarr(src, nb2); }, 650); } else stopNarr();
+    playDiag(els[cur]); clearTimeout(window._nt); if (hasN && autoNarr() && N[pages[cur].nkey]) { const src = N[pages[cur].nkey], nb2 = els[cur].querySelector('.narr'), at = cur; window._nt = setTimeout(() => { if (cur === at) playNarr(src, nb2); }, 650); } else stopNarr();
     if (last && window._dfx) { const d = window._dfx; window._dfx = null; clearTimeout(window._nt); stopNarr(); setTimeout(() => didiCelebrate(d.r, d.n, { onRetry: () => viewLesson(slug) }), 450); }
     document.getElementById('pCount').textContent = `${cur + 1} / ${pages.length} · ${pages[cur].label}`;
   };
@@ -841,7 +972,7 @@ async function viewActivities() {
   const all = [...await listActs()].sort((a, b) => SUBJ.indexOf(a.subject) - SUBJ.indexOf(b.subject));
   const list = all.filter(a => (state.agrade === '전체' || String(a.grade) === String(state.agrade)) && (state.asubject === '전체' || a.subject === state.asubject) && (state.mat === '전체' || (a.tags || []).includes(state.mat)));
   app.innerHTML = `<h1>실험·활동</h1>
-  <div class="intro"><p>단원 개념을 집에 있는 재료로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p></div>
+  <div class="intro"><p>단원 개념을 집에 있는 재활용품으로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p><!--KITNOTE--></div>
   <div class="filters">
     <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('agrade','전체')}${['3','4','5','6'].map(g => fbtn('agrade', g, g + '학년')).join('')}</div>
     <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${['전체', ...SUBJ].map(s => fbtn('asubject', s)).join('')}</div>
@@ -855,7 +986,7 @@ async function viewActivities() {
 }
 function block(c) {
   switch (c.type) {
-    case 'materials': return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit && CPANG[r.name] ? ` <a class="cp" href="https://link.coupang.com/a/${CPANG[r.name]}" target="_blank" rel="sponsored nofollow noopener">쿠팡에서 보기</a>` : ''}</td></tr>`).join('')}</tbody></table></div>${c.rows.some(r => r.kit && CPANG[r.name]) ? '<p class="cp-note">부모님께: 집에 없는 준비물은 쿠팡에서 찾아볼 수 있어요. 이 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>' : ''}${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`;
+    case 'materials': { const K = CPKIT[ACT_SLUG] && CPKIT[ACT_SLUG][1] ? CPKIT[ACT_SLUG] : null; const anyCp = K || c.rows.some(r => r.kit && CPANG[r.name]); return `<h2>준비물</h2>${c.note ? `<p class="sub">${esc(c.note)}</p>` : ''}${K ? `<a class="kitcard" href="https://link.coupang.com/a/${K[1]}" target="_blank" rel="sponsored nofollow noopener"><b>집에 재료가 없다면 실험 키트로 준비해요</b><span>쿠팡에서 ‘${esc(K[0])}’ 보기 ›</span></a>` : ''}<div class="tbl"><table><tbody>${c.rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.how)}${r.kit && CPANG[r.name] ? ` <a class="cp" href="https://link.coupang.com/a/${CPANG[r.name]}" target="_blank" rel="sponsored nofollow noopener">쿠팡에서 보기</a>` : ''}</td></tr>`).join('')}</tbody></table></div>${anyCp ? '<p class="cp-note">부모님께: 쿠팡 링크는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다. 아이 혼자 구매하지 않도록 지도해 주세요.</p>' : ''}${c.image ? `<img src="${esc(c.image)}" alt="준비물을 한데 모아 놓은 모습" loading="lazy" style="margin-top:18px;width:100%;max-width:520px;aspect-ratio:4/3;object-fit:cover;border-radius:3px">` : ''}`; }
     case 'steps': return `<h2>${esc(c.title)}</h2><ol class="steps">${c.items.map(s => `<li class="${s.image ? 'has-img' : ''}"><div><h3>${esc(s.title)}</h3><p style="margin:4px 0 0">${esc(s.body)}${sayChips(s.body)}</p>${s.warn ? `<p class="caution">${esc(s.warn)}</p>` : ''}</div>${s.image ? `<img src="${esc(s.image)}" alt="${esc(s.title)} 장면" loading="lazy" ${imgErr}>` : ''}</li>`).join('')}</ol>${(c.notes || []).map(n => `<div class="note">${esc(n)}</div>`).join('')}`;
     case 'questions': return `<h2>${esc(c.title)}</h2><ul class="plain">${c.items.map(x => `<li>${esc(x)}${hasAudio(x) ? sayBtn(x) : sayChips(x)}</li>`).join('')}</ul>`;
     case 'explain': return `${c.title ? `<h2>${esc(c.title)}</h2>` : '<h2>부모님께</h2>'}${c.boxes.map(b => `<h3 style="margin-top:18px">${esc(b.label)}</h3>${b.paras.map(p => `<p>${esc(p)}</p>`).join('')}`).join('')}`;
