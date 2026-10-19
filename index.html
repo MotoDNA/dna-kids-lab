@@ -342,6 +342,20 @@ html,body{overflow-x:clip}
 .ah-band{scroll-margin-top:52px;margin-bottom:-96px}
 footer nav.flinks{display:block;flex:none}
 .ah-hero{text-align:center;padding:72px 0 0}
+.ah-hero{position:relative}
+.ah-fl{display:none}
+@media (min-width:1240px){
+.ah-fl{display:block;position:absolute;width:188px;padding:14px 14px 12px;background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.04);text-align:left;cursor:pointer;border:0;font:inherit;color:inherit;animation:ahfl 7s ease-in-out infinite;transition:box-shadow .2s}
+.ah-fl:hover{box-shadow:0 14px 36px rgba(0,0,0,.13),0 0 0 1px rgba(0,113,227,.35)}
+.ah-fl .sj{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;margin-bottom:8px}
+.ah-fl svg{display:block;width:100%;height:auto}
+.ah-fl .cap{display:block;font-size:13px;color:var(--sub);margin-top:6px;letter-spacing:-.01em}
+.ah-fl.l1{left:calc(50% - 600px);top:40px;--r:-5deg}.ah-fl.l2{left:calc(50% - 545px);top:270px;--r:3deg;animation-delay:-2.3s}.ah-fl.l3{left:calc(50% - 610px);top:500px;--r:-2deg;animation-delay:-4.6s}
+.ah-fl.r1{right:calc(50% - 600px);top:60px;--r:5deg;animation-delay:-1.2s}.ah-fl.r2{right:calc(50% - 545px);top:290px;--r:-3deg;animation-delay:-3.5s}.ah-fl.r3{right:calc(50% - 610px);top:520px;--r:2deg;animation-delay:-5.8s}
+}
+@keyframes ahfl{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-10px) rotate(var(--r,0deg))}}
+@media (prefers-reduced-motion:reduce){.ah-fl{animation:none;transform:rotate(var(--r,0deg))}}
+
 .ah-hero h1{font-size:clamp(36px,6.4vw,64px);line-height:1.08;letter-spacing:-.045em;margin:0 0 16px}
 .ah-sub{font-size:clamp(18px,2.4vw,23px);line-height:1.45;color:var(--sub);max-width:30em;margin:0 auto 26px;letter-spacing:-.02em}
 .ah-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:center}
@@ -560,6 +574,7 @@ async function viewHome() {
   const nL = lessons.length;
   app.innerHTML = `<div class="ah">
   <section class="ah-hero">
+    <button type="button" class="ah-fl l1" data-s="국어" aria-label="국어 단원 보기"><span class="sj" style="background:#fff1e6;color:#c2410c">국어</span><svg viewBox="0 0 160 70"><rect x="2" y="12" width="40" height="46" rx="10" fill="#bfdcff"/><text x="22" y="46" font-size="28" font-weight="800" text-anchor="middle" fill="#0071e3">ㄱ</text><text x="52" y="44" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">+</text><rect x="62" y="12" width="40" height="46" rx="10" fill="#ffd6a5"/><text x="82" y="46" font-size="28" font-weight="800" text-anchor="middle" fill="#c2410c">ㅏ</text><text x="112" y="44" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">=</text><text x="140" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#1d1d1f">가</text></svg><span class="cap">자음과 모음이 만나 글자</span></button><button type="button" class="ah-fl l2" data-s="수학" aria-label="수학 단원 보기"><span class="sj" style="background:#e8f1fd;color:#0071e3">수학</span><svg viewBox="0 0 160 70"><g stroke="#fff" stroke-width="3"><rect x="4" y="10" width="38" height="34" rx="6" fill="#0071e3"/><rect x="42" y="10" width="38" height="34" fill="#0071e3"/><rect x="80" y="10" width="38" height="34" fill="#0071e3"/><rect x="118" y="10" width="38" height="34" rx="6" fill="#e8e8ed"/></g><text x="80" y="66" font-size="16" font-weight="800" text-anchor="middle" fill="#1d1d1f">4칸 중 3칸 = 3/4</text></svg><span class="cap">분수를 막대로 보기</span></button><button type="button" class="ah-fl l3" data-s="영어" aria-label="영어 단원 보기"><span class="sj" style="background:#eaf7ee;color:#1e7e34">영어</span><svg viewBox="0 0 160 70"><circle cx="30" cy="40" r="22" fill="#ff3b30"/><path d="M30 18 q4-10 12-10" stroke="#34a853" stroke-width="4" fill="none"/><text x="104" y="40" font-size="30" font-weight="800" text-anchor="middle" fill="#1d1d1f"><tspan fill="#0071e3">a</tspan>pple</text><text x="104" y="64" font-size="15" font-weight="800" text-anchor="middle" fill="#6e6e73">사과</text></svg><span class="cap">소리와 뜻 함께 익히기</span></button><button type="button" class="ah-fl r1" data-s="과학" aria-label="과학 단원 보기"><span class="sj" style="background:#fdeeee;color:#d70015">과학</span><svg viewBox="0 0 160 70"><g fill="none" stroke="#86868b" stroke-width="2.5" stroke-dasharray="4 4"><path d="M24 26 C0 2 160 2 136 26"/><path d="M24 44 C0 68 160 68 136 44"/></g><rect x="20" y="20" width="60" height="30" rx="4" fill="#ff3b30"/><rect x="80" y="20" width="60" height="30" rx="4" fill="#0071e3"/><text x="50" y="42" font-size="20" font-weight="800" text-anchor="middle" fill="#fff">N</text><text x="110" y="42" font-size="20" font-weight="800" text-anchor="middle" fill="#fff">S</text></svg><span class="cap">자석의 두 극</span></button><button type="button" class="ah-fl r2" data-s="중국어" aria-label="중국어 단원 보기"><span class="sj" style="background:#fff6dd;color:#a15c00">중국어</span><svg viewBox="0 0 160 70"><text x="80" y="34" font-size="30" font-weight="800" text-anchor="middle" fill="#1d1d1f">你好</text><path d="M44 50 q18 -12 36 -2 q18 10 36 -8" stroke="#ff9500" stroke-width="4" fill="none" stroke-linecap="round"/><text x="80" y="68" font-size="15" font-weight="800" text-anchor="middle" fill="#6e6e73">nǐ hǎo</text></svg><span class="cap">성조를 곡선으로 읽기</span></button><button type="button" class="ah-fl r3" data-s="일본어" aria-label="일본어 단원 보기"><span class="sj" style="background:#f3ecfb;color:#7e3bb5">일본어</span><svg viewBox="0 0 160 70"><rect x="12" y="10" width="54" height="50" rx="12" fill="#f3ecfb"/><text x="39" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#af52de">あ</text><text x="80" y="43" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">↔</text><rect x="94" y="10" width="54" height="50" rx="12" fill="#e8f1fd"/><text x="121" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#0071e3">ア</text></svg><span class="cap">히라가나·가타카나 짝</span></button>
     <h1>${name ? esc(callName(name)) + ',<br>오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
     <p class="ah-sub">초등 1~6학년 국어·수학·과학·영어·중국어·일본어 ${nL}개 단원을 쉬운 말로 정리했어요. 읽고, 듣고, 문제를 풀며 다져 보세요.</p>
     <div class="ah-cta"><button class="btn" type="button" id="goUnits">단원 고르기</button><a class="more" href="#/activities">실험·활동 보기 ›</a></div>
@@ -582,6 +597,7 @@ async function viewHome() {
     </div>
   </div></section></div>`;
   const gu = document.getElementById('goUnits'); if (gu) gu.onclick = () => document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  app.querySelectorAll('.ah-fl').forEach(b => b.onclick = () => { if (subjHere.includes(b.dataset.s)) { state.subject = b.dataset.s; saveState(); viewHome(); } document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'grade') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
