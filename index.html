@@ -341,7 +341,28 @@ footer a{color:#424245}
 html,body{overflow-x:clip}
 .ah-band{scroll-margin-top:52px;margin-bottom:-96px}
 footer nav.flinks{display:block;flex:none}
-.ah-hero{text-align:center;padding:72px 0 0}
+.ah-hero{text-align:center;padding:56px 0 0}
+.ah-split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:28px auto 0;max-width:1000px;text-align:center;background:#fff;border-radius:28px;box-shadow:0 12px 40px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);overflow:hidden}
+.ah-split .sp{display:flex;flex-direction:column;align-items:center;padding:26px 28px 26px}
+.ah-split .study{border-right:1px solid var(--line);background:linear-gradient(180deg,#f5f9ff,#fff 55%)}
+.ah-split .lab{background:linear-gradient(180deg,#fff8f0,#fff 55%)}
+.ah-split .k{font-size:14px;font-weight:700;letter-spacing:.02em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.ah-split .study .k{background:#e8f1fd;color:#0071e3}.ah-split .lab .k{background:#fff1e6;color:#c2410c}
+.ah-split h2{font-size:clamp(26px,3vw,34px);letter-spacing:-.035em;margin:0 0 8px}
+.ah-split p{font-size:16px;line-height:1.55;color:var(--sub);margin:0 auto 14px;max-width:24em}
+.ah-split p b{color:var(--ink)}
+.ah-split .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:6px}
+.ah-split .sc{border:0;font:inherit;font-size:14px;font-weight:700;padding:5px 12px;border-radius:999px;cursor:pointer}
+.ah-split .sc:hover{filter:brightness(.95)}
+.ah-split .tg{font-size:14px;padding:5px 12px;border-radius:999px;background:#f5f5f7;color:var(--ink)}
+.ah-split .pic{margin:12px auto 16px}
+.ah-split .didi{width:auto;height:150px;object-fit:contain}
+.ah-split .photo{width:100%;max-width:300px;height:150px;object-fit:cover;border-radius:16px}
+.ah-split .btn{min-width:170px;margin-top:auto}
+.ah-split .lab .btn{background:#ff9500;text-decoration:none}
+.ah-split .lab .btn:hover{background:#f08a00}
+@media (max-width:760px){.ah-split{grid-template-columns:1fr;border-radius:22px}.ah-split .study{border-right:0;border-bottom:1px solid var(--line)}.ah-split .sp{padding:26px 18px 24px}.ah-split .didi{height:130px}.ah-split .photo{height:140px}}
+
 .ah-hero{position:relative}
 .ah-fl{display:none}
 @media (min-width:1240px){
@@ -565,7 +586,7 @@ async function myDone() {
   return best;
 }
 async function viewHome() {
-  const [topics, lessons, done] = await Promise.all([listTopics(), listLessons(), myDone()]);
+  const [topics, lessons, done, actsAll] = await Promise.all([listTopics(), listLessons(), myDone(), listActs()]);
   const L = Object.fromEntries(lessons.map(l => [l.slug, l]));
   const subjHere = LSUBJ.filter(s => topics.some(t => String(t.grade) === state.grade && t.subject === s));
   if (!subjHere.includes(state.subject)) state.subject = subjHere.includes('수학') ? '수학' : subjHere[0];
@@ -574,12 +595,27 @@ async function viewHome() {
   const nL = lessons.length;
   app.innerHTML = `<div class="ah">
   <section class="ah-hero">
-    <button type="button" class="ah-fl l1" data-s="국어" aria-label="국어 단원 보기"><span class="sj" style="background:#fff1e6;color:#c2410c">국어</span><svg viewBox="0 0 160 70"><rect x="2" y="12" width="40" height="46" rx="10" fill="#bfdcff"/><text x="22" y="46" font-size="28" font-weight="800" text-anchor="middle" fill="#0071e3">ㄱ</text><text x="52" y="44" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">+</text><rect x="62" y="12" width="40" height="46" rx="10" fill="#ffd6a5"/><text x="82" y="46" font-size="28" font-weight="800" text-anchor="middle" fill="#c2410c">ㅏ</text><text x="112" y="44" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">=</text><text x="140" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#1d1d1f">가</text></svg><span class="cap">자음과 모음이 만나 글자</span></button><button type="button" class="ah-fl l2" data-s="수학" aria-label="수학 단원 보기"><span class="sj" style="background:#e8f1fd;color:#0071e3">수학</span><svg viewBox="0 0 160 70"><g stroke="#fff" stroke-width="3"><rect x="4" y="10" width="38" height="34" rx="6" fill="#0071e3"/><rect x="42" y="10" width="38" height="34" fill="#0071e3"/><rect x="80" y="10" width="38" height="34" fill="#0071e3"/><rect x="118" y="10" width="38" height="34" rx="6" fill="#e8e8ed"/></g><text x="80" y="66" font-size="16" font-weight="800" text-anchor="middle" fill="#1d1d1f">4칸 중 3칸 = 3/4</text></svg><span class="cap">분수를 막대로 보기</span></button><button type="button" class="ah-fl l3" data-s="영어" aria-label="영어 단원 보기"><span class="sj" style="background:#eaf7ee;color:#1e7e34">영어</span><svg viewBox="0 0 160 70"><circle cx="30" cy="40" r="22" fill="#ff3b30"/><path d="M30 18 q4-10 12-10" stroke="#34a853" stroke-width="4" fill="none"/><text x="104" y="40" font-size="30" font-weight="800" text-anchor="middle" fill="#1d1d1f"><tspan fill="#0071e3">a</tspan>pple</text><text x="104" y="64" font-size="15" font-weight="800" text-anchor="middle" fill="#6e6e73">사과</text></svg><span class="cap">소리와 뜻 함께 익히기</span></button><button type="button" class="ah-fl r1" data-s="과학" aria-label="과학 단원 보기"><span class="sj" style="background:#fdeeee;color:#d70015">과학</span><svg viewBox="0 0 160 70"><g fill="none" stroke="#86868b" stroke-width="2.5" stroke-dasharray="4 4"><path d="M24 26 C0 2 160 2 136 26"/><path d="M24 44 C0 68 160 68 136 44"/></g><rect x="20" y="20" width="60" height="30" rx="4" fill="#ff3b30"/><rect x="80" y="20" width="60" height="30" rx="4" fill="#0071e3"/><text x="50" y="42" font-size="20" font-weight="800" text-anchor="middle" fill="#fff">N</text><text x="110" y="42" font-size="20" font-weight="800" text-anchor="middle" fill="#fff">S</text></svg><span class="cap">자석의 두 극</span></button><button type="button" class="ah-fl r2" data-s="중국어" aria-label="중국어 단원 보기"><span class="sj" style="background:#fff6dd;color:#a15c00">중국어</span><svg viewBox="0 0 160 70"><text x="80" y="34" font-size="30" font-weight="800" text-anchor="middle" fill="#1d1d1f">你好</text><path d="M44 50 q18 -12 36 -2 q18 10 36 -8" stroke="#ff9500" stroke-width="4" fill="none" stroke-linecap="round"/><text x="80" y="68" font-size="15" font-weight="800" text-anchor="middle" fill="#6e6e73">nǐ hǎo</text></svg><span class="cap">성조를 곡선으로 읽기</span></button><button type="button" class="ah-fl r3" data-s="일본어" aria-label="일본어 단원 보기"><span class="sj" style="background:#f3ecfb;color:#7e3bb5">일본어</span><svg viewBox="0 0 160 70"><rect x="12" y="10" width="54" height="50" rx="12" fill="#f3ecfb"/><text x="39" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#af52de">あ</text><text x="80" y="43" font-size="20" font-weight="800" text-anchor="middle" fill="#6e6e73">↔</text><rect x="94" y="10" width="54" height="50" rx="12" fill="#e8f1fd"/><text x="121" y="47" font-size="32" font-weight="800" text-anchor="middle" fill="#0071e3">ア</text></svg><span class="cap">히라가나·가타카나 짝</span></button>
-    <h1>${name ? esc(callName(name)) + ',<br>오늘은 어떤 단원을 공부할까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
-    <p class="ah-sub">초등 1~6학년 국어·수학·과학·영어·중국어·일본어 ${nL}개 단원을 쉬운 말로 정리했어요. 읽고, 듣고, 문제를 풀며 다져 보세요.</p>
-    <div class="ah-cta"><button class="btn" type="button" id="goUnits">단원 고르기</button><a class="more" href="#/activities">실험·활동 보기 ›</a></div>
+    <h1>${name ? esc(callName(name)) + ',<br>오늘은 무엇을 해 볼까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
+    <p class="ah-sub">초등 1~6학년, 개념은 쉽게 공부하고 실험으로 직접 확인해요.</p>
+    <div class="ah-split">
+      <div class="sp study">
+        <div class="k">공부하기</div>
+        <h2>단원 개념 공부</h2>
+        <p>국어·수학·과학·영어·중국어·일본어 <b>${nL}개 단원</b>을 그림과 애니메이션으로 쉽게 익히고 문제로 다져요.</p>
+        <div class="chips"><button type="button" class="sc" data-s="국어" style="background:#fff1e6;color:#c2410c">국어</button><button type="button" class="sc" data-s="수학" style="background:#e8f1fd;color:#0071e3">수학</button><button type="button" class="sc" data-s="과학" style="background:#fdeeee;color:#d70015">과학</button><button type="button" class="sc" data-s="영어" style="background:#eaf7ee;color:#1e7e34">영어</button><button type="button" class="sc" data-s="중국어" style="background:#fff6dd;color:#a15c00">중국어</button><button type="button" class="sc" data-s="일본어" style="background:#f3ecfb;color:#7e3bb5">일본어</button></div>
+        <img src="assets/img/didi/read.webp" alt="책을 읽는 디디" width="220" height="220" class="pic didi">
+        <button class="btn" type="button" id="goUnits">단원 고르기</button>
+      </div>
+      <div class="sp lab">
+        <div class="k">실험하기</div>
+        <h2>집에서 하는 실험</h2>
+        <p>재활용품으로 <b>${actsAll.length}가지 실험·활동</b>을 하며 개념을 눈으로 확인해요. 재료가 없으면 실험 키트로도 할 수 있어요.</p>
+        <div class="chips"><span class="tg">종이컵 실전화</span><span class="tg">물에 뜨는 나침반</span><span class="tg">분수 피자</span></div>
+        <img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" class="pic photo" loading="lazy">
+        <a class="btn" href="#/activities">실험 보러 가기</a>
+      </div>
+    </div>
     ${me ? '' : `<p class="ah-login">로그인하면 공부 기록이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}
-    <img class="ah-didi" src="assets/img/didi/wave.webp" alt="손을 흔드는 디디" width="300" height="305">
   </section>
   <section class="ah-band" id="units"><div class="in">
     <h2>몇 학년이에요?</h2>
@@ -597,7 +633,7 @@ async function viewHome() {
     </div>
   </div></section></div>`;
   const gu = document.getElementById('goUnits'); if (gu) gu.onclick = () => document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  app.querySelectorAll('.ah-fl').forEach(b => b.onclick = () => { if (subjHere.includes(b.dataset.s)) { state.subject = b.dataset.s; saveState(); viewHome(); } document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
+  app.querySelectorAll('.ah-split .sc').forEach(b => b.onclick = () => { if (subjHere.includes(b.dataset.s)) { state.subject = b.dataset.s; saveState(); viewHome(); } document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'grade') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
