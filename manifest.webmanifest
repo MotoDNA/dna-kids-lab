@@ -1,0 +1,19 @@
+{
+  "name": "DNA Kids Lab 디엔에이 키즈랩",
+  "short_name": "DNA Kids Lab",
+  "description": "초등 1~6학년 무료 가정 학습 · 실험 · 상식 놀이터",
+  "id": "/",
+  "start_url": "/?utm_source=pwa&utm_medium=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "ko",
+  "background_color": "#f6f1e6",
+  "theme_color": "#1f6b52",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "assets/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/app/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

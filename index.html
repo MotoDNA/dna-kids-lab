@@ -11,6 +11,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dnakidslab.cloud/">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f6b52">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/app/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="DNA Kids Lab">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="canonical" href="https://dnakidslab.cloud/">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
@@ -426,6 +434,18 @@ footer nav.flinks{display:block;flex:none}
 @media (max-width:1000px){.ah-tiles{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.ah-didi{width:200px}.seg{width:100%}.seg .f{flex:1;padding:6px 0;font-size:14px}.ah-tiles{grid-template-columns:1fr}.tile{min-height:0}.ah-hero{padding-top:44px}.ah-band{padding-top:44px;padding-bottom:52px}.ah .units{padding:2px 16px}.page-in{padding:22px 20px 12px}}
 @media (max-width:640px){.pg-title{font-size:26px}h1{font-size:30px}.book{height:calc(100vh - 245px);height:calc(100dvh - 245px)}}
+.pwa-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;max-width:520px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.16);line-height:1.4}
+.pwa-bar img{width:44px;height:44px;border-radius:11px;flex:none}
+.pwa-bar .t{flex:1;min-width:0;font-size:15px}.pwa-bar .t b{display:block;font-size:16px}
+.pwa-bar .go{flex:none;border:0;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;padding:10px 16px;cursor:pointer}
+.pwa-bar .x{flex:none;border:0;background:none;color:var(--sub);font-size:22px;line-height:1;padding:6px;cursor:pointer}
+.pwa-dlg{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+.pwa-dlg>div{background:#fff;border-radius:18px;max-width:460px;width:100%;padding:22px 20px calc(18px + env(safe-area-inset-bottom));line-height:1.6}
+.pwa-dlg h3{margin:0 0 10px;font-size:19px}.pwa-dlg ol{margin:0 0 14px;padding-left:22px}.pwa-dlg li{margin:6px 0}
+.pwa-dlg .ic{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:#f6f6f6;font-size:14px}
+.pwa-dlg button{width:100%;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;padding:12px;cursor:pointer}
+.flinks .pwa-link{background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit}
+@media print{.pwa-bar,.pwa-dlg{display:none!important}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -437,7 +457,7 @@ footer nav.flinks{display:block;flex:none}
 <div class="acct" id="acct"></div>
 </div></header>
 <main class="w" id="app"><p class="sub">불러오는 중…</p></main>
-<footer><div class="w"><nav class="flinks"><a href="l/index.html">전체 단원 보기</a> · <a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용약관</a></nav>DNA Kids Lab · 도안과 문제지는 가정 내 학습용으로 자유롭게 인쇄할 수 있어요.<br>© 2026 DNA Labs. 이 사이트의 모든 콘텐츠(글·사진·문제·도안·음성)의 저작권은 DNA Labs에 있습니다.</div></footer>
+<footer><div class="w"><nav class="flinks"><a href="l/index.html">전체 단원 보기</a> · <button type="button" class="pwa-link" id="pwaLink" hidden>📲 앱으로 설치</button> · <a href="privacy.html">개인정보처리방침</a> · <a href="terms.html">이용약관</a></nav>DNA Kids Lab · 도안과 문제지는 가정 내 학습용으로 자유롭게 인쇄할 수 있어요.<br>© 2026 DNA Labs. 이 사이트의 모든 콘텐츠(글·사진·문제·도안·음성)의 저작권은 DNA Labs에 있습니다.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://lnnyevytmpgvdqtpfyjt.supabase.co';
@@ -1201,6 +1221,53 @@ async function route() {
 }
 window.addEventListener('hashchange', route);
 (async () => { try { await loadMe(); } catch (e) {} renderAcct(); route(); startSession(); })();
+</script>
+<script>
+/* 앱으로 설치하기 (PWA) */
+(function () {
+  if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  const ua = navigator.userAgent;
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const inApp = /KAKAOTALK|NAVER\(inapp|Instagram|FBAN|FBAV|Line\/|DaumApps|everytimeApp/i.test(ua);
+  const touch = matchMedia('(pointer:coarse)').matches || navigator.maxTouchPoints > 1;
+  let deferred = null;
+  const link = document.getElementById('pwaLink');
+  const ga = (n, p) => { try { gtag('event', n, p || {}); } catch (e) {} };
+  const snoozed = () => { try { return Date.now() < +(localStorage.getItem('dkl_pwa_snooze') || 0); } catch (e) { return false; } };
+  const snooze = days => { try { localStorage.setItem('dkl_pwa_snooze', String(Date.now() + days * 864e5)); } catch (e) {} };
+  function guide() {
+    let h;
+    if (inApp) h = `<h3>앱 설치는 인터넷 앱에서 할 수 있어요</h3><p>지금은 카카오톡·네이버 같은 앱 안의 화면이라 설치가 안 돼요.</p><ol><li>오른쪽 위(또는 아래) <span class="ic">⋮</span> 또는 <span class="ic">…</span> 메뉴를 눌러요</li><li><b>${ios ? 'Safari로 열기' : '다른 브라우저로 열기(Chrome)'}</b>를 눌러요</li><li>열린 화면에서 다시 <b>📲 앱으로 설치</b>를 눌러요</li></ol>`;
+    else if (ios) h = `<h3>아이폰·아이패드에 설치하기</h3><ol><li>Safari 아래(아이패드는 위)의 <span class="ic">공유 ⬆︎</span> 단추를 눌러요<br><small>안 보이면 주소창 옆 <span class="ic">…</span>을 먼저 눌러요</small></li><li>목록을 내려 <b>홈 화면에 추가</b>를 눌러요</li><li>오른쪽 위 <b>추가</b>를 누르면 끝!</li></ol>`;
+    else h = `<h3>앱으로 설치하기</h3><ol><li>브라우저 오른쪽 위 <span class="ic">⋮</span> 메뉴를 눌러요</li><li><b>홈 화면에 추가</b> 또는 <b>앱 설치</b>를 눌러요</li><li><b>설치</b>를 누르면 끝!</li></ol>`;
+    const d = document.createElement('div'); d.className = 'pwa-dlg'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true');
+    d.innerHTML = `<div>${h}<button type="button">알겠어요</button></div>`;
+    const close = () => { d.remove(); document.removeEventListener('keydown', esc); }; const esc = e => { if (e.key === 'Escape') close(); };
+    d.onclick = e => { if (e.target === d || e.target.tagName === 'BUTTON') close(); }; document.addEventListener('keydown', esc);
+    document.body.appendChild(d); d.querySelector('button').focus(); ga('pwa_guide', { platform: inApp ? 'inapp' : ios ? 'ios' : 'other' });
+  }
+  async function install() {
+    if (deferred) { deferred.prompt(); const r = await deferred.userChoice.catch(() => ({})); ga('pwa_prompt', { outcome: r.outcome || '' }); deferred = null; hideBar(); if (r.outcome === 'accepted') { if (link) link.hidden = true; } return; }
+    guide();
+  }
+  let bar = null;
+  function hideBar() { if (bar) { bar.remove(); bar = null; } }
+  function showBar() {
+    if (bar || standalone || snoozed() || !touch) return;
+    bar = document.createElement('div'); bar.className = 'pwa-bar'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', '앱 설치 안내');
+    bar.innerHTML = `<img src="assets/app/icon-192.png" alt=""><div class="t"><b>앱으로 설치해요</b>홈 화면에서 바로 열 수 있어요</div><button type="button" class="go">설치</button><button type="button" class="x" aria-label="닫기">×</button>`;
+    bar.querySelector('.go').onclick = install;
+    bar.querySelector('.x').onclick = () => { snooze(14); hideBar(); ga('pwa_dismiss'); };
+    document.body.appendChild(bar);
+  }
+  if (standalone) return;
+  if (link) { link.hidden = false; link.onclick = install; }
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; showBar(); });
+  window.addEventListener('appinstalled', () => { hideBar(); if (link) link.hidden = true; ga('pwa_installed'); });
+  // 아이폰·아이패드, 앱 속 브라우저는 설치 신호가 오지 않으므로 잠시 뒤 안내를 띄워요
+  if (ios || inApp) setTimeout(showBar, 2500);
+})();
 </script>
 </body>
 </html>
