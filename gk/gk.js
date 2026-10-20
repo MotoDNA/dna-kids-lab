@@ -56,11 +56,13 @@ const IC = {
   korea: '<path d="M20 3.5a10.5 10.5 0 0 1 10.5 10.5C30.5 22.5 20 36 20 36S9.5 22.5 9.5 14A10.5 10.5 0 0 1 20 3.5z" fill="currentColor"/><circle cx="20" cy="14" r="4.2" fill="#fff"/>',
   space: '<circle cx="20" cy="20" r="9" fill="currentColor"/><ellipse cx="20" cy="20" rx="17.5" ry="5.5" fill="none" stroke="currentColor" stroke-width="2.4" transform="rotate(-20 20 20)"/>',
   dino: '<path d="M3 31c3 0 6-5 10-6.5 4-1.4 9 .6 13-.4 2-.5 2.6-5 2.8-10 .1-3.2 1.4-6.1 4.4-6.1 2 0 3.3 1.1 3.3 2.3l-3.2.9c-.8 4-.6 9.6-1.8 13.4-.9 2.8-2.7 4.6-5.3 5.4l.9 5.5h-3.3l-1-4.8h-6.7l-.9 4.8H9.3l.3-5.6C7 31.4 5 32 3 31z" fill="currentColor"/>',
+  globe: '<circle cx="20" cy="20" r="15" fill="currentColor" opacity=".25"/><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="2.6"/><ellipse cx="20" cy="20" rx="6.5" ry="15" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M5 20h30M8 12h24M8 28h24" stroke="currentColor" stroke-width="2"/>',
   time: '<circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 10.5V20l6.5 4" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
 };
 const ic = (k, size) => `<svg viewBox="0 0 40 40" width="${size || 34}" height="${size || 34}" aria-hidden="true" focusable="false">${IC[k]}</svg>`;
 
 const ACTS = [
+  { id: 'globe', href: 'gk/globe/', t: '3D 지구본 여행', d: '위성 사진 지구본을 돌리며 나라·수도·문화와 북극·남극을 알아봐요.', c: '#0b57d0' },
   { id: 'map', t: '세계지도 탐험', d: '나라를 눌러 국기·수도·인사말을 알아보고, 어디 있는지 맞혀 봐요.', c: '#34a853' },
   { id: 'flags', t: '국기 맞히기', d: '국기를 보고 나라를, 나라를 보고 국기를 골라요.', c: '#d93025' },
   { id: 'capitals', t: '나라·수도', d: '카드를 뒤집어 나라와 수도 짝을 찾아요.', c: '#0071e3' },
@@ -393,7 +395,7 @@ function bindSay(root, byIso) {
 function viewHome(app) {
   document.title = '상식 놀이터 · DNA Kids Lab';
   app.innerHTML = `<div class="gk"><section class="gk-hero"><span class="gk-kick">상식 놀이터</span><h1>세계 상식 놀이</h1><p>지도·국기·모스부호·행성·공룡까지, 놀면서 세상을 알아 가요.</p></section>
-  <div class="gk-grid">${ACTS.map(a => `<a class="gk-tile" href="#/gk/${a.id}"><span class="gk-ic" style="background:${a.c}1a;color:${a.c}">${ic(a.id, 30)}</span><b>${a.t}</b><span>${a.d}</span></a>`).join('')}</div></div>`;
+  <div class="gk-grid">${ACTS.map(a => `<a class="gk-tile" href="${a.href || '#/gk/' + a.id}"><span class="gk-ic" style="background:${a.c}1a;color:${a.c}">${ic(a.id, 30)}</span><b>${a.t}</b><span>${a.d}</span></a>`).join('')}</div></div>`;
 }
 
 /* =================== 2. 세계지도 =================== */
