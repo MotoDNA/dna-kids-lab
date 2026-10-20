@@ -1172,7 +1172,7 @@ async function viewParent() {
 async function route() {
   stopNarr(); clearTimeout(window._nt);
   logView('/' + (location.hash.replace(/^#\/?/, '') || ''));
-  try { const gp = '/' + (location.hash.replace(/^#\/?/, '') || ''); gtag('event', 'page_view', { page_location: location.origin + gp + location.search, page_path: gp, page_title: document.title }); } catch (e) {}
+  { const gp = '/' + (location.hash.replace(/^#\/?/, '') || ''); setTimeout(() => { try { gtag('event', 'page_view', { page_location: location.origin + gp + location.search, page_path: gp, page_title: document.title }); } catch (e) {} }, 600); }
   const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   const [p, arg] = h.split('/');
   document.title = 'DNA Kids Lab · 학교 개념을 집에서 쉽게';
