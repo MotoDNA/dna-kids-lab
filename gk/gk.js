@@ -386,9 +386,9 @@ async function speak(text, lang, btn, noteEl) {
   if (noteEl) noteEl.textContent = '';
   speechSynthesis.speak(u);
 }
-const greetHtml = c => c.greet ? `<div class="gk-say"><b lang="${E(c.greet.lang)}">${E(c.greet.text)}</b><button type="button" class="gk-sbtn" data-say="${E(c.iso2)}">🔊 들어 보기</button><span class="gk-snote" aria-live="polite"></span><span class="gk-snote" style="margin-top:-6px">${E(langName(c.greet.lang))}로 하는 "안녕하세요"</span></div>` : '';
+const greetHtml = c => c.greet ? `<div class="gk-say"><b lang="${E(c.greet.lang)}">${E(c.greet.text)}</b><button type="button" class="gk-sbtn" data-gsay="${E(c.iso2)}">🔊 들어 보기</button><span class="gk-snote" aria-live="polite"></span><span class="gk-snote" style="margin-top:-6px">${E(langName(c.greet.lang))}로 하는 "안녕하세요"</span></div>` : '';
 function bindSay(root, byIso) {
-  root.querySelectorAll('[data-say]').forEach(b => b.onclick = () => { const c = byIso[b.dataset.say]; if (c && c.greet) speak(c.greet.text, c.greet.lang, b, b.parentElement.querySelector('.gk-snote')); });
+  root.querySelectorAll('[data-gsay]').forEach(b => b.onclick = () => { const c = byIso[b.dataset.gsay]; if (c && c.greet) speak(c.greet.text, c.greet.lang, b, b.parentElement.querySelector('.gk-snote')); });
 }
 
 /* =================== 1. 홈 =================== */
@@ -798,9 +798,9 @@ async function viewGreet(app) {
   const list = cs.filter(c => c.greet && c.greet.text);
   const byIso = Object.fromEntries(cs.map(c => [c.iso2, c]));
   body.innerHTML = `<div class="gk-cards">${list.map(c => `<div class="gk-c"><div class="top"><img src="${flagSrc(c.iso2)}" alt="${E(c.ko)} 국기" loading="lazy"><b>${E(c.ko)}<small>${E(langName(c.greet.lang))}</small></b></div>
-    <div class="big" lang="${E(c.greet.lang)}">${E(c.greet.text)}</div><button type="button" class="gk-sbtn" data-say="${E(c.iso2)}">🔊 들어 보기</button><span class="gk-snote" aria-live="polite" style="display:block;margin-top:6px"></span></div>`).join('')}</div>
+    <div class="big" lang="${E(c.greet.lang)}">${E(c.greet.text)}</div><button type="button" class="gk-sbtn" data-gsay="${E(c.iso2)}">🔊 들어 보기</button><span class="gk-snote" aria-live="polite" style="display:block;margin-top:6px"></span></div>`).join('')}</div>
     <p class="gk-note">소리는 이 기기(휴대폰·컴퓨터)에 들어 있는 목소리로 읽어 줘요. 그 나라 말 목소리가 없는 기기에서는 소리가 나오지 않을 수 있어요.</p>`;
-  body.querySelectorAll('[data-say]').forEach(b => b.onclick = () => { const c = byIso[b.dataset.say]; speak(c.greet.text, c.greet.lang, b, b.parentElement.querySelector('.gk-snote')); });
+  body.querySelectorAll('[data-gsay]').forEach(b => b.onclick = () => { const c = byIso[b.dataset.gsay]; speak(c.greet.text, c.greet.lang, b, b.parentElement.querySelector('.gk-snote')); });
 }
 
 /* =================== 9. 우리나라 시·도 =================== */
