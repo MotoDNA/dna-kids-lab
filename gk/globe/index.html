@@ -144,11 +144,14 @@ function shapeSvg(f, d) { // country silhouette + capital + city
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(d.ko)} 모양과 수도 위치"><path d="${path}" fill="#7fb37a" stroke="#4d7c48" stroke-width="1" fill-rule="evenodd"/>${d.city ? lab([d.city[2], d.city[3]], d.city[0], 'city') : ''}${lab(d.c, d.cap, 'cap')}</svg>`;
 }
 function peopleSvg(n, color) { return `<svg viewBox="0 0 18 26"><circle cx="9" cy="5" r="4.2" fill="${color}"/><path d="M2 25v-9a7 7 0 0 1 14 0v9z" fill="${color}"/></svg>`; }
+let PID = 0;
+function partSvg(f) { const id = 'pc' + (++PID); return `<svg viewBox="0 0 18 26"><defs><clipPath id="${id}"><rect x="0" y="0" width="${18 * f}" height="26"/></clipPath></defs><circle cx="9" cy="5" r="4.2" fill="var(--line)"/><path d="M2 25v-9a7 7 0 0 1 14 0v9z" fill="var(--line)"/><g clip-path="url(#${id})"><circle cx="9" cy="5" r="4.2" fill="var(--accent)"/><path d="M2 25v-9a7 7 0 0 1 14 0v9z" fill="var(--accent)"/></g></svg>`; }
 function peopleTile(d) {
   const r = d.pop / KR.pop; let icons = '';
-  if (r >= 1) { const n = Math.min(Math.round(r), 40); icons = Array.from({ length: n }, () => peopleSvg(1, 'var(--accent)')).join('') + (Math.round(r) > 40 ? `<span class="sm" style="align-self:center">… 모두 ${Math.round(r)}명</span>` : ''); }
+  if (r >= 1) { const full = Math.min(Math.floor(r), 40), frac = r > 40 ? 0 : Math.round((r - Math.floor(r)) * 10) / 10;
+    icons = Array.from({ length: full }, () => peopleSvg(1, 'var(--accent)')).join('') + (frac >= 0.1 ? partSvg(frac) : '') + (r > 40 ? `<span class="sm" style="align-self:center">… 모두 ${Math.round(r)}배</span>` : ''); }
   else { const pct = Math.max(r * 100, 3); icons = `<svg viewBox="0 0 18 26"><defs><clipPath id="pc"><rect x="0" y="${26 - 26 * pct / 100}" width="18" height="26"/></clipPath></defs><circle cx="9" cy="5" r="4.2" fill="var(--line)"/><path d="M2 25v-9a7 7 0 0 1 14 0v9z" fill="var(--line)"/><g clip-path="url(#pc)"><circle cx="9" cy="5" r="4.2" fill="var(--accent)"/><path d="M2 25v-9a7 7 0 0 1 14 0v9z" fill="var(--accent)"/></g></svg>`; }
-  const txt = d.iso === 'kr' ? '우리나라 인구예요' : r >= 1 ? `우리나라를 사람 1명으로 치면 <b>${ratio(r)}명</b>만큼` : `우리나라의 약 <b>${r >= 0.1 ? Math.round(r * 100) : (Math.round(r * 1000) / 10)}%</b>`;
+  const txt = d.iso === 'kr' ? '우리나라 인구예요' : r >= 1 ? `우리나라 인구의 <b>${ratio(r)}배</b>예요` : `우리나라 인구의 약 <b>${r >= 0.1 ? Math.round(r * 100) : (Math.round(r * 1000) / 10)}%</b>예요`;
   return `<div class="tile"><h3>인구 <em>${d.popYear}년 추정</em></h3><div class="big">약 ${fmtPop(d.pop)}</div><div class="people">${icons}</div><div class="sm">${txt}</div></div>`;
 }
 function areaTile(d) {
