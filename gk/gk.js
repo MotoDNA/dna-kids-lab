@@ -55,6 +55,7 @@ const IC = {
   greet: '<path d="M6 6h18a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9l-6 5v-5H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3z" fill="currentColor"/><path d="M34 15h-4v6a5 5 0 0 1-5 5h-7v1a3 3 0 0 0 3 3h7l5 4v-4h1a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3z" fill="currentColor" opacity=".5"/>',
   korea: '<path d="M20 3.5a10.5 10.5 0 0 1 10.5 10.5C30.5 22.5 20 36 20 36S9.5 22.5 9.5 14A10.5 10.5 0 0 1 20 3.5z" fill="currentColor"/><circle cx="20" cy="14" r="4.2" fill="#fff"/>',
   space: '<circle cx="20" cy="20" r="9" fill="currentColor"/><ellipse cx="20" cy="20" rx="17.5" ry="5.5" fill="none" stroke="currentColor" stroke-width="2.4" transform="rotate(-20 20 20)"/>',
+  stars: '<path d="M5 31l9-9 9 4 9-15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><circle cx="5" cy="31" r="3" fill="currentColor"/><circle cx="14" cy="22" r="2.6" fill="currentColor"/><circle cx="23" cy="26" r="2.6" fill="currentColor"/><path d="M32 4l1.8 5.2L39 11l-5.2 1.8L32 18l-1.8-5.2L25 11l5.2-1.8z" fill="currentColor"/>',
   dino: '<path d="M3 31c3 0 6-5 10-6.5 4-1.4 9 .6 13-.4 2-.5 2.6-5 2.8-10 .1-3.2 1.4-6.1 4.4-6.1 2 0 3.3 1.1 3.3 2.3l-3.2.9c-.8 4-.6 9.6-1.8 13.4-.9 2.8-2.7 4.6-5.3 5.4l.9 5.5h-3.3l-1-4.8h-6.7l-.9 4.8H9.3l.3-5.6C7 31.4 5 32 3 31z" fill="currentColor"/>',
   globe: '<circle cx="20" cy="20" r="15" fill="currentColor" opacity=".25"/><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="2.6"/><ellipse cx="20" cy="20" rx="6.5" ry="15" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M5 20h30M8 12h24M8 28h24" stroke="currentColor" stroke-width="2"/>',
   time: '<circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 10.5V20l6.5 4" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
@@ -72,6 +73,7 @@ const ACTS = [
   { id: 'greet', t: '세계의 인사말', d: '여러 나라 말로 "안녕하세요"를 듣고 따라 해요.', c: '#d6336c' },
   { id: 'korea', t: '우리나라 시·도', d: '17개 시·도와 시·도청이 있는 곳을 알아봐요.', c: '#1a73e8' },
   { id: 'space', t: '태양계 행성', d: '여덟 행성의 크기를 한 줄로 세워 비교해요.', c: '#3949ab' },
+  { id: 'stars', t: '별자리 여행', d: '계절마다 보이는 별자리와 북극성 찾는 법을 알아봐요.', c: '#5b3cc4' },
   { id: 'dino', t: '공룡 시대', d: '트라이아스기·쥐라기·백악기를 시간 띠로 봐요.', c: '#2e7d32' },
   { id: 'time', t: '세계 시간', d: '지금 세계 여러 도시는 몇 시일까요?', c: '#00838f' }
 ];
@@ -292,6 +294,80 @@ const CSS = `
 .gk-clk .tm{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.25}
 .gk-clk .dd{font-size:14px;color:var(--sub);line-height:1.45}
 .gk-clk .df{font-size:14px;font-weight:700;color:#00838f}
+/* 별자리 */
+.gk .seg.big .f{min-height:44px;font-size:15px;font-weight:600}
+.gk-sky{position:relative;background:radial-gradient(ellipse at 50% 0,#1d2c62,#080e26 75%);border-radius:22px;overflow:hidden}
+.gk-sky svg{display:block;width:100%;height:auto;-webkit-tap-highlight-color:transparent}
+.gk-sky .ln{fill:none;stroke:#8fb0ff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.2s ease-out}
+.gk-sky.on .ln{stroke-dashoffset:0}
+.gk-sky.st .ln{stroke-dasharray:none;transition:none}
+.gk-sky .hit{fill:none;stroke:transparent;stroke-width:24;stroke-linecap:round;stroke-linejoin:round;pointer-events:stroke}
+.gk-sky .hitc{fill:transparent}
+.gk-sky .cn{cursor:pointer;outline:none}
+.gk-sky .cn.sel .ln{stroke:#fff;stroke-width:3.2;filter:drop-shadow(0 0 4px #9fc2ff)}
+.gk-sky .cn:focus-visible .ln{stroke:#fff;stroke-width:3}
+.gk-sky text{paint-order:stroke;stroke:#0a1230;stroke-linejoin:round;pointer-events:none}
+.gk-sky .cl{fill:#d6e2ff;font-size:14.5px;font-weight:800;stroke-width:4px}
+.gk-sky .cn.sel .cl{fill:#fff;font-size:16px}
+.gk-sky .sn{fill:#ffe9a8;font-size:12.5px;font-weight:700;stroke-width:3px}
+.gk-sky .cmp{fill:#9fb0d9;font-size:12.5px;font-weight:700;stroke-width:0}
+.gk-sky path.shp{fill:none}
+.gk-sky .shp{fill:rgba(255,200,40,.13);stroke:#ffd60a;stroke-width:2.6;stroke-dasharray:7 6;stroke-linejoin:round;opacity:0;transition:opacity .6s 1.4s;pointer-events:none}
+.gk-sky.on .shp{opacity:.95}
+.gk-sky .lb{fill:none;stroke:#8fb0ff;stroke-width:1.6;opacity:.3;stroke-linecap:round;stroke-linejoin:round}
+.gk-sky .hl{fill:none;stroke:#ffd60a;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.gk-sky .gd{fill:none;stroke:#6ff0c3;stroke-width:2.4;stroke-linecap:round}
+.gk-sky .gd.dash{stroke-dasharray:6 6}
+.gk-sky .tk{fill:#6ff0c3}
+.gk-sky .tkt{fill:#b9ffe6;font-size:12px;font-weight:800;stroke-width:3px}
+.gk-sky .ring{fill:none;stroke:#ffd60a;stroke-width:2.2}
+.gk-sky .ring.g{stroke:#6ff0c3}
+.gk-sky .pol{fill:#fff;filter:drop-shadow(0 0 6px #ffd60a)}
+.gk-sky .big{font-size:16px;fill:#ffd60a;font-weight:800;stroke-width:4px}
+.gk-sky .nw{stroke-dasharray:1;animation:gkdraw 1.1s ease-out both}
+.gk-sky .nw.slow{animation-duration:1.8s}
+.gk-sky .fd{animation:gkfade .5s ease-out both}
+@keyframes gkdraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes gkfade{from{opacity:0}to{opacity:1}}
+.gk-stchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0}
+.gk-stchips button{border:1.5px solid #d2d2d7;background:#fff;border-radius:999px;min-height:44px;padding:8px 16px;font-size:16px;font-weight:600;cursor:pointer;color:var(--ink)}
+.gk-stchips button[aria-pressed=true]{background:#1d1d1f;border-color:#1d1d1f;color:#fff}
+.gk-shape{display:flex;gap:10px;align-items:flex-start;background:#fff8dc;border-radius:16px;padding:12px 14px;margin:12px 0 0;font-size:15.5px;line-height:1.6}
+.gk-shape i{flex:none;width:26px;height:0;border-top:3px dashed #e0a800;margin-top:12px}
+.gk-shape b{display:block;font-size:17px}
+.gk-schip{display:inline-block;font-size:13px;font-weight:700;border-radius:99px;padding:2px 10px;background:#efeafd;color:#5b3cc4;white-space:nowrap}
+.gk-schip.spring{background:#fde7ef;color:#b0245c}.gk-schip.summer{background:#e6f4ea;color:#1e7e34}.gk-schip.autumn{background:#fff1e0;color:#a35300}.gk-schip.winter{background:#e8f0fe;color:#1a57c7}.gk-schip.south{background:#f1f3f4;color:#5f6368}
+.gk-stinfo{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;align-items:start}
+.gk-stinfo .mini{background:#0d1736;border-radius:16px;overflow:hidden}
+.gk-stinfo .mini svg{display:block;width:100%;height:auto}
+.gk-stinfo h2{font-size:26px;margin:0;line-height:1.25}
+.gk-stinfo .en{font-size:14px;color:var(--sub);margin:2px 0 8px}
+.gk-stinfo dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:12px 0 10px;font-size:16px;line-height:1.5}
+.gk-stinfo dt{color:var(--sub)}.gk-stinfo dd{margin:0;font-weight:600}
+.gk-stinfo dd span{font-weight:400;color:var(--sub)}
+.gk-stinfo .fact{background:#f3effd;border-radius:12px;padding:10px 12px;font-size:15.5px;line-height:1.6;margin:0}
+@media (max-width:560px){.gk-stinfo{grid-template-columns:1fr}.gk-stinfo .mini{max-width:220px}}
+.gk-steps{max-width:760px;margin:12px auto 0}
+.gk-steps .no{font-size:14px;font-weight:700;color:#5b3cc4}
+.gk-steps p.tx{font-size:17.5px;line-height:1.6;margin:4px 0 12px;min-height:3.2em;font-weight:600}
+.gk-steps .gk-btns{justify-content:space-between;margin-top:0}
+.gk-steps .btn{min-height:48px;min-width:120px}
+.gk-nwrap{max-width:760px;margin:0 auto}
+.gk-stcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.gk-stc{display:flex;flex-direction:column;gap:4px;text-align:left;background:#fff;border:0;border-radius:18px;padding:10px 10px 12px;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.035);cursor:pointer;color:var(--ink);font:inherit;transition:transform .15s,box-shadow .15s}
+.gk-stc:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(0,0,0,.07),0 10px 26px rgba(0,0,0,.09)}
+.gk-stc .mini{background:#0d1736;border-radius:12px;overflow:hidden;margin-bottom:4px}
+.gk-stc .mini svg{display:block;width:100%;height:auto}
+.gk-stc b{font-size:17px;line-height:1.3;word-break:keep-all}
+.gk-stc .st{font-size:14px;color:var(--sub);line-height:1.4}
+@media (max-width:560px){.gk-stcards{grid-template-columns:1fr 1fr;gap:10px}}
+.gk-modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.gk-modal .box{position:relative;background:#fff;border-radius:22px;padding:22px 20px 20px;max-width:620px;width:100%;max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.gk-modal .x{position:absolute;right:10px;top:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--bg2);font-size:24px;line-height:1;cursor:pointer;color:var(--ink)}
+.gk-modal .box h2{padding-right:44px}
+.gk-qsky{background:#0d1736;border-radius:16px;overflow:hidden;max-width:300px;margin:12px auto 0}
+.gk-qsky svg{display:block;width:100%;height:auto}
+@media (prefers-reduced-motion:reduce){.gk-sky .ln,.gk-sky .shp,.gk-stc{transition:none!important}.gk-sky .nw,.gk-sky .fd{animation:none!important}.gk-stc:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){.gk-tile,.gk-mc .in,.gk-sil .m,.gk-r .bar i,.gk-space .pl,.gk-prog i{transition:none!important}.gk-map path.ans{animation:none}.gk-tile:hover{transform:none}}
 `;
 function injectCss() { if (document.getElementById('gk-css')) return; const s = document.createElement('style'); s.id = 'gk-css'; s.textContent = CSS; document.head.appendChild(s); }
@@ -888,6 +964,301 @@ async function viewSpace(app) {
   ro.observe(sp); onLeave(() => ro.disconnect());
 }
 
+/* =================== 10-2. 별자리 여행 =================== */
+const SEA_SHORT = { spring: '봄', summer: '여름', autumn: '가을', winter: '겨울', north: '일 년 내내', south: '남반구' };
+const SEA_LONG = { spring: '봄 저녁 하늘', summer: '여름 저녁 하늘', autumn: '가을 저녁 하늘', winter: '겨울 저녁 하늘', north: '일 년 내내 (북쪽 하늘)', south: '남반구 하늘 (우리나라에서는 거의 볼 수 없어요)' };
+const QSTAR = { UMa: ['북두칠성'], UMi: ['북극성'], Ori: ['베텔게우스', '리겔'], Tau: ['알데바란'], Gem: ['폴룩스', '카스토르'], CMa: ['시리우스'], CMi: ['프로키온'], Leo: ['레굴루스'], Vir: ['스피카'], Boo: ['아크투루스'], Lyr: ['베가'], Cyg: ['데네브'], Aql: ['알타이르'], Sco: ['안타레스'], Sgr: ['남두육성'], Cru: ['아크룩스'] };
+const STAR_NOTE = { 베가: '직녀성', 알타이르: '견우성', 북극성: '폴라리스' };
+const D2R = Math.PI / 180;
+// 평사도법(스테레오 투영): 하늘을 올려다본 모습(위=북, 왼쪽=동)
+function skyProj(ra0, dec0, rot) {
+  const d0 = dec0 * D2R, s0 = Math.sin(d0), c0 = Math.cos(d0), cr = Math.cos(rot || 0), sr = Math.sin(rot || 0);
+  return (ra, dec) => {
+    const a = (ra - ra0) * D2R, d = dec * D2R, cd = Math.cos(d);
+    const cc = s0 * Math.sin(d) + c0 * cd * Math.cos(a); if (cc < -.2) return null;
+    const k = 2 / (1 + cc), x = -k * cd * Math.sin(a), y = k * (c0 * Math.sin(d) - s0 * cd * Math.cos(a));
+    return [x * cr - y * sr, x * sr + y * cr];
+  };
+}
+function skyCenter(pts) {
+  let X = 0, Y = 0, Z = 0;
+  pts.forEach(([r, d]) => { const a = r * D2R, b = d * D2R; X += Math.cos(b) * Math.cos(a); Y += Math.cos(b) * Math.sin(a); Z += Math.sin(b); });
+  return [(Math.atan2(Y, X) / D2R + 360) % 360, Math.atan2(Z, Math.hypot(X, Y)) / D2R];
+}
+function bounds(P) {
+  const b = [Infinity, -Infinity, Infinity, -Infinity];
+  P.forEach(p => { if (!p) return; b[0] = Math.min(b[0], p[0]); b[1] = Math.max(b[1], p[0]); b[2] = Math.min(b[2], p[1]); b[3] = Math.max(b[3], p[1]); });
+  return b;
+}
+// 단위 좌표 → 화면 좌표 (W×H 상자에 맞춤, y 뒤집기)
+function fitBox(b, W, H, pad) {
+  const bw = Math.max(b[1] - b[0], 1e-4), bh = Math.max(b[3] - b[2], 1e-4);
+  const s = Math.min((W - 2 * pad) / bw, (H - 2 * pad) / bh);
+  const ox = W / 2 - (b[0] + b[1]) / 2 * s, oy = H / 2 + (b[2] + b[3]) / 2 * s;
+  const f = p => p ? [ox + p[0] * s, oy - p[1] * s] : null; f.s = s; return f;
+}
+const starR = (m, k) => Math.max(1, Math.min(6.4, 4.4 - .95 * m)) * (k || 1);
+const r1 = n => Math.round(n * 10) / 10;
+const ptsAttr = P => P.map(p => `${r1(p[0])},${r1(p[1])}`).join(' ');
+function miniSky(c, W, H, pad) {
+  const [ra0, dec0] = skyCenter(c.stars); const pr = skyProj(ra0, dec0);
+  const f = fitBox(bounds(c.stars.map(s => pr(s[0], s[1]))), W, H, pad || 12);
+  const k = Math.max(.75, Math.min(1.15, W / 220));
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true" focusable="false">${c.lines.map(l => `<polyline points="${ptsAttr(l.map(p => f(pr(p[0], p[1]))))}" fill="none" stroke="#8fb0ff" stroke-width="${r1(1.5 * k)}" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`).join('')}${c.stars.map(s => { const p = f(pr(s[0], s[1])); return `<circle cx="${r1(p[0])}" cy="${r1(p[1])}" r="${r1(starR(s[2], k))}" fill="#fff"/>`; }).join('')}</svg>`;
+}
+const seaChip = c => `<span class="gk-schip ${c.season}">${SEA_SHORT[c.season]}</span>`;
+function starInfo(c) {
+  return `<div class="gk-stinfo"><div class="mini">${miniSky(c, 220, 170)}</div><div><h2>${E(c.ko)}</h2><div class="en">${E(c.en)} · ${E(c.la)}</div><span class="gk-schip ${c.season}">${E(SEA_LONG[c.season])}</span>
+    <dl><dt>${c.bright ? '가장 밝은 별' : '대표 별'}</dt><dd>${E(c.star)}${c.starNote ? ` <span>(${E(c.starNote)})</span>` : ''}</dd><dt>찾는 방법</dt><dd>${E(c.find)}</dd></dl><p class="fact">${E(c.fact)}</p></div></div>`;
+}
+function seasonNow() { const m = new Date().getMonth() + 1; return m >= 3 && m <= 5 ? 'spring' : m >= 6 && m <= 8 ? 'summer' : m >= 9 && m <= 11 ? 'autumn' : 'winter'; }
+// 부드러운 곡선(캣멀-롬)
+function curvePath(P) {
+  let d = `M${r1(P[0][0])},${r1(P[0][1])}`;
+  for (let i = 0; i < P.length - 1; i++) {
+    const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+    d += ` C${r1(p1[0] + (p2[0] - p0[0]) / 6)},${r1(p1[1] + (p2[1] - p0[1]) / 6)} ${r1(p2[0] - (p3[0] - p1[0]) / 6)},${r1(p2[1] - (p3[1] - p1[1]) / 6)} ${r1(p2[0])},${r1(p2[1])}`;
+  }
+  return d;
+}
+
+async function viewStars(app) {
+  const body = shell(app, 'stars');
+  let D; try { D = await data('stars'); } catch (e) { return fail(body); }
+  const byId = Object.fromEntries(D.cons.map(c => [c.id, c]));
+  const N = D.named;
+  let tab = 'sky', sea = seasonNow(), sel = null, method = 'dip', step = 0, cardFilter = 'all';
+  body.innerHTML = segHtml('보기', [['sky', '계절 밤하늘'], ['pole', '북극성 찾기'], ['cards', '별자리 카드'], ['quiz', '퀴즈']], tab).replace('class="seg"', 'class="seg big"') + '<div class="gk-stb"></div>';
+  const box = body.querySelector('.gk-stb');
+  let ro = null; const stopRO = () => { if (ro) { ro.disconnect(); ro = null; } };
+  onLeave(stopRO);
+  const watch = (el, fn) => { stopRO(); let w = el.clientWidth; ro = new ResizeObserver(() => { if (Math.abs(el.clientWidth - w) > 30) { w = el.clientWidth; fn(); } }); ro.observe(el); };
+  const go = v => { tab = v; stopRO(); closeModal(); ({ sky: drawSkyTab, pole: drawPoleTab, cards: drawCards, quiz: startQuiz })[v](); };
+  bindSeg(body, '.seg', go);
+
+  /* ----- 1. 계절 밤하늘 ----- */
+  function drawSkyTab() {
+    box.innerHTML = `<div class="gk-stchips" role="group" aria-label="계절" style="margin:0 0 12px">${['spring', 'summer', 'autumn', 'winter'].map(k => `<button type="button" data-s="${k}" aria-pressed="${k === sea}">${SEA_SHORT[k]}</button>`).join('')}</div>
+      <div class="gk-sky"></div><div class="gk-stchips gk-cnl" role="group" aria-label="별자리 고르기"></div><div class="gk-shape"></div>
+      <div class="gk-card gk-info"><p class="hint">별자리 선이나 이름을 누르면 자세히 알려 줘요.</p></div>
+      <p class="gk-note">하늘을 올려다본 모습이에요. 위쪽이 북쪽, 왼쪽이 동쪽이에요. 별의 위치는 실제 자료로 그렸고, 밝은 별일수록 크게 그렸어요. 별자리는 저녁 8~9시 무렵에 보기 좋은 계절로 나누었어요.</p>`;
+    box.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { sea = b.dataset.s; sel = null; box.querySelectorAll('[data-s]').forEach(x => x.setAttribute('aria-pressed', x === b)); drawSky(); });
+    drawSky();
+    watch(box.querySelector('.gk-sky'), () => drawSky(true));
+  }
+  function drawSky(keep) {
+    const S = D.seasons[sea], cons = S.ids.map(id => byId[id]);
+    const sky = box.querySelector('.gk-sky'), info = box.querySelector('.gk-info');
+    const all = [].concat(...cons.map(c => c.stars));
+    const pr = skyProj(S.c[0], S.c[1]);
+    const b = bounds(all.map(s => pr(s[0], s[1])));
+    const W = Math.max(300, Math.round(sky.clientWidth || 600)), pad = W < 500 ? 34 : 50;
+    const asp = (b[3] - b[2]) / (b[1] - b[0]);
+    const H = Math.round(Math.min(Math.max((W - 2 * pad) * asp + 2 * pad, W * .62), Math.max(W * 1.25, 420), 700));
+    const f = fitBox(b, W, H, pad);
+    const kk = W < 500 ? .85 : 1;
+    let bg = '';
+    D.bg.forEach(s => { const p = f(pr(s[0], s[1])); if (p && p[0] > -5 && p[0] < W + 5 && p[1] > -5 && p[1] < H + 5) bg += `<circle cx="${r1(p[0])}" cy="${r1(p[1])}" r="${r1(starR(s[2], .7 * kk))}" fill="#fff" opacity=".6"/>`; });
+    const shapeStars = S.shape.stars.map(n => N[n]).filter(Boolean).map(s => f(pr(s.ra, s.dec)));
+    const sp = S.shape;
+    const shape = sp.kind === 'curve' ? `<path class="shp" d="${curvePath(shapeStars)}"/>` : `<polygon class="shp" points="${ptsAttr(shapeStars)}"/>`;
+    // 별자리 이름표: 선과 다른 이름표를 덜 가리는 자리로
+    const CL = cons.map(c => ({ c, L: c.lines.map(l => l.map(p => f(pr(p[0], p[1])))), P: c.stars.map(s => f(pr(s[0], s[1]))) }));
+    const samples = [];
+    CL.forEach(o => o.L.forEach(l => { for (let j = 0; j < l.length - 1; j++) { const a = l[j], b2 = l[j + 1], n = Math.max(1, Math.ceil(Math.hypot(b2[0] - a[0], b2[1] - a[1]) / 4)); for (let q = 0; q <= n; q++) samples.push([a[0] + (b2[0] - a[0]) * q / n, a[1] + (b2[1] - a[1]) * q / n]); } }));
+    const placedN = [];
+    // 이름표 붙일 밝은 별
+    let names = '';
+    Object.entries(N).forEach(([nm, s]) => {
+      if (!s.label) return; const p = f(pr(s.ra, s.dec)); if (!p || p[0] < 0 || p[0] > W || p[1] < 0 || p[1] > H) return;
+      const right = p[0] < W - 90, x0 = p[0] + (right ? 1 : -1) * (starR(s.mag, kk) + 5), tw = nm.length * 13;
+      placedN.push(right ? [x0, p[1] - 10, x0 + tw, p[1] + 6] : [x0 - tw, p[1] - 10, x0, p[1] + 6]);
+      names += `<text class="sn" x="${r1(p[0] + (right ? 1 : -1) * (starR(s.mag, kk) + 5))}" y="${r1(p[1] + 4)}" text-anchor="${right ? 'start' : 'end'}">${E(nm)}</text>`;
+    });
+    const placed = placedN.slice();
+    CL.forEach(o => {
+      const P = o.P, xs = P.map(p => p[0]), ys = P.map(p => p[1]);
+      const cx = xs.reduce((t, v) => t + v, 0) / P.length, cy = ys.reduce((t, v) => t + v, 0) / P.length;
+      const tw = o.c.ko.length * 15 + 6, th = 20;
+      const cands = [[cx, cy], [cx, cy - 26], [cx, cy + 26], [cx - 50, cy], [cx + 50, cy], [cx, Math.max(...ys) + 22], [cx, Math.min(...ys) - 10], [cx - 40, cy - 30], [cx + 40, cy + 30], [cx + 40, cy - 30], [cx - 40, cy + 30]];
+      let best = null, bs = Infinity;
+      cands.forEach(([x, y], ci) => {
+        const r = [x - tw / 2, y - th + 4, x + tw / 2, y + 6];
+        let sc = ci * .6;
+        if (r[0] < 4 || r[2] > W - 4 || r[1] < 22 || r[3] > H - 22) sc += 1000;
+        samples.forEach(p => { if (p[0] > r[0] - 3 && p[0] < r[2] + 3 && p[1] > r[1] - 3 && p[1] < r[3] + 3) sc += 1; });
+        placed.forEach(q => { if (r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1]) sc += 500; });
+        if (sc < bs) { bs = sc; best = [x, y, r]; }
+      });
+      placed.push(best[2]); o.lx = best[0]; o.ly = best[1];
+    });
+    let groups = '';
+    CL.forEach((o, i) => {
+      const c = o.c, L = o.L.map(ptsAttr), P = o.P, lx = o.lx, ly = o.ly;
+      groups += `<g class="cn${sel === c.id ? ' sel' : ''}" data-id="${c.id}" tabindex="0" role="button" aria-label="${E(c.ko)}">${L.map(p => `<polyline class="hit" points="${p}"/>`).join('')}<circle class="hitc" cx="${r1(lx)}" cy="${r1(ly - 5)}" r="24"/>${L.map(p => `<polyline class="ln" pathLength="1" points="${p}" style="transition-delay:${(i * .35).toFixed(2)}s"/>`).join('')}
+        ${c.stars.map((s, j) => `<circle cx="${r1(P[j][0])}" cy="${r1(P[j][1])}" r="${r1(starR(s[2], kk))}" fill="#fff"/>`).join('')}<text class="cl" x="${r1(lx)}" y="${r1(ly)}" text-anchor="middle">${E(c.ko)}</text></g>`;
+    });
+    sky.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${E(S.ko)} 저녁 하늘의 별자리">${bg}${groups}${shape}${names}<text class="cmp" x="10" y="${H - 10}">← 동쪽</text><text class="cmp" x="${W - 10}" y="${H - 10}" text-anchor="end">서쪽 →</text><text class="cmp" x="${W / 2}" y="16" text-anchor="middle">↑ 북쪽</text></svg>`;
+    sky.classList.remove('on');
+    if (RM() || keep) sky.classList.add('on'); else requestAnimationFrame(() => requestAnimationFrame(() => sky.classList.add('on')));
+    const pickC = id => { sel = id; sky.querySelectorAll('.cn').forEach(g => g.classList.toggle('sel', g.dataset.id === id)); box.querySelectorAll('.gk-cnl button').forEach(x => x.setAttribute('aria-pressed', x.dataset.id === id)); info.innerHTML = starInfo(byId[id]); };
+    sky.querySelectorAll('.cn').forEach(g => { g.addEventListener('click', () => pickC(g.dataset.id)); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickC(g.dataset.id); } }); });
+    const chips = box.querySelector('.gk-cnl');
+    chips.innerHTML = cons.map(c => `<button type="button" data-id="${c.id}" aria-pressed="${sel === c.id}">${E(c.ko)}</button>`).join('');
+    chips.querySelectorAll('button').forEach(bt => bt.onclick = () => pickC(bt.dataset.id));
+    box.querySelector('.gk-shape').innerHTML = `<i aria-hidden="true"></i><div><b>${E(sp.ko)}</b>${E(sp.text)}</div>`;
+    if (!keep && !sel) info.innerHTML = '<p class="hint">별자리 선이나 이름을 누르면 자세히 알려 줘요.</p>';
+  }
+
+  /* ----- 2. 북극성 찾기 ----- */
+  const DIP = ['두베', '메라크', '페크다', '메그레즈', '알리오스', '미자르', '알카이드'];
+  const CAS = ['카프', '셰다르', '감마별', '루크바', '세긴'];
+  const STEPS = {
+    dip: ['북쪽 하늘에서 국자 모양으로 늘어선 일곱 별, 북두칠성을 찾아요.',
+      '국자 끝에 있는 두 별을 찾아요. 국자 바닥 쪽 별(메라크)과 국자 입구 쪽 별(두베)이에요.',
+      '두 별을 이은 거리를 한 칸으로 생각하고, 국자 입구 쪽으로 그 거리의 약 5배만큼 늘여요.',
+      '그곳에서 밝게 빛나는 별이 북극성이에요! 북극성은 작은곰자리 꼬리 끝에 있어요.'],
+    cas: ['북극성을 사이에 두고 북두칠성 맞은편에서 W 모양의 카시오페이아자리를 찾아요.',
+      'W 모양에서 바깥쪽 두 선을 길게 늘여 서로 만나는 점을 찾아요.',
+      '만나는 점과 W 모양의 가운데 별을 선으로 이어요.',
+      '가운데 별에서 그 거리의 약 5배만큼 늘여요.',
+      '그곳에서 밝게 빛나는 별이 북극성이에요! 북두칠성이 낮게 떠서 잘 안 보이는 가을에는 이 방법이 좋아요.']
+  };
+  function drawPoleTab() {
+    box.innerHTML = `<div class="gk-nwrap"><div class="gk-stchips" role="group" aria-label="찾는 방법" style="margin:0 0 12px"><button type="button" data-m="dip" aria-pressed="${method === 'dip'}">북두칠성으로 찾기</button><button type="button" data-m="cas" aria-pressed="${method === 'cas'}">카시오페이아자리로 찾기</button></div>
+      <div class="gk-sky on st"></div><div class="gk-panel gk-steps" aria-live="polite"></div>
+      <p class="gk-note">북쪽 하늘을 바라본 모습이에요. 북쪽 하늘의 별들은 북극성을 중심으로 하루에 한 바퀴씩 도는 것처럼 보여서, 시각과 계절에 따라 별자리가 기울어진 모습으로 보여요. 북극성은 아주 밝은 별은 아니지만, 거의 움직이지 않아서 방향을 찾을 때 길잡이가 돼요.</p></div>`;
+    box.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { method = b.dataset.m; step = 0; box.querySelectorAll('[data-m]').forEach(x => x.setAttribute('aria-pressed', x === b)); drawPole(); });
+    drawPole();
+    watch(box.querySelector('.gk-sky'), () => drawPole(true));
+  }
+  function drawPole(still) {
+    const sky = box.querySelector('.gk-sky');
+    // 북극을 가운데에 두고, 북두칠성이 위쪽에 오도록 돌림
+    let pr = skyProj(0, 90);
+    const dc = DIP.map(n => pr(N[n].ra, N[n].dec)); const cx = dc.reduce((t, p) => t + p[0], 0) / 7, cy = dc.reduce((t, p) => t + p[1], 0) / 7;
+    const rot = Math.PI / 2 - Math.atan2(cy, cx) + .25;
+    pr = skyProj(0, 90, rot);
+    const u = n => pr(N[n].ra, N[n].dec);
+    const add = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+    const M = u('메라크'), Du = u('두베'), Po = u('북극성');
+    const dTicks = [1, 2, 3, 4, 5].map(k => add(Du, [Du[0] + (Du[0] - M[0]), Du[1] + (Du[1] - M[1])], k));
+    const [cB, cA, cG, cD, cE] = CAS.map(u);
+    // 바깥 두 선(β-α, ε-δ)의 교점
+    const x1 = cA[0] - cB[0], y1 = cA[1] - cB[1], x2 = cD[0] - cE[0], y2 = cD[1] - cE[1];
+    const den = x1 * y2 - y1 * x2, t = ((cE[0] - cB[0]) * y2 - (cE[1] - cB[1]) * x2) / den;
+    const X = [cB[0] + t * x1, cB[1] + t * y1];
+    const cTicks = [1, 2, 3, 4, 5].map(k => [cG[0] + (cG[0] - X[0]) * k, cG[1] + (cG[1] - X[1]) * k]);
+    const umi = byId.UMi, uma = byId.UMa;
+    // 방법마다 필요한 부분만 크게 보이도록 맞춤
+    const unit = method === 'dip' ? [].concat(DIP.map(u), [Po], dTicks, umi.stars.map(s => pr(s[0], s[1])))
+      : [].concat(CAS.map(u), [Po, X], cTicks, umi.stars.map(s => pr(s[0], s[1])));
+    const W = Math.max(300, Math.round(sky.clientWidth || 600)), pad = W < 500 ? 30 : 46;
+    const b = bounds(unit), asp = (b[3] - b[2]) / (b[1] - b[0]);
+    const H = Math.round(Math.min(Math.max((W - 2 * pad) * asp + 2 * pad, W * .7), W * 1.3, 760));
+    const f = fitBox(b, W, H, pad), F = p => f(p);
+    const kk = W < 500 ? .9 : 1.05;
+    const st = (ra, dec, m, extra) => { const p = f(pr(ra, dec)); return p ? `<circle cx="${r1(p[0])}" cy="${r1(p[1])}" r="${r1(starR(m, kk))}" fill="#fff"${extra || ''}/>` : ''; };
+    const line = (P, cls, ex) => `<polyline class="${cls}" ${cls.includes('nw') ? 'pathLength="1" ' : ''}points="${ptsAttr(P.map(F))}"${ex || ''}/>`;
+    const lbl = (p, txt, cls, dx, dy, anc) => { const q = F(p); return `<text class="${cls || 'sn'}" x="${r1(q[0] + (dx || 0))}" y="${r1(q[1] + (dy || 0))}" text-anchor="${anc || 'middle'}">${E(txt)}</text>`; };
+    const ring = (p, r, cls, d) => { const q = F(p); return `<circle class="ring ${cls || ''} fd" cx="${r1(q[0])}" cy="${r1(q[1])}" r="${r}" style="animation-delay:${d || 0}s"/>`; };
+    const dirS = (a, b) => { const p = F(a), q = F(b), dx = p[0] - q[0], dy = p[1] - q[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
+    const nrm = d => { const l = Math.hypot(d[0], d[1]) || 1; return [d[0] / l, d[1] / l]; };
+    const lblS = (p, d, dist, txt, cls) => { const q = F(p), y = q[1] + d[1] * dist, tw = txt.length * (cls === 'big' ? 16 : 12.5); let x = q[0] + d[0] * dist; const anc = Math.abs(d[0]) < .4 ? 'middle' : d[0] > 0 ? 'start' : 'end';
+      const lo = anc === 'start' ? 6 : anc === 'end' ? 6 + tw : 6 + tw / 2, hi = anc === 'start' ? W - 6 - tw : anc === 'end' ? W - 6 : W - 6 - tw / 2; x = Math.min(Math.max(x, lo), hi); return `<text class="${cls || 'sn'}" x="${r1(x)}" y="${r1(y + 5)}" text-anchor="${anc}">${E(txt)}</text>`; };
+    const ax = method === 'dip' ? dirS(Du, M) : dirS(cG, X);
+    let nx = [-ax[1], ax[0]];
+    if (method === 'dip') { const bw = dirS(u('페크다'), Du); if (nx[0] * bw[0] + nx[1] * bw[1] > 0) nx = [-nx[0], -nx[1]]; }
+    const isLast = step === STEPS[method].length - 1;
+    let bg = '';
+    D.bg.forEach(s => { const p = f(pr(s[0], s[1])); if (p && p[0] > -5 && p[0] < W + 5 && p[1] > -5 && p[1] < H + 5) bg += `<circle cx="${r1(p[0])}" cy="${r1(p[1])}" r="${r1(starR(s[2], .65 * kk))}" fill="#fff" opacity=".5"/>`; });
+    let base = uma.lines.map(l => line(l.map(p => pr(p[0], p[1])), 'lb')).join('') + byId.Cas.lines.map(l => line(l.map(p => pr(p[0], p[1])), 'lb')).join('');
+    [uma, byId.Cas, umi].forEach(c => c.stars.forEach(s => base += st(s[0], s[1], s[2])));
+    const dipLine = line(['알카이드', '미자르', '알리오스', '메그레즈', '페크다', '메라크', '두베', '메그레즈'].map(u), 'hl' + (method === 'dip' && step === 0 && !still ? ' nw' : ''));
+    const casLine = line(CAS.map(u), 'hl' + (method === 'cas' && step === 0 && !still ? ' nw' : ''));
+    const nw = still ? '' : ' nw';
+    let ov = '';
+    const tickSvg = (T, d0) => T.map((p, i) => { const q = F(p); return `<g class="fd" style="animation-delay:${(d0 + i * .3).toFixed(2)}s"><circle class="tk" cx="${r1(q[0])}" cy="${r1(q[1])}" r="${i === 4 ? 4.5 : 3.2}"/><text class="tkt" x="${r1(q[0] + nx[0] * 14)}" y="${r1(q[1] + nx[1] * 14 + 4)}" text-anchor="middle">${i + 1}</text></g>`; }).join('');
+    const polaris = d => `${ring(Po, 15, '', d)}<circle class="pol fd" cx="${r1(F(Po)[0])}" cy="${r1(F(Po)[1])}" r="${r1(starR(N['북극성'].mag, kk) + 1)}" style="animation-delay:${d}s"/>`;
+    const umiLines = d => umi.lines.map(l => line(l.map(p => pr(p[0], p[1])), 'hl' + nw, ` style="animation-delay:${d}s;stroke:#ffb35c"`)).join('');
+    if (method === 'dip') {
+      ov += dipLine + lbl(add(u('메그레즈'), u('알리오스'), .5), '북두칠성', 'big', 0, 26);
+      if (step >= 1) ov += ring(M, 11, 'g') + ring(Du, 11, 'g', .2) + line([M, Du], 'gd' + nw) + lblS(M, nrm([nx[0] - ax[0], nx[1] - ax[1]]), 16, '메라크', 'tkt') + lblS(Du, nx, 18, '두베', 'tkt');
+      if (step >= 2) ov += line([Du, dTicks[4]], 'gd dash') + tickSvg(dTicks, still ? 0 : .3);
+      if (step >= 3) ov += umiLines(0) + polaris(.4) + lblS(Po, ax, 26, '북극성', 'big') + lbl(add(u('북극성'), [umi.stars.reduce((t, s) => t + pr(s[0], s[1])[0], 0) / umi.stars.length, umi.stars.reduce((t, s) => t + pr(s[0], s[1])[1], 0) / umi.stars.length], 1.6), '작은곰자리', 'sn');
+    } else {
+      { const ext = Math.max(...CAS.map(n => { const q = F(u(n)), g = F(cG); return (q[0] - g[0]) * nx[0] + (q[1] - g[1]) * nx[1]; })); ov += casLine + lblS(cG, nx, ext + 18, '카시오페이아자리', 'big'); }
+      if (step >= 1) ov += line([cB, X], 'gd' + nw) + line([cE, X], 'gd' + nw) + ring(X, 7, 'g', still ? 0 : 1) + lblS(X, [-ax[0], -ax[1]], 16, '만나는 점', 'tkt');
+      if (step >= 2) ov += line([X, cG], 'gd' + nw, ' style="stroke:#ffd60a"') + ring(cG, 11, '', .2) + lblS(cG, nrm([ax[0] - nx[0] * 1.2, ax[1] - nx[1] * 1.2]), 18, '가운데 별', 'tkt');
+      if (step >= 3) ov += line([cG, cTicks[4]], 'gd dash') + tickSvg(cTicks, still ? 0 : .3);
+      if (step >= 4) ov += umiLines(0) + polaris(.4) + lblS(Po, ax, 26, '북극성', 'big');
+    }
+    sky.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="북쪽 하늘에서 북극성 찾기">${bg}${base}${ov}</svg>`;
+    const steps = box.querySelector('.gk-steps'), n = STEPS[method].length;
+    steps.innerHTML = `<div class="no">${n}단계 중 ${step + 1}단계</div><p class="tx">${E(STEPS[method][step])}</p><div class="gk-btns"><button class="btn ghost" type="button" data-a="prev"${step ? '' : ' disabled'}>‹ 이전</button><button class="btn" type="button" data-a="next">${isLast ? '처음부터 ↺' : '다음 ›'}</button></div>`;
+    steps.querySelector('[data-a=prev]').onclick = () => { if (step) { step--; drawPole(true); } };
+    steps.querySelector('[data-a=next]').onclick = () => { if (isLast) { step = 0; drawPole(); } else { step++; drawPole(); } if (step === n - 1) sfx2('right'); };
+  }
+
+  /* ----- 3. 별자리 카드 ----- */
+  function drawCards() {
+    const F = [['all', '전체'], ['spring', '봄'], ['summer', '여름'], ['autumn', '가을'], ['winter', '겨울'], ['north', '북쪽 하늘'], ['south', '남반구']];
+    box.innerHTML = `<div class="gk-cats" role="group" aria-label="계절">${F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === cardFilter}">${l}</button>`).join('')}</div><div class="gk-stcards"></div>
+      <p class="gk-note">카드를 누르면 찾는 방법과 별자리 이야기를 볼 수 있어요. 계절은 우리나라에서 저녁에 보기 좋은 때예요.</p>`;
+    const grid = box.querySelector('.gk-stcards');
+    const fill = () => {
+      const list = D.cons.filter(c => cardFilter === 'all' || c.season === cardFilter);
+      grid.innerHTML = list.map(c => `<button type="button" class="gk-stc" data-id="${c.id}"><div class="mini">${miniSky(c, 200, 150)}</div><b>${E(c.ko)}</b><div>${seaChip(c)}</div><div class="st">${c.bright ? '가장 밝은 별' : '대표 별'}: ${E(c.star)}</div></button>`).join('');
+      grid.querySelectorAll('.gk-stc').forEach(b => b.onclick = () => openModal(byId[b.dataset.id], b));
+    };
+    box.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { cardFilter = b.dataset.f; box.querySelectorAll('[data-f]').forEach(x => x.setAttribute('aria-pressed', x === b)); fill(); });
+    fill();
+  }
+  let modal = null, modalKey = null, modalFrom = null;
+  function closeModal() {
+    if (modal) { modal.remove(); modal = null; }
+    if (modalKey) { document.removeEventListener('keydown', modalKey); modalKey = null; }
+    if (modalFrom && modalFrom.isConnected) { try { modalFrom.focus({ preventScroll: true }); } catch (e) {} } modalFrom = null;
+  }
+  onLeave(closeModal);
+  function openModal(c, from) {
+    closeModal(); modalFrom = from;
+    modal = document.createElement('div'); modal.className = 'gk-modal';
+    modal.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-label="${E(c.ko)}" tabindex="-1"><button type="button" class="x" aria-label="닫기">×</button>${starInfo(c)}</div>`;
+    body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    modal.querySelector('.x').onclick = closeModal;
+    modalKey = e => { if (e.key === 'Escape') closeModal(); };
+    document.addEventListener('keydown', modalKey);
+    modal.querySelector('.x').focus({ preventScroll: true });
+  }
+
+  /* ----- 4. 퀴즈 ----- */
+  function startQuiz() {
+    const cons = D.cons;
+    const pic = shuffle(cons).slice(0, 4).map(c => {
+      const opts = choicesFrom(c, cons, x => x.id);
+      return { q: `이 모양은 어떤 별자리일까요?<div class="gk-qsky">${miniSky(c, 300, 220, 18)}</div>`, choices: opts.map(x => ({ html: E(x.ko), ok: x === c })), answer: c.ko, explain: `이 모양은 <b>${E(c.ko)}</b>${J(c.ko, '이에요', '예요')}. ${E(c.find)}` };
+    });
+    const seasonal = cons.filter(c => SEA_SHORT[c.season] && ['spring', 'summer', 'autumn', 'winter'].includes(c.season));
+    const sea = shuffle(seasonal).slice(0, 3).map(c => ({
+      q: `<b>${E(c.ko)}</b>${J(c.ko, '은', '는')}<br>어느 계절 저녁 하늘에서 잘 보일까요?`,
+      choices: ['spring', 'summer', 'autumn', 'winter'].map(k => ({ html: SEA_SHORT[k], ok: k === c.season })), answer: SEA_SHORT[c.season],
+      explain: `${E(eunnun(c.ko))} <b>${SEA_SHORT[c.season]}</b> 저녁 하늘에서 잘 보여요. ${E(c.find)}` }));
+    const starQ = shuffle(cons.filter(c => QSTAR[c.id])).slice(0, 3).map(c => {
+      const nm = pick(QSTAR[c.id]);
+      const opts = choicesFrom(c, cons, x => x.id);
+      const note = STAR_NOTE[nm] ? `(${STAR_NOTE[nm]})` : '';
+      return { q: `<b>${E(nm)}</b>${E(note)}${J(nm, '이', '가')} 있는 별자리는<br>어느 것일까요?`, choices: opts.map(x => ({ html: E(x.ko), ok: x === c })), answer: c.ko,
+        explain: `${E(nm)}${E(note)}${J(nm, '은', '는')} <b>${E(c.ko)}</b>에 있어요. ${E(c.fact)}` };
+    });
+    const qs = shuffle(pic.concat(sea, starQ));
+    runQuiz(box, qs, { ref: 'stars', title: '별자리 퀴즈', retry: startQuiz });
+  }
+
+  drawSkyTab();
+}
+
 /* =================== 11. 공룡 시대 =================== */
 const ERA_COL = ['#8e6bbf', '#2f8f5b', '#d9822b'];
 function yearsKo(m) { // 백만 년 → "2억 5,200만"
@@ -964,7 +1335,7 @@ function viewTime(app) {
 
 /* ---------- 진입점 ---------- */
 let currentSub = '';
-const VIEWS = { map: viewMap, flags: viewFlags, capitals: viewCapitals, peaks: viewPeaks, morse: viewMorse, quiz: viewQuiz, greet: viewGreet, korea: viewKorea, space: viewSpace, dino: viewDino, time: viewTime };
+const VIEWS = { map: viewMap, flags: viewFlags, capitals: viewCapitals, peaks: viewPeaks, morse: viewMorse, quiz: viewQuiz, greet: viewGreet, korea: viewKorea, space: viewSpace, stars: viewStars, dino: viewDino, time: viewTime };
 const GK = window.GK = {
   acts: ACTS,
   leave,

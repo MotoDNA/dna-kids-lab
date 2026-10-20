@@ -89,7 +89,7 @@ svg text{font-family:var(--body)}
   <div class="stage"><div id="globe"></div><div class="load" id="load">지구본을 불러오는 중…</div>
     <div class="hint">끌어서 돌리기 · 휠/두 손가락으로 확대 · 지구는 23.4° 기울어진 자전축을 따라 돌아요 · 노란 선은 국경, ★ 수도, ● 주요 도시</div></div>
   <section class="card" id="info" aria-live="polite"><div class="empty">지구본에서 나라를 눌러 보세요.</div></section>
-  <p class="note">인구·면적·언어·종교: CIA 월드 팩트북(2025년판, 공개 자료) · 나라 경계와 도시: Natural Earth(공개 자료) · 지구 사진: NASA Blue Marble(공개 자료) · 국기: flag-icons(MIT). 이름이 나오지 않는 곳은 아직 정보가 없거나 국경이 분쟁 중인 곳이에요.</p>
+  <p class="note">인구·면적·언어·종교: CIA 월드 팩트북(2025년판, 공개 자료) · 나라 경계와 도시: Natural Earth(공개 자료) · 지구 사진: NASA Blue Marble 2004년 12월(공개 자료) · 국기: flag-icons(MIT). 이름이 나오지 않는 곳은 아직 정보가 없거나 국경이 분쟁 중인 곳이에요.</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
 <script>
@@ -267,12 +267,12 @@ function find(name) { name = (name || '').trim(); if (!name) return; const f = f
       .htmlElementsData([]).htmlLat(m => m.lat).htmlLng(m => m.lng).htmlAltitude(0.008)
       .htmlElement(m => { const e = document.createElement('div'); e.className = 'mk ' + m.cls; e.innerHTML = `<span>${esc(m.t)}</span><i></i>`; if (m.pole) e.onclick = () => showPole(m.pole); return e; });
     ctr = g.controls(); ctr.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; ctr.autoRotateSpeed = 0.45;
-    ctr.minDistance = 165; ctr.maxDistance = 600; ctr.minPolarAngle = 0.22; ctr.maxPolarAngle = Math.PI - 0.22;
+    ctr.minDistance = 128; ctr.maxDistance = 600; ctr.minPolarAngle = 0.22; ctr.maxPolarAngle = Math.PI - 0.22;
     const TILT = 23.44 * Math.PI / 180;
     (function axis() { const c = g.camera(), az = Math.atan2(c.position.x, c.position.z), rx = Math.cos(az), rz = -Math.sin(az);
       c.up.set(-Math.sin(TILT) * rx, Math.cos(TILT), -Math.sin(TILT) * rz); requestAnimationFrame(axis); })();
     try { g.renderer().setPixelRatio(Math.min(devicePixelRatio || 1, 2)); } catch (e) {}
-    const hd = new Image(); hd.onload = () => { g.globeImageUrl('earth_hd.webp'); setTimeout(() => { try { const m = g.globeMaterial().map; if (m) { m.anisotropy = g.renderer().capabilities.getMaxAnisotropy(); m.needsUpdate = true; } } catch (e) {} }, 800); }; hd.src = 'earth_hd.webp';
+    let mts = 4096; try { mts = g.renderer().capabilities.maxTextureSize; } catch (e) {} const hdUrl = (mts >= 8192 && !matchMedia('(pointer:coarse)').matches) ? 'earth_8k.webp' : 'earth_hd.webp'; const hd = new Image(); hd.onload = () => { g.globeImageUrl(hdUrl); setTimeout(() => { try { const m = g.globeMaterial().map; if (m) { m.anisotropy = g.renderer().capabilities.getMaxAnisotropy(); m.needsUpdate = true; } } catch (e) {} }, 800); }; hd.src = hdUrl;
     el.addEventListener('pointerdown', () => { ctr.autoRotate = false; });
     const size = () => { const r = el.getBoundingClientRect(); g.width(r.width).height(r.height); }; size(); addEventListener('resize', size);
     g.pointOfView({ lat: 30, lng: 127, altitude: 1.9 }, 0);

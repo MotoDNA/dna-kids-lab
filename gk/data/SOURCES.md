@@ -27,3 +27,12 @@
 - 지질 연대: ICS International Chronostratigraphic Chart v2024/12 및 ChangeLog (트라이아스기 시작 251.902Ma, 쥐라기 시작 201.4Ma, 백악기 시작 143.1Ma[2024/12 개정, 이전 ~145.0Ma], 백악기 끝 66.0Ma) https://stratigraphy.org/ICSchart/ChronostratChart2024-12.pdf , https://stratigraphy.org/ICSchart/ChangeLog2012-2026.txt
 - 시·도청 소재지: 경기도청 누리집(수원시 영통구 도청로 30, 북부청사 의정부시) https://www.gg.go.kr · 경상북도청 누리집(안동시 풍천면 도청대로 455, 동부청사 포항시) https://www.gb.go.kr · 그 밖의 시·도는 각 시·도 누리집 기준
 - 라이선스: 위 자료는 사실(수치) 인용이며 문장은 직접 작성함.
+
+## 별자리 `gk/data/stars.json` (2026-10-20)
+- 별 위치(적경·적위)·등급, 별자리 선(스틱 그림): d3-celestial 0.7.35 (npm, BSD-3-Clause, Copyright (c) 2015 Olaf Frohn) — `data/stars.6.json`, `data/stars.8.json`, `data/constellations.lines.json` https://github.com/ofrohn/d3-celestial
+  - 원자료는 Hipparcos 목록 기반. 19개 별자리 선 꼭짓점·이름 붙인 밝은 별 32개·배경 별(4.6등급까지)만 뽑아 압축(좌표 소수 2~3자리). 변환 스크립트로 직접 추출, 값은 수정하지 않음.
+  - BSD-3-Clause 고지: 위 저작권 표시와 라이선스 조건을 이 파일에 남김(재배포 시 유지).
+- 별자리 이름: 한국천문학회 88개 별자리 우리말 이름 기준. 별 이름(시리우스, 베텔게우스, 리겔, 베가(직녀성), 알타이르(견우성), 데네브 등)은 널리 쓰는 한국어 표기.
+- 북극성 찾기(북두칠성 국자 끝 두 별 거리의 약 5배 / 카시오페이아자리 바깥쪽 두 선의 교점과 가운데 별 거리의 약 5배): 초등 과학 5학년 ‘태양계와 별’ 교과 내용과 같은 방법. 자료 좌표로 계산하면 5.06배·4.62배라 화면에는 ‘약 5배’로 표시.
+  - 참고: https://starwalk.space/ko/news/polaris-north-star , https://m.cafe.daum.net/withandfree/IuXu/1863
+- 계절 구분(저녁 하늘 기준), 별자리 이야기·찾는 방법 문장은 일반 천문 상식으로 직접 작성.
