@@ -427,6 +427,8 @@ footer nav.flinks{display:block;flex:none}
 @media (max-width:760px){.ah-didi{width:200px}.seg{width:100%}.seg .f{flex:1;padding:6px 0;font-size:14px}.ah-tiles{grid-template-columns:1fr}.tile{min-height:0}.ah-hero{padding-top:44px}.ah-band{padding-top:44px;padding-bottom:52px}.ah .units{padding:2px 16px}.page-in{padding:22px 20px 12px}}
 @media (max-width:640px){.pg-title{font-size:26px}h1{font-size:30px}.book{height:calc(100vh - 245px);height:calc(100dvh - 245px)}}
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
 </head>
 <body>
 <header><div class="w">
@@ -1170,6 +1172,7 @@ async function viewParent() {
 async function route() {
   stopNarr(); clearTimeout(window._nt);
   logView('/' + (location.hash.replace(/^#\/?/, '') || ''));
+  try { const gp = '/' + (location.hash.replace(/^#\/?/, '') || ''); gtag('event', 'page_view', { page_location: location.origin + gp + location.search, page_path: gp, page_title: document.title }); } catch (e) {}
   const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   const [p, arg] = h.split('/');
   document.title = 'DNA Kids Lab · 학교 개념을 집에서 쉽게';
