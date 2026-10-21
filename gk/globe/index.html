@@ -284,7 +284,8 @@ function find(name) { name = (name || '').trim(); if (!name) return; const f = f
     $('#np').onclick = () => showPole('n'); $('#sp').onclick = () => showPole('s');
     $('#rand').onclick = () => { const L = feats.filter(f => f.d); pick(L[Math.floor(Math.random() * L.length)], true); };
     const kr = feats.find(f => f.properties.i === 'kr'); if (kr) pick(kr, false);
-  } catch (e) { $('#load').textContent = '지구본을 불러오지 못했어요. 새로고침해 보세요.'; }
+  try { sessionStorage.removeItem('globe_retry'); } catch (er) {}
+  } catch (e) { console.error('globe init', e); let again = false; try { again = !sessionStorage.getItem('globe_retry'); sessionStorage.setItem('globe_retry', '1'); } catch (er) {} if (again) { setTimeout(() => location.reload(), 800); return; } $('#load').textContent = '지구본을 불러오지 못했어요. 새로고침해 보세요.'; }
 })();
 </script>
 
