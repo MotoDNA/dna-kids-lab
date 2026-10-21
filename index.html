@@ -20,8 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="DNA Kids Lab">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="canonical" href="https://dnakidslab.cloud/">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <style>
 :root{--ink:#222;--sub:#5f6368;--line:#e6e6e6;--accent:#1f6b52;--accent-soft:#e8f2ee;--note:#fff8e1;--bad:#b3261e;--good:#1f6b52}
 *{box-sizing:border-box}
@@ -279,7 +278,7 @@ a.kitcard{display:flex;flex-direction:column;gap:2px;background:var(--bg2);borde
 a.cp{display:inline-block;margin-left:6px;font-size:13px;font-weight:600;color:var(--accent);border:1px solid var(--accent);border-radius:980px;padding:1px 10px;white-space:nowrap;text-decoration:none}a.cp:hover{background:var(--accent);color:#fff;text-decoration:none}
 .cp-note{font-size:13px;color:var(--sub);background:var(--bg2);border-radius:12px;padding:10px 14px;margin:10px 0 0;line-height:1.55}
 :root{--ink:#1d1d1f;--sub:#6e6e73;--line:#e3e3e8;--accent:#0071e3;--accent-soft:#e8f1fc;--bg2:#f5f5f7;--good:#1d8348;--bad:#d70015;--note:#fbf6e9}
-body{background:#fff;font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:17px;line-height:1.7;letter-spacing:-.01em}
+body{background:#fff;font-family:var(--fb);font-size:17px;line-height:1.7;letter-spacing:-.01em}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
 header .w{max-width:1024px;flex-wrap:nowrap;padding-block:0;min-height:52px;gap:24px}
@@ -462,6 +461,11 @@ footer nav.flinks{display:block;flex:none}
 #ptoast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:#fff4cc;color:#7a5200;border:1px solid #f1d27a;font-weight:800;padding:10px 20px;border-radius:999px;font-size:18px;opacity:0;transition:.3s;z-index:80;box-shadow:0 6px 20px rgba(0,0,0,.12);pointer-events:none}
 #ptoast.on{opacity:1;transform:translate(-50%,0)}
 .pv-tag{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:999px;background:#eef3ff;color:#2a56c6;border:1px solid #c9d8ff;font-size:12px;font-weight:700;letter-spacing:0;vertical-align:middle;white-space:nowrap}
+
+/* 글꼴: 제목 주아, 본문 고운돋움 */
+:root{--fh:'Jua','Gowun Dodum','Noto Sans KR',sans-serif;--fb:'Gowun Dodum','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+body{font-family:var(--fb);letter-spacing:0}
+h1,h2,h3,h4,.brand,.pg-h{font-family:var(--fh);font-weight:400;letter-spacing:0}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
