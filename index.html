@@ -461,6 +461,7 @@ footer nav.flinks{display:block;flex:none}
 .pbars div{background:#f0b400}
 #ptoast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:#fff4cc;color:#7a5200;border:1px solid #f1d27a;font-weight:800;padding:10px 20px;border-radius:999px;font-size:18px;opacity:0;transition:.3s;z-index:80;box-shadow:0 6px 20px rgba(0,0,0,.12);pointer-events:none}
 #ptoast.on{opacity:1;transform:translate(-50%,0)}
+.pv-tag{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:999px;background:#eef3ff;color:#2a56c6;border:1px solid #c9d8ff;font-size:12px;font-weight:700;letter-spacing:0;vertical-align:middle;white-space:nowrap}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -894,9 +895,9 @@ async function viewLesson(slug) {
   pages.push({ label: '표지', nkey: 'cover', html: `<div class="pg-cover">${l.hero_image ? `<img src="${esc(l.hero_image)}" alt="" ${imgErr}>` : ''}<div>
     <div class="meta">${esc(l.subject)} · ${l.grade ? l.grade + '학년' + semLab(l) : esc(l.band) + '학년'} · ${esc(l.topic)}</div>${CURRI[slug] && CURRI[slug].changed ? '<div class="chgtag">📌 2022 개정 교육과정에서 바뀐 내용이 있어요. 마지막 쪽에서 자세히 볼 수 있어요.</div>' : ''}
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
-    <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}</li>`).join('')}</ol></div></div></div>` });
+    <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}${s.preview ? ` <span class="pv-tag">${esc(s.preview)}</span>` : ''}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
-  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${diagHtml(slug, i)}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
+  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}${s.preview ? ` <span class="pv-tag">${esc(s.preview)}</span>` : ''}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${diagHtml(slug, i)}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
   // 3. 표현·낱말
   if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}${sayBtn(e.en)}</td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
   if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', nkey: 'kw', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
