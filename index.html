@@ -446,6 +446,21 @@ footer nav.flinks{display:block;flex:none}
 .pwa-dlg button{width:100%;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;padding:12px;cursor:pointer}
 .flinks .pwa-link{background:none;border:0;padding:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit}
 @media print{.pwa-bar,.pwa-dlg{display:none!important}}
+.pchip{display:inline-flex;align-items:center;gap:4px;padding:3px 11px;border-radius:999px;background:#fff4cc;color:#7a5200;font-weight:700;text-decoration:none;font-size:14px;border:1px solid #f1d27a}
+.pchip[hidden]{display:none}
+.pchip:hover{background:#ffeaa0}
+.pts-hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:20px;background:linear-gradient(135deg,#fffaf0,#fff4cc)}
+.pts-hero .big{font-size:44px;font-weight:800;line-height:1;color:#7a5200}
+.pts-hero .lv{font-size:20px;font-weight:700}.pts-hero small{color:var(--sub);font-size:14px}
+.pbar{height:12px;border-radius:99px;background:#eee6cf;overflow:hidden;margin:8px 0 4px}.pbar i{display:block;height:100%;background:linear-gradient(90deg,#f0b400,#f08c00);border-radius:99px}
+.goal{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0;background:#fff}
+.goal b{font-size:17px;color:var(--ink)}.goal .meta{font-size:14px;color:var(--sub)}.goal.done{border-color:#f0b400;background:#fffaf0}
+.goal .act{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.ways div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;background:#fff}.ways b{color:#7a5200}
+.pbars div{background:#f0b400}
+#ptoast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);background:#fff4cc;color:#7a5200;border:1px solid #f1d27a;font-weight:800;padding:10px 20px;border-radius:999px;font-size:18px;opacity:0;transition:.3s;z-index:80;box-shadow:0 6px 20px rgba(0,0,0,.12);pointer-events:none}
+#ptoast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -551,8 +566,8 @@ function renderAcct() {
     document.getElementById('toKid').onclick = () => { setParentMode(false); if (location.hash.startsWith('#/parent')) location.hash = '#/'; };
   } else {
     acctEl.className = 'acct';
-    acctEl.innerHTML = `<span>${esc(name)} 학생</span><button class="lnk" id="toParent">부모님으로 전환</button><button class="lnk" id="logout">로그아웃</button>`;
-    document.getElementById('toParent').onclick = () => askPin();
+    acctEl.innerHTML = `<a class="pchip" href="#/points" id="pchip" hidden>⭐ <span>0</span></a><span>${esc(name)} 학생</span><button class="lnk" id="toParent">부모님으로 전환</button><button class="lnk" id="logout">로그아웃</button>`;
+    document.getElementById('toParent').onclick = () => askPin(); showPts(); refreshPoints();
     document.getElementById('logout').onclick = async () => { await endTracking(); await endSession(); await sb.auth.signOut(); me = null; setParentMode(false); location.hash = '#/'; renderAcct(); };
   }
 }
@@ -606,7 +621,7 @@ async function startTracking(kind, ref, title) {
   return t;
 }
 async function endTracking() { if (track) { const t = track; track = null; if (t.sec > 0) await flush(t); } }
-async function logOnce(row) { if (!me) return; await sb.from('study_logs').insert(row); }
+async function logOnce(row) { if (!me) return; await sb.from('study_logs').insert(row); setTimeout(refreshPoints, 700); }
 document.addEventListener('visibilitychange', () => { if (!visible()) { if (sess) flush(sess); if (track) flush(track); } });
 window.addEventListener('pagehide', () => { if (sess) flush(sess); if (track) flush(track); });
 
@@ -1138,6 +1153,79 @@ function viewLogin() {
 const KIND = { session: '접속', lesson: '개념 공부', quiz: '확인 문제', activity: '실험·활동', typing: '타자', gk: '상식 놀이터' };
 const dayKey = d => { const x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`; };
 const hm = d => { const x = new Date(d); return `${String(x.getHours()).padStart(2, '0')}:${String(x.getMinutes()).padStart(2, '0')}`; };
+
+/* ---------- 학습 포인트 ---------- */
+let PTS = null, ptsBusy = false, ptsSeen = null;
+const LEVELS = [[0, '🌱', '새싹'], [100, '🌿', '떡잎'], [300, '🔎', '꼬마 탐험가'], [600, '🧭', '탐험가'], [1000, '🧪', '꼬마 과학자'], [1600, '🔬', '과학자'], [2500, '🎓', '박사'], [4000, '🤖', '디디 마스터']];
+function levelOf(t) { let i = 0; LEVELS.forEach((l, k) => { if (t >= l[0]) i = k; }); const cur = LEVELS[i], nx = LEVELS[i + 1]; return { i, cur, nx, pct: nx ? Math.round((t - cur[0]) / (nx[0] - cur[0]) * 100) : 100 }; }
+function showPts() { const c = document.getElementById('pchip'); if (!c) return; if (!PTS) { c.hidden = true; return; } c.hidden = false; c.querySelector('span').textContent = PTS.total.toLocaleString('ko-KR'); c.title = `학습 포인트 · 오늘 ${PTS.today}점`; }
+function ptoast(m) { let t = document.getElementById('ptoast'); if (!t) { t = document.createElement('div'); t.id = 'ptoast'; t.setAttribute('role', 'status'); document.body.appendChild(t); } t.textContent = m; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 2600); }
+async function refreshPoints() {
+  if (!me || ptsBusy) return; ptsBusy = true;
+  try {
+    const { data, error } = await sb.rpc('my_points');
+    if (error || !data) { PTS = null; showPts(); return; }
+    data.total = +data.total || 0; data.today = +data.today || 0;
+    if (ptsSeen !== null && data.total > ptsSeen && !parentMode) { const up = data.total - ptsSeen; ptoast(`⭐ +${up} 포인트!`); const lb = levelOf(ptsSeen).i, la = levelOf(data.total).i; if (la > lb) setTimeout(() => ptoast(`${LEVELS[la][1]} ${LEVELS[la][2]}(으)로 레벨 업!`), 2800); }
+    ptsSeen = data.total; PTS = data; showPts();
+  } catch (e) { } finally { ptsBusy = false; }
+}
+setInterval(() => { if (me && document.visibilityState === 'visible') refreshPoints(); }, 90000);
+async function loadGoals() { const { data } = await sb.from('reward_goals').select('*').order('created_at', { ascending: false }).limit(50); return data || []; }
+const goalHtml = (g, total, parent) => { const got = Math.max(0, total - g.start_total), pct = Math.min(100, Math.round(got / g.target * 100)), done = got >= g.target;
+  return `<div class="goal${done && !g.claimed_at ? ' done' : ''}"><b>🎁 ${esc(g.title)}</b> <span class="meta">${g.claimed_at ? `· ${dayKey(g.claimed_at)}에 받았어요` : done ? '· 목표 달성! 🎉' : `· ${(g.target - got).toLocaleString('ko-KR')}점 남았어요`}</span>
+  ${g.claimed_at ? '' : `<div class="pbar"><i style="width:${pct}%"></i></div><div class="meta">${Math.min(got, g.target).toLocaleString('ko-KR')} / ${g.target.toLocaleString('ko-KR')}점 · ${dayKey(g.created_at)}부터 모은 점수</div>`}
+  ${!parent && done && !g.claimed_at ? '<div class="meta" style="color:#7a5200;font-weight:700;margin-top:6px">부모님께 보여 드리고 약속한 선물을 받아요!</div>' : ''}
+  ${parent && !g.claimed_at ? `<div class="act">${done ? `<button class="btn" data-claim="${g.id}">선물 줬어요</button>` : ''}<button class="btn ghost" data-gdel="${g.id}">약속 지우기</button></div>` : ''}</div>`; };
+const ptsBars = days => { const ds = [...Array(14)].map((_, i) => dayKey(new Date(Date.now() - (13 - i) * 864e5))); const m = Object.fromEntries((days || []).map(d => [d.d, d.p])); const mx = Math.max(20, ...ds.map(k => m[k] || 0));
+  return `<div class="bars pbars">${ds.map(k => `<div style="height:${Math.round((m[k] || 0) / mx * 100)}%" title="${k} ${m[k] || 0}점"></div>`).join('')}</div><div class="bars-l">${ds.map(k => `<span>${+k.slice(8)}</span>`).join('')}</div>`; };
+async function viewPoints() {
+  if (!me) { app.innerHTML = `<div class="narrow"><h1>학습 포인트</h1><p>로그인하면 공부할 때마다 포인트가 쌓여요. 부모님과 약속한 선물도 받을 수 있어요!</p><a class="btn" href="#/login">로그인</a> <a class="btn ghost" href="#/signup">가족 가입</a></div>`; return; }
+  document.title = '학습 포인트 · DNA Kids Lab';
+  await refreshPoints();
+  if (!PTS) { app.innerHTML = `<div class="narrow"><h1>학습 포인트</h1><p>포인트 기능을 준비하고 있어요. 조금만 기다려 주세요!</p></div>`; return; }
+  const goals = await loadGoals(); const lv = levelOf(PTS.total); const name = me.profile ? me.profile.child_name : '';
+  const open = goals.filter(g => !g.claimed_at), got = goals.filter(g => g.claimed_at).slice(0, 5);
+  app.innerHTML = `<div class="narrow"><h1>${esc(name)}의 학습 포인트</h1>
+  <div class="pts-hero"><div class="big">⭐ ${PTS.total.toLocaleString('ko-KR')}</div><div><div class="lv">${lv.cur[1]} ${lv.cur[2]}</div>
+  <div class="pbar"><i style="width:${lv.pct}%"></i></div><small>${lv.nx ? `${(lv.nx[0] - PTS.total).toLocaleString('ko-KR')}점 더 모으면 ${lv.nx[1]} ${lv.nx[2]}!` : '가장 높은 레벨이에요! 정말 대단해요.'}</small></div></div>
+  <div class="stat"><div><b>${PTS.today}점</b><span>오늘 모은 점수 (하루 ${PTS.cap}점까지)</span></div><div><b>${PTS.streak}일 🔥</b><span>연속 출석</span></div></div>
+  <h2>부모님과 한 약속</h2>
+  ${open.length ? open.map(g => goalHtml(g, PTS.total, false)).join('') : '<p class="sub">아직 약속이 없어요. 부모님께 "몇 점 모으면 선물 주세요!"라고 말해 보세요. 부모님 화면에서 약속을 걸 수 있어요.</p>'}
+  ${got.length ? `<h3>받은 선물</h3>${got.map(g => goalHtml(g, PTS.total, false)).join('')}` : ''}
+  <h2>최근 14일 포인트</h2>${ptsBars(PTS.days)}
+  <h2>포인트 모으는 방법</h2>
+  <div class="ways"><div><b>+2</b> 오늘 처음 들어오기</div><div><b>+10</b> 단원 개념 1분 넘게 공부</div><div><b>+문제 수</b> 확인 문제 (다 맞히면 +5)</div><div><b>+15</b> 실험·활동 해 보기</div><div><b>+5~8</b> 상식 놀이터 퀴즈·탐험</div><div><b>+5</b> 타자 연습 (하루 3번까지)</div><div><b>+5 / +20</b> 3일 / 7일 연속 출석 보너스</div></div>
+  <p class="sub" style="font-size:14px">같은 단원은 하루에 한 번만 점수가 쌓여요. 하루 ${PTS.cap}점까지 모을 수 있어요.</p></div>`;
+}
+async function parentPointsHtml() {
+  await refreshPoints(); if (!PTS) return '';
+  const goals = await loadGoals(); const lv = levelOf(PTS.total);
+  const wk = (PTS.days || []).filter(d => d.d > dayKey(new Date(Date.now() - 7 * 864e5)));
+  const sum = k => wk.reduce((s, d) => s + (+d[k] || 0), 0);
+  const parts = [['lesson', '개념 공부'], ['quiz', '확인 문제'], ['activity', '실험·활동'], ['gk', '상식'], ['typing', '타자'], ['att', '출석'], ['bonus', '연속 보너스']].filter(([k]) => sum(k) > 0);
+  return `<h2>학습 포인트와 보상 약속</h2>
+  <div class="stat"><div><b>⭐ ${PTS.total.toLocaleString('ko-KR')}</b><span>모은 포인트 · ${lv.cur[1]} ${lv.cur[2]}</span></div><div><b>${wk.reduce((s, d) => s + d.p, 0)}점</b><span>최근 7일</span></div><div><b>${PTS.streak}일</b><span>연속 출석</span></div></div>
+  ${parts.length ? `<p class="sub" style="font-size:15px">최근 7일 포인트: ${parts.map(([k, n]) => `${n} ${sum(k)}점`).join(' · ')}</p>` : ''}
+  ${ptsBars(PTS.days)}
+  <h3 style="margin-top:22px">보상 약속</h3><p class="sub" style="font-size:15px">약속을 건 날부터 모은 포인트로 셉니다. 목표에 닿으면 아이 화면에 "목표 달성!"이 보여요. 약속은 부모님 비밀번호로만 만들고 지울 수 있어요.</p>
+  <div id="goals">${goals.length ? goals.map(g => goalHtml(g, PTS.total, true)).join('') : '<p class="sub">아직 약속이 없어요.</p>'}</div>
+  <div class="form" style="margin-top:14px"><label for="gt">선물 이름</label><input type="text" id="gt" maxlength="40" placeholder="예: 아이스크림, 주말 공원 나들이">
+  <label for="gp">목표 포인트</label><input type="number" id="gp" min="10" max="100000" step="10" value="300" inputmode="numeric">
+  <label for="gpin">부모님 비밀번호</label><input type="password" id="gpin" inputmode="numeric" maxlength="6" autocomplete="off">
+  <p class="err" id="gerr" role="status"></p><button class="btn" id="gadd">약속 걸기</button></div>
+  <p class="sub" style="font-size:14px">하루에 열심히 하면 40~80점 정도 모여요. 일주일 목표는 300점, 한 달 목표는 1,000점 정도를 추천해요.</p>`;
+}
+function bindParentPoints() {
+  const err = document.getElementById('gerr'); if (!err) return;
+  const pin = () => document.getElementById('gpin').value.trim();
+  const msg = r => ({ wrong: '부모님 비밀번호가 맞지 않아요.', locked: '여러 번 틀려서 10분 동안 잠겼어요.', none: '부모님 비밀번호를 먼저 정해 주세요.', limit: '진행 중인 약속은 10개까지예요.', login: '다시 로그인해 주세요.' }[r] || '잠시 뒤 다시 해 주세요.');
+  const run = async (fn, args) => { err.textContent = ''; if (!/^\d{4,6}$/.test(pin())) { err.textContent = '아래 칸에 부모님 비밀번호를 넣어 주세요.'; document.getElementById('gpin').focus(); return; }
+    const { data, error } = await sb.rpc(fn, Object.assign({ pin: pin() }, args)); if (error || data !== 'ok') { err.textContent = msg(data); return; } toast('저장했어요'); viewParent(); };
+  document.getElementById('gadd').onclick = () => { const t = document.getElementById('gt').value.trim(), n = +document.getElementById('gp').value; if (!t) { err.textContent = '선물 이름을 써 주세요.'; return; } if (!(n >= 10 && n <= 100000)) { err.textContent = '목표 포인트는 10~100,000점으로 정해 주세요.'; return; } run('reward_add', { p_title: t, p_target: Math.round(n) }); };
+  document.getElementById('goals').onclick = e => { const c = e.target.closest('[data-claim]'), d = e.target.closest('[data-gdel]');
+    if (c) run('reward_claim', { p_id: +c.dataset.claim }); else if (d) { if (confirm('이 약속을 지울까요?')) run('reward_delete', { p_id: +d.dataset.gdel }); } };
+}
 async function viewParent() {
   if (!me) { location.hash = '#/login'; return; }
   loadParentMode();
@@ -1156,6 +1244,7 @@ async function viewParent() {
   const work = L.filter(r => r.kind !== 'session');
   const byDay = {}; L.forEach(r => { (byDay[dayKey(r.started_at)] ||= []).push(r); });
   const name = me.profile ? me.profile.child_name : '아이';
+  const ptsHtml = await parentPointsHtml();
   app.innerHTML = `<div class="narrow">
   <h1>${esc(name)}의 학습 기록</h1><p class="sub" style="font-size:15px">최근 30일 기록이에요. 접속 시간은 화면을 실제로 보고 있던 시간만 셌어요.</p>
   <div class="stat"><div><b>${fmtMin(sumBy(r => dayKey(r.started_at) === today))}</b><span>오늘 접속 시간</span></div><div><b>${fmtMin(week)}</b><span>최근 7일 접속 시간</span></div>
@@ -1163,6 +1252,7 @@ async function viewParent() {
   <h2>하루 접속 시간 (최근 14일)</h2>
   <div class="bars">${days.map(k => `<div style="height:${Math.round(perDay[k] / max * 100)}%" title="${k} ${fmtMin(perDay[k])}"></div>`).join('')}</div>
   <div class="bars-l">${days.map(k => `<span>${+k.slice(8)}</span>`).join('')}</div>
+  ${ptsHtml}
   <h2>날짜별 기록</h2>
   ${Object.keys(byDay).length ? Object.keys(byDay).sort().reverse().map(k => { const rs = byDay[k]; const ss = rs.filter(r => r.kind === 'session'); const first = ss.length ? ss[ss.length - 1] : null;
     return `<h3 style="margin-top:22px">${k} <span class="sub" style="font-weight:400;font-size:14px">접속 ${ss.length}번 · ${fmtMin(ss.reduce((s, r) => s + (r.duration_sec || 0), 0))}${first ? ` · 처음 ${hm(first.started_at)}` : ''}</span></h3>
@@ -1173,6 +1263,7 @@ async function viewParent() {
   <label for="cn">아이 이름</label><input type="text" id="cn" maxlength="10" value="${esc(name)}"><label for="cb">학년</label><select id="cb">${GRADES.map(g => `<option value="${g}" ${me.profile && String(me.profile.grade || (me.profile.band === '1~2' ? 1 : me.profile.band === '5~6' ? 5 : 3)) === g ? 'selected' : ''}>${g}학년</option>`).join('')}</select>
   <p class="err" id="cerr" role="status"></p><button class="btn ghost" id="cgo">저장</button></div>
   <p class="sub" style="font-size:14px;margin-top:24px">부모님 모드는 30분 뒤 자동으로 아이 화면으로 돌아가요.</p></div>`;
+  bindParentPoints();
   document.getElementById('npgo').onclick = async () => {
     const o = document.getElementById('np0').value, n = document.getElementById('np1').value, e = document.getElementById('nperr');
     if (!/^[0-9]{4,6}$/.test(n)) return e.textContent = '새 비밀번호는 숫자 4~6자리예요.';
@@ -1213,6 +1304,7 @@ async function route() {
     else if (p === 'login') viewLogin();
     else if (p === 'signup') viewSignup();
     else if (p === 'parent') await viewParent();
+    else if (p === 'points') await viewPoints();
     else await viewHome();
     window.scrollTo(0, 0);
   } catch (e) {
