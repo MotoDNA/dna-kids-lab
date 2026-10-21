@@ -470,6 +470,21 @@ footer nav.flinks{display:block;flex:none}
 :root{--fh:'Jua','Gowun Dodum','Noto Sans KR',sans-serif;--fb:'Gowun Dodum','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif}
 body{font-family:var(--fb);letter-spacing:0}
 h1,h2,h3,h4,.brand,.pg-h{font-family:var(--fh);font-weight:400;letter-spacing:0}
+.pv-btn{display:inline-flex;align-items:center;gap:4px;margin-right:10px;padding:3px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;white-space:nowrap;vertical-align:middle}
+.pv-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pv-dlg{position:fixed;inset:0;z-index:90;background:rgba(20,20,24,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.pv-box{background:#fff;border-radius:16px;width:min(760px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.pv-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.pv-head b{flex:1;min-width:0;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--sub);padding:2px 6px}
+.pv-pages{overflow:auto;padding:14px;background:#eef0f3;display:flex;flex-direction:column;gap:12px}
+.pv-pages img{width:100%;height:auto;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12);border-radius:4px}
+.pv-more{text-align:center;color:var(--sub);font-size:14px}
+.pv-foot{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid var(--line);justify-content:flex-end}
+.pv-foot a{padding:9px 16px;border-radius:999px;font-weight:700;text-decoration:none;white-space:nowrap;text-align:center;font-size:15px}
+@media(max-width:520px){.pv-foot a{flex:1;padding:10px 8px}}
+.pv-foot .dl{background:var(--accent);color:#fff}.pv-foot .op{border:1px solid var(--line);color:var(--ink)}
+@media print{.pv-btn,.pv-dlg{display:none!important}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -1289,6 +1304,37 @@ async function viewParent() {
 }
 
 /* ---------- 길 찾기 ---------- */
+
+/* ---------- PDF 미리 보기 ---------- */
+let PV_INDEX = null;
+const pvIndex = () => PV_INDEX || (PV_INDEX = fetch('assets/preview/index.json?v=1').then(r => r.ok ? r.json() : {}).catch(() => ({})));
+const pvKey = href => { try { const u = new URL(href, location.href); const m = u.pathname.match(/assets\/(pdf|workbook|writing)\/([^/]+)\.pdf$/); return m ? { path: `assets/${m[1]}/${m[2]}.pdf`, base: `assets/preview/${m[1]}__${decodeURIComponent(m[2])}` } : null; } catch (e) { return null; } };
+async function addPdfPreviews(root) {
+  const idx = await pvIndex();
+  (root || document).querySelectorAll('a[href$=".pdf"]').forEach(a => {
+    if (a.dataset.pv || (a.previousElementSibling && a.previousElementSibling.classList.contains('pv-btn'))) return;
+    const k = pvKey(a.getAttribute('href')); if (!k || !idx[k.path]) return;
+    a.dataset.pv = '1';
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pv-btn'; b.textContent = '👀 미리 보기';
+    const row = a.closest('tr'); const t = row ? row.querySelector('td') : null;
+    const title = ((t && t.firstChild && t.firstChild.textContent) || a.textContent || 'PDF').trim();
+    b.onclick = () => openPdfPreview(k, idx[k.path], a.getAttribute('href'), title);
+    a.parentNode.insertBefore(b, a);
+  });
+}
+function openPdfPreview(k, pages, href, title) {
+  const shown = Math.min(pages, 3);
+  const d = document.createElement('div'); d.className = 'pv-dlg'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', title + ' 미리 보기');
+  d.innerHTML = `<div class="pv-box"><div class="pv-head"><b>${esc(title)}</b><button type="button" class="pv-x" aria-label="닫기">×</button></div>
+    <div class="pv-pages">${Array.from({ length: shown }, (_, i) => `<img src="${k.base}_${i + 1}.webp" alt="${i + 1}쪽" loading="lazy">`).join('')}${pages > shown ? `<div class="pv-more">전체 ${pages}쪽 중 앞 ${shown}쪽이에요.</div>` : `<div class="pv-more">전체 ${pages}쪽</div>`}</div>
+    <div class="pv-foot"><a class="op" href="${esc(href)}" target="_blank" rel="noopener">새 창에서 전체 보기</a><a class="dl" href="${esc(href)}" download>PDF 내려받기</a></div></div>`;
+  const prev = document.activeElement;
+  const close = () => { d.remove(); document.removeEventListener('keydown', key); document.body.style.overflow = ''; if (prev && prev.focus) prev.focus(); };
+  const key = e => { if (e.key === 'Escape') close(); };
+  d.addEventListener('click', e => { if (e.target === d || e.target.closest('.pv-x')) close(); });
+  document.addEventListener('keydown', key); document.body.appendChild(d); document.body.style.overflow = 'hidden'; d.querySelector('.pv-x').focus();
+  try { gtag('event', 'pdf_preview', { file: k.path }); } catch (e) {}
+}
 async function route() {
   stopNarr(); clearTimeout(window._nt);
   logView('/' + (location.hash.replace(/^#\/?/, '') || ''));
@@ -1316,6 +1362,7 @@ async function route() {
     else if (p === 'points') await viewPoints();
     else await viewHome();
     window.scrollTo(0, 0);
+    addPdfPreviews(app);
   } catch (e) {
     app.innerHTML = `<p class="empty">${esc(e.message)} <button class="f" onclick="location.reload()">다시 열기</button></p>`;
   }
