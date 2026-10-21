@@ -988,7 +988,7 @@ async function viewActivities() {
   app.innerHTML = `<h1>실험·활동</h1>
   <div class="intro"><p>단원 개념을 집에 있는 재활용품으로 직접 확인해 보는 활동이에요. 준비물, 순서, 부모님 설명, 인쇄용 도안이 함께 있어요.</p><p class="sub" style="font-size:15px">재활용품이 없어도 괜찮아요. 실험마다 준비물 칸에 같은 실험을 할 수 있는 실험 키트 쿠팡 링크를 달아 두었어요.</p></div>
   <div class="filters">
-    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('agrade','전체')}${['3','4','5','6'].map(g => fbtn('agrade', g, g + '학년')).join('')}</div>
+    <div class="grp" role="group" aria-label="학년"><span class="lab">학년</span>${fbtn('agrade','전체')}${['2','3','4','5','6'].map(g => fbtn('agrade', g, g + '학년')).join('')}</div>
     <div class="grp" role="group" aria-label="과목"><span class="lab">과목</span>${['전체', ...SUBJ].map(s => fbtn('asubject', s)).join('')}</div>
     <div class="grp"><label class="lab" for="mat">재료</label><select id="mat" style="width:auto">${['전체', ...MATS].map(m => `<option ${m === state.mat ? 'selected' : ''}>${m}</option>`).join('')}</select></div>
   </div>

@@ -1,6 +1,8 @@
 -- 전문가 검토에서 남은 학년·범위 결정 반영 (2026-10-21, 초이 결정: 교육과정에 맞게 옮기기 / 수학은 '미리 보기' 표시 / 기타는 정리)
 
--- 1) 실험·활동: 교육과정 학년에 맞게 옮기기
+-- 1) 실험·활동: 교육과정 학년에 맞게 옮기기 (활동도 1~2학년 허용)
+alter table public.activities drop constraint if exists activities_band_check;
+alter table public.activities add constraint activities_band_check check (band in ('1~2','3~4','5~6'));
 update public.activities set band = '3~4', grade = 4, semester = 2 where slug = 'shadow-theater';        -- 빛과 그림자
 update public.activities set band = '3~4', grade = 4, semester = 1 where slug = 'marker-chromatography'; -- 혼합물의 분리
 update public.activities set band = '5~6', grade = 5, semester = 1 where slug = 'star-projector';        -- 태양계와 별
