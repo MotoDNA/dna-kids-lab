@@ -1,0 +1,102 @@
+# DNA Kids Lab (디엔에이 키즈랩)
+
+> 초등학교 1~6학년을 위한 무료 한국어 가정 학습 사이트. 교과 단원 159개(국어 38개 · 수학 34개 · 과학 18개 · 영어 29개 · 중국어 20개 · 일본어 20개)의 개념 설명·듣기·확인 문제, 단원별 연습문제 PDF(20문제, 정답 포함), 재활용품으로 하는 실험·활동 53개, 쓰기 연습장, 상식 놀이터(3D 지구본·세계지도·별자리 등), 한글·영어 타자 연습을 회원 가입 없이 제공한다. 2022 개정 교육과정 성취기준과 연결되어 있다. 운영: DNA Labs (hello@dnalabs.kr).
+
+## 주요 페이지
+- [사이트 소개](https://dnakidslab.cloud/p/about.html): 구성, 만든 방법, 운영자
+- [자주 묻는 질문](https://dnakidslab.cloud/p/faq.html): 무료 여부, 대상 학년, 받아쓰기 연습, 인쇄 방법, 개인정보
+- [전체 단원 목록](https://dnakidslab.cloud/l/index.html): 학년·과목별 단원
+- [실험·활동 목록](https://dnakidslab.cloud/p/activities.html): 학년별 재활용품 실험
+- [무료 도안·문제지](https://dnakidslab.cloud/p/printables.html): 쓰기 연습장, 실험 도안, 연습문제 PDF
+- [상식 놀이터](https://dnakidslab.cloud/p/gk.html)
+- [3D 지구본](https://dnakidslab.cloud/gk/globe/)
+- [타자 연습](https://dnakidslab.cloud/p/typing.html)
+
+## 학년별 단원
+- 1학년 국어: [입 모양을 바꾸면 어떤 소리가 날까?](https://dnakidslab.cloud/l/k1-01.html), [짧은 줄이 두 개면 어떤 소리가 날까?](https://dnakidslab.cloud/l/k1-02.html), [네모 ㅁ, 동그라미 ㅇ은 어떤 소리일까?](https://dnakidslab.cloud/l/k1-04.html), [바람이 세게 나오는 자음은 무엇일까?](https://dnakidslab.cloud/l/k1-05.html), [자음과 모음은 어디에 붙을까?](https://dnakidslab.cloud/l/k1-06.html), [쌍둥이 자음은 어떤 소리가 날까?](https://dnakidslab.cloud/l/k1-07.html), [글자 아래에 자음이 붙으면 어떻게 읽을까?](https://dnakidslab.cloud/l/k1-08.html), [옷은 왜 [옫]으로 소리 날까?](https://dnakidslab.cloud/l/k1-09.html), [동물, 과일, 탈것 이름을 읽어 볼까?](https://dnakidslab.cloud/l/k1-11.html), [ㄱ ㄴ ㄷ ㄹ, 이름이 뭘까?](https://dnakidslab.cloud/l/k1-03.html), [모음 두 개가 만나면 어떤 소리가 날까?](https://dnakidslab.cloud/l/k1-10.html), [어른께는 어떻게 인사하고 말할까?](https://dnakidslab.cloud/l/k1-18.html), [그림일기는 어떻게 쓸까?](https://dnakidslab.cloud/l/k1-16.html), ['음악'은 왜 [으막]이라고 읽을까?](https://dnakidslab.cloud/l/k1-12.html), [어디에서 띄어 쓰고, 어디에서 쉬어 읽을까?](https://dnakidslab.cloud/l/k1-13.html), [마침표, 물음표, 느낌표는 언제 쓸까?](https://dnakidslab.cloud/l/k1-14.html), ['빨간' 사과는 어떤 사과일까?](https://dnakidslab.cloud/l/k1-15.html), [이야기는 어떤 차례로 펼쳐질까?](https://dnakidslab.cloud/l/k1-17.html)
+- 1학년 수학: [상자, 공, 세모, 네모! 어떤 모양일까?](https://dnakidslab.cloud/l/m1-02.html), [더하면 몇 개? 빼면 몇 개?](https://dnakidslab.cloud/l/m1-03.html), [하나, 둘, 셋! 9까지 셀 수 있을까?](https://dnakidslab.cloud/l/m1-01.html), [누가 더 길고, 무겁고, 넓을까?](https://dnakidslab.cloud/l/m1-04.html), [10개씩 묶어 세면 100까지 셀 수 있어요!](https://dnakidslab.cloud/l/m1-05.html)
+- 1학년 영어: [A부터 M까지, 알파벳 친구를 만나 볼까?](https://dnakidslab.cloud/l/e1-01.html), [N부터 Z까지, 알파벳 끝까지 가 볼까?](https://dnakidslab.cloud/l/e1-02.html), [n부터 z까지, 글자 소리를 들어 볼까?](https://dnakidslab.cloud/l/e1-05.html), [c-a-t, 소리를 이으면 어떤 낱말이 될까?](https://dnakidslab.cloud/l/e1-06.html), [I, you, the, a — 책에 자꾸 나오는 낱말은 뭘까?](https://dnakidslab.cloud/l/e1-07.html), [영어로 하나, 둘, 셋 어떻게 셀까?](https://dnakidslab.cloud/l/e1-08.html), [큰 글자 A와 작은 글자 a는 같은 친구일까?](https://dnakidslab.cloud/l/e1-03.html), [글자는 어떤 소리를 낼까? a부터 m까지](https://dnakidslab.cloud/l/e1-04.html), [빨간 동그라미를 영어로 뭐라고 할까?](https://dnakidslab.cloud/l/e1-09.html)
+- 2학년 수학: [2씩, 5씩 묶어 세면 곱셈이 돼요!](https://dnakidslab.cloud/l/m1-08.html), [두 자리 수, 어떻게 더하고 뺄까?](https://dnakidslab.cloud/l/m1-06.html), [시곗바늘이 알려 주는 시각은?](https://dnakidslab.cloud/l/m1-07.html)
+- 2학년 영어: [영어로 어떻게 인사할까?](https://dnakidslab.cloud/l/e1-10.html), [This is my mom! 어떻게 소개할까?](https://dnakidslab.cloud/l/e1-11.html), ["~해도 돼요?" 영어로 어떻게 부탁할까?](https://dnakidslab.cloud/l/e1-13.html), [좋아하는 것을 영어로 어떻게 말할까?](https://dnakidslab.cloud/l/e1-12.html), [영어 이야기를 혼자 읽어 볼까?](https://dnakidslab.cloud/l/e1-14.html)
+- 3학년 국어: [이 문단에서 가장 중요한 문장은 어디 있을까?](https://dnakidslab.cloud/l/k3-02.html), [고마운 마음, 편지로 어떻게 전할까?](https://dnakidslab.cloud/l/k3-08.html), [할머니께 ‘밥 먹어’라고 해도 될까?](https://dnakidslab.cloud/l/k3-03.html), [이야기 속 인물은 지금 어떤 마음일까?](https://dnakidslab.cloud/l/k3-09.html), [시를 읽으면 왜 소리가 들리고 냄새가 날까?](https://dnakidslab.cloud/l/k3-10.html), [‘먹었다’는 왜 국어사전에 없을까?](https://dnakidslab.cloud/l/k3-04.html)
+- 3학년 수학: [받아올림과 받아내림, 왜 필요할까?](https://dnakidslab.cloud/l/m3-04.html), [피자를 똑같이 나누면 어떤 수가 될까?](https://dnakidslab.cloud/l/m3-01.html), [똑같이 나누면 몇 개씩일까?](https://dnakidslab.cloud/l/m3-05.html), [mm, km, 초는 언제 쓸까?](https://dnakidslab.cloud/l/m3-06.html), [선과 각으로 어떤 도형을 만들까?](https://dnakidslab.cloud/l/m3-08.html), [물병에 물이 얼마나 들어갈까?](https://dnakidslab.cloud/l/m3-07.html), [큰 수의 곱셈은 어떻게 할까?](https://dnakidslab.cloud/l/m3-02.html), [조사한 내용을 한눈에 보려면 어떻게 할까?](https://dnakidslab.cloud/l/m3-03.html)
+- 3학년 과학: [무게는 어떻게 잴까?](https://dnakidslab.cloud/l/s3-04.html), [동물은 어떻게 태어나고 자랄까?](https://dnakidslab.cloud/l/s3-06.html), [씨앗은 어떻게 자라서 다시 씨앗이 될까?](https://dnakidslab.cloud/l/s3-07.html), [소리는 어떻게 생기고 전해질까?](https://dnakidslab.cloud/l/s3-01.html), [지구와 달은 어떻게 생겼을까?](https://dnakidslab.cloud/l/s3-09.html)
+- 3학년 영어: [알파벳 26글자로 어떻게 낱말을 만들까?](https://dnakidslab.cloud/l/e3-01.html), [처음 만난 친구에게 영어로 인사해 볼까?](https://dnakidslab.cloud/l/e3-06.html), [무지개 색깔과 숫자를 영어로 세어 볼까?](https://dnakidslab.cloud/l/e3-05.html), [내가 좋아하는 것을 영어로 말해 볼까?](https://dnakidslab.cloud/l/e3-08.html), [우리 가족을 영어로 소개해 볼까?](https://dnakidslab.cloud/l/e3-03.html), [오늘 날씨는 영어로 어떻게 말할까?](https://dnakidslab.cloud/l/e3-04.html)
+- 3학년 중국어: [중국어는 어떤 글자로 쓰고, 어떻게 읽을까?](https://dnakidslab.cloud/l/c3-01.html), [같은 '마'인데 왜 뜻이 다를까?](https://dnakidslab.cloud/l/c3-02.html), [병음의 뒷소리 '운모'는 어떻게 읽을까?](https://dnakidslab.cloud/l/c3-03.html), [병음의 앞소리 '성모'는 몇 개나 될까?](https://dnakidslab.cloud/l/c3-04.html), [중국 친구에게 뭐라고 인사할까?](https://dnakidslab.cloud/l/c3-05.html)
+- 3학년 일본어: [あいうえお, かきくけこ는 어떻게 읽을까?](https://dnakidslab.cloud/l/j3-02.html), [はな, ほし, みみ는 무슨 뜻일까?](https://dnakidslab.cloud/l/j3-04.html), [히라가나 마지막 글자 ん까지 다 읽어 볼까?](https://dnakidslab.cloud/l/j3-05.html), [일본어는 왜 글자가 세 가지나 있을까?](https://dnakidslab.cloud/l/j3-01.html), [すし, ねこ, いぬ를 히라가나로 읽어 볼까?](https://dnakidslab.cloud/l/j3-03.html)
+- 4학년 국어: [감기가 ‘낫다’일까, ‘낳다’일까?](https://dnakidslab.cloud/l/k3-05.html), [처음 보는 낱말, 뜻을 어떻게 알아낼까?](https://dnakidslab.cloud/l/k3-01.html), [왜 그런 일이 일어났을까?](https://dnakidslab.cloud/l/k3-06.html), [내 생각을 어떻게 말해야 친구들이 고개를 끄덕일까?](https://dnakidslab.cloud/l/k3-07.html)
+- 4학년 수학: [각의 크기는 어떻게 잴까?](https://dnakidslab.cloud/l/m4-02.html), [큰 수의 곱셈과 나눗셈, 어떻게 할까?](https://dnakidslab.cloud/l/m4-03.html), [막대그래프로 한눈에 비교해 볼까?](https://dnakidslab.cloud/l/m4-05.html), [만보다 큰 수는 어떻게 읽고 쓸까?](https://dnakidslab.cloud/l/m4-01.html), [규칙을 찾아 수와 식으로 나타내 볼까?](https://dnakidslab.cloud/l/m4-06.html), [분모가 같은 분수, 어떻게 더하고 뺄까?](https://dnakidslab.cloud/l/m4-07.html), [수직과 평행으로 사각형을 알아볼까?](https://dnakidslab.cloud/l/m4-08.html), [0.01과 0.001, 소수는 어떻게 더하고 뺄까?](https://dnakidslab.cloud/l/m4-09.html), [변이 많아지면 어떤 도형이 될까? 다각형과 대각선](https://dnakidslab.cloud/l/m4-10.html), [시간에 따라 어떻게 변했을까? 꺾은선그래프](https://dnakidslab.cloud/l/m4-11.html), [삼각형은 어떻게 나눌 수 있을까?](https://dnakidslab.cloud/l/m4-04.html)
+- 4학년 과학: [물은 어떻게 얼음과 수증기로 변할까?](https://dnakidslab.cloud/l/s3-08.html), [자석은 어떤 물체를 끌어당길까?](https://dnakidslab.cloud/l/s3-02.html), [태양계에는 어떤 행성들이 있을까?](https://dnakidslab.cloud/l/s5-04.html)
+- 4학년 영어: [내 기분을 영어로 어떻게 말할까?](https://dnakidslab.cloud/l/e3-07.html), [가게에서 영어로 물건을 사려면 뭐라고 할까?](https://dnakidslab.cloud/l/e3-02.html)
+- 4학년 중국어: [중국어로 하나부터 열까지 셀 수 있을까?](https://dnakidslab.cloud/l/c3-06.html), [우리 가족을 중국어로 어떻게 부를까?](https://dnakidslab.cloud/l/c3-07.html), [무지개 색깔을 중국어로 말해 볼까?](https://dnakidslab.cloud/l/c3-08.html), [고마울 때와 미안할 때 중국어로 뭐라고 할까?](https://dnakidslab.cloud/l/c3-09.html), [중국어로 내 이름을 소개해 볼까?](https://dnakidslab.cloud/l/c3-10.html)
+- 4학년 일본어: [일본 친구를 만나면 어떻게 인사할까?](https://dnakidslab.cloud/l/j3-07.html), [いち, に, さん! 일본어로 10까지 세어 볼까?](https://dnakidslab.cloud/l/j3-08.html), [엄마, 아빠, 연필, 가방은 일본어로 뭐라고 할까?](https://dnakidslab.cloud/l/j3-09.html), [점 두 개와 동그라미 하나로 소리가 바뀐다고?](https://dnakidslab.cloud/l/j3-06.html), [바나나, 케이크를 가타카나로 써 볼까?](https://dnakidslab.cloud/l/j3-10.html)
+- 5학년 국어: [긴 글을 짧게 정리하는 비법은 무엇일까?](https://dnakidslab.cloud/l/k5-02.html), [내 생각으로 다른 사람을 설득하는 글은 어떻게 쓸까?](https://dnakidslab.cloud/l/k5-05.html), [여행의 추억을 글로 오래 간직하려면?](https://dnakidslab.cloud/l/k5-09.html), ["구름이 솜사탕 같아"라고 말하면 왜 더 잘 보일까?](https://dnakidslab.cloud/l/k5-01.html), [뉴스와 광고, 인터넷 글을 똑똑하게 읽으려면?](https://dnakidslab.cloud/l/k5-07.html), ["나는 어제 숙제를 할 것이다"는 왜 어색할까?](https://dnakidslab.cloud/l/k5-08.html), [이야기 속 인물은 무엇을 소중하게 여겼을까?](https://dnakidslab.cloud/l/k5-10.html)
+- 5학년 수학: [나누어떨어지는 수에는 어떤 규칙이 있을까?](https://dnakidslab.cloud/l/m5-03.html), [분모가 다른 분수는 어떻게 더할까?](https://dnakidslab.cloud/l/m5-04.html), [상자 모양에는 어떤 비밀이 있을까?](https://dnakidslab.cloud/l/m5-01.html), [소수끼리 곱하면 소수점은 어디로 갈까?](https://dnakidslab.cloud/l/m5-05.html)
+- 5학년 과학: [우리 몸은 어떻게 움직이고 살아갈까?](https://dnakidslab.cloud/l/s5-01.html), [그림자는 왜 생길까?](https://dnakidslab.cloud/l/s3-03.html), [돋보기로 보면 왜 크게 보일까?](https://dnakidslab.cloud/l/s5-03.html), [생물은 주변 환경과 어떻게 어울려 살까?](https://dnakidslab.cloud/l/s5-09.html), [섞인 물질을 어떻게 다시 나눌까?](https://dnakidslab.cloud/l/s3-05.html), [바람은 왜 불고, 구름은 어떻게 생길까?](https://dnakidslab.cloud/l/s5-06.html)
+- 5학년 영어: [몇 시에 일어나? 하루 일과를 영어로 말해 볼까?](https://dnakidslab.cloud/l/e5-02.html), [영어 문장은 어떤 순서로 만들까?](https://dnakidslab.cloud/l/e5-03.html), [이번 방학에 무엇을 할 거야? 계획을 영어로 말해 볼까?](https://dnakidslab.cloud/l/e5-07.html), [어제 한 일을 영어로 말해 볼까?](https://dnakidslab.cloud/l/e5-05.html), [길을 잃었을 때 영어로 길을 물어볼까?](https://dnakidslab.cloud/l/e5-01.html)
+- 5학년 중국어: [중국어로 나를 소개해 볼까요?](https://dnakidslab.cloud/l/c5-01.html), [중국어로 몇 살인지 물어볼까요?](https://dnakidslab.cloud/l/c5-02.html), [지금 몇 시예요? 중국어로 시간 말하기](https://dnakidslab.cloud/l/c5-04.html), [오늘은 몇 월 며칠, 무슨 요일일까요?](https://dnakidslab.cloud/l/c5-03.html), [중국어로 '나는 ~을 좋아해!' 말해 볼까요?](https://dnakidslab.cloud/l/c5-05.html)
+- 5학년 일본어: [일본어로 내 이름을 어떻게 소개할까?](https://dnakidslab.cloud/l/j5-01.html), ['이것', '그것', '저것'은 일본어로 뭐라고 할까?](https://dnakidslab.cloud/l/j5-02.html), [일본어로 몇 살인지 어떻게 묻고 답할까?](https://dnakidslab.cloud/l/j5-03.html), ['좋아해요'는 일본어로 어떻게 말할까?](https://dnakidslab.cloud/l/j5-04.html), [지금 몇 시? 오늘은 무슨 요일? 일본어로 말해 볼까?](https://dnakidslab.cloud/l/j5-05.html)
+- 6학년 국어: ["떡볶이는 맛있다"는 사실일까, 의견일까?](https://dnakidslab.cloud/l/k5-03.html), [생각이 다를 때, 싸우지 않고 결정하는 방법은?](https://dnakidslab.cloud/l/k5-04.html), ["발이 넓다"는 정말 발이 크다는 뜻일까?](https://dnakidslab.cloud/l/k5-06.html)
+- 6학년 수학: [상자 안의 공간은 얼마나 클까?](https://dnakidslab.cloud/l/m5-02.html), [두 수를 나눗셈으로 비교해 볼까?](https://dnakidslab.cloud/l/m5-06.html), [동그란 원의 넓이는 어떻게 구할까?](https://dnakidslab.cloud/l/m5-07.html)
+- 6학년 과학: [식초와 비눗물은 무엇이 다를까?](https://dnakidslab.cloud/l/s5-02.html), [식물은 어떻게 스스로 양분을 만들까?](https://dnakidslab.cloud/l/s5-07.html), [전구에 불이 켜지려면 어떻게 연결해야 할까?](https://dnakidslab.cloud/l/s5-05.html), [불은 어떻게 타고, 어떻게 끌까?](https://dnakidslab.cloud/l/s5-08.html)
+- 6학년 영어: [나는 커서 무엇이 되고 싶을까?](https://dnakidslab.cloud/l/e5-06.html), [해야 할 일과 하면 안 되는 일을 영어로 말해 볼까?](https://dnakidslab.cloud/l/e5-04.html)
+- 6학년 중국어: [화장실은 어디예요? 중국어로 장소 묻기](https://dnakidslab.cloud/l/c5-08.html), [오늘 날씨 어때요? 중국어로 날씨 말하기](https://dnakidslab.cloud/l/c5-10.html), [식당에서 중국어로 주문해 볼까요?](https://dnakidslab.cloud/l/c5-06.html), [이거 얼마예요? 중국어로 물건 사기](https://dnakidslab.cloud/l/c5-07.html), [중국어로 '나는 ~할 수 있어요' 말해 볼까요?](https://dnakidslab.cloud/l/c5-09.html)
+- 6학년 일본어: [일본 식당에서 음식을 어떻게 주문할까?](https://dnakidslab.cloud/l/j5-06.html), [일본 가게에서 '얼마예요?'는 어떻게 물을까?](https://dnakidslab.cloud/l/j5-07.html), ['화장실이 어디예요?'는 일본어로 어떻게 물을까?](https://dnakidslab.cloud/l/j5-08.html), ['먹어요, 가요, 봐요'는 일본어로 어떻게 말할까?](https://dnakidslab.cloud/l/j5-09.html), ['오늘은 더워요'는 일본어로 어떻게 말할까?](https://dnakidslab.cloud/l/j5-10.html)
+
+## 실험·활동
+- [우유팩 자음 카드 놀이](https://dnakidslab.cloud/a/g1-consonant-cards.html): 1학년 1학기 국어
+- [병뚜껑 받침 글자 블록](https://dnakidslab.cloud/a/g1-batchim-caps.html): 1학년 1학기 국어
+- [달걀판 병뚜껑 수 세기](https://dnakidslab.cloud/a/g1-count-caps.html): 1학년 1학기 수학
+- [재활용품 모양 탐정](https://dnakidslab.cloud/a/g1-shape-detective.html): 1학년 1학기 수학
+- [페트병 마라카스 소리 비교](https://dnakidslab.cloud/a/g1-bottle-maracas.html): 1학년 2학기 과학
+- [달걀판 곱셈 배열](https://dnakidslab.cloud/a/egg-tray-arrays.html): 2학년 2학기 수학
+- [고무줄 용수철저울](https://dnakidslab.cloud/a/rubber-band-scale.html): 3학년 1학기 과학
+- [페트병 배추흰나비 관찰통](https://dnakidslab.cloud/a/butterfly-life-cycle.html): 3학년 1학기 과학
+- [달걀판 강낭콩 키우기](https://dnakidslab.cloud/a/egg-tray-beans.html): 3학년 1학기 과학
+- [피자 상자 분수판](https://dnakidslab.cloud/a/pizza-fractions.html): 3학년 1학기 수학
+- [종이컵 자릿값 계산판](https://dnakidslab.cloud/a/place-value-cups.html): 3학년 1학기 수학
+- [종이컵 간식 똑같이 나누기](https://dnakidslab.cloud/a/snack-division.html): 3학년 1학기 수학
+- [종이띠 1m 자와 1분 감각 놀이](https://dnakidslab.cloud/a/paper-meter-tape.html): 3학년 1학기 수학
+- [이면지 칠교놀이](https://dnakidslab.cloud/a/tangram.html): 3학년 1학기 수학
+- [우유팩 알파벳 블록](https://dnakidslab.cloud/a/alphabet-blocks.html): 3학년 1학기 영어
+- [종이컵 색깔 볼링](https://dnakidslab.cloud/a/color-bowling.html): 3학년 1학기 영어
+- [현관 문고리 인사 카드](https://dnakidslab.cloud/a/door-hanger-greetings.html): 3학년 1학기 영어
+- [냉장고 좋아요 설문판](https://dnakidslab.cloud/a/like-survey.html): 3학년 1학기 영어
+- [종이컵 실전화](https://dnakidslab.cloud/a/string-phone.html): 3학년 2학기 과학
+- [재활용품 막대그래프](https://dnakidslab.cloud/a/recycling-bar-graph.html): 3학년 2학기 수학
+- [우유팩·페트병 들이 비교](https://dnakidslab.cloud/a/carton-capacity.html): 3학년 2학기 수학
+- [휴지심 가족 인형](https://dnakidslab.cloud/a/family-puppets.html): 3학년 2학기 영어
+- [이면지 날씨 돌림판](https://dnakidslab.cloud/a/weather-wheel.html): 3학년 2학기 영어
+- [병뚜껑 물 위 나침반](https://dnakidslab.cloud/a/floating-compass.html): 4학년 1학기 과학
+- [사인펜 색 분리](https://dnakidslab.cloud/a/marker-chromatography.html): 4학년 1학기 과학
+- [얼음 녹이기 경주와 병 물방울](https://dnakidslab.cloud/a/ice-and-dew.html): 4학년 1학기 과학
+- [종이접시 기분 시계](https://dnakidslab.cloud/a/feelings-plate.html): 4학년 1학기 영어
+- [우유팩 그림자 극장](https://dnakidslab.cloud/a/shadow-theater.html): 4학년 2학기 과학
+- [박스 과일 가게](https://dnakidslab.cloud/a/fruit-shop.html): 4학년 2학기 영어
+- [페트병 폐 모형](https://dnakidslab.cloud/a/bottle-lung.html): 5학년 1학기 과학
+- [페트병 물 돋보기](https://dnakidslab.cloud/a/water-lens.html): 5학년 1학기 과학
+- [휴지심 별자리 투영기](https://dnakidslab.cloud/a/star-projector.html): 5학년 1학기 과학
+- [종이 분수 막대로 통분하기](https://dnakidslab.cloud/a/fraction-strips.html): 5학년 1학기 수학
+- [1~100 수표 배수 색칠](https://dnakidslab.cloud/a/hundred-chart-multiples.html): 5학년 1학기 수학
+- [종이접시 하루 시계](https://dnakidslab.cloud/a/daily-clock.html): 5학년 1학기 영어
+- [우유팩 문장 주사위](https://dnakidslab.cloud/a/sentence-dice.html): 5학년 1학기 영어
+- [주말 계획 달력](https://dnakidslab.cloud/a/weekend-plan-calendar.html): 5학년 1학기 영어
+- [페트병 빗물 측정기](https://dnakidslab.cloud/a/bottle-rain-gauge.html): 5학년 2학기 과학
+- [페트병 미니 생태계](https://dnakidslab.cloud/a/bottle-terrarium.html): 5학년 2학기 과학
+- [정육면체 전개도 찾기](https://dnakidslab.cloud/a/cube-nets.html): 5학년 2학기 수학
+- [마트 전단지 소수 장보기](https://dnakidslab.cloud/a/flyer-decimal-shopping.html): 5학년 2학기 수학
+- [상자 동네 지도](https://dnakidslab.cloud/a/town-map.html): 5학년 2학기 영어
+- [여름방학 미니북](https://dnakidslab.cloud/a/summer-minibook.html): 5학년 2학기 영어
+- [적양배추 산·염기 지시약](https://dnakidslab.cloud/a/cabbage-indicator.html): 6학년 1학기 과학
+- [색깔 물 배추 줄기 관찰](https://dnakidslab.cloud/a/colored-celery.html): 6학년 1학기 과학
+- [종이접시 달 모양 달력](https://dnakidslab.cloud/a/moon-phase-calendar.html): 6학년 1학기 과학
+- [각설탕 부피 재기](https://dnakidslab.cloud/a/sugar-cube-volume.html): 6학년 1학기 수학
+- [주스 비율 맞추기 실험](https://dnakidslab.cloud/a/juice-ratio.html): 6학년 1학기 수학
+- [미래의 나 꿈 명함 만들기](https://dnakidslab.cloud/a/dream-business-card.html): 6학년 1학기 영어
+- [우유팩 손전등](https://dnakidslab.cloud/a/milk-carton-torch.html): 6학년 2학기 과학
+- [유리병 촛불 끄기](https://dnakidslab.cloud/a/candle-jar.html): 6학년 2학기 과학
+- [종이접시 원 넓이 직사각형 만들기](https://dnakidslab.cloud/a/plate-circle-area.html): 6학년 2학기 수학
+- [지구 지킴이 포스터](https://dnakidslab.cloud/a/earth-poster.html): 6학년 2학기 영어
+
+## Optional
+- [전체 내용 요약 (llms-full.txt)](https://dnakidslab.cloud/llms-full.txt)
