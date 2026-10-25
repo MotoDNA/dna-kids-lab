@@ -485,6 +485,9 @@ h1,h2,h3,h4,.brand,.pg-h{font-family:var(--fh);font-weight:400;letter-spacing:0}
 @media(max-width:520px){.pv-foot a{flex:1;padding:10px 8px}}
 .pv-foot .pv-dl{background:var(--accent);color:#fff;border:1px solid var(--accent)}.pv-foot .pv-op{border:1px solid var(--line);color:var(--ink)}
 @media print{.pv-btn,.pv-dlg{display:none!important}}
+.p3-open{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #2a56c6;color:#2a56c6;background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;margin:12px 0 4px}
+.p3-open:hover{background:#eef3ff}.p3-open:disabled{opacity:.6}
+@media print{.p3-open{display:none}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -907,7 +910,7 @@ async function viewLesson(slug) {
   const l = (await q('lesson:' + slug, () => sb.from('lessons').select('*').eq('slug', slug)))[0];
   CUR_LANG = l ? (LANG_OF[l.subject] || null) : null;
   if (!l) { app.innerHTML = `<p class="empty">찾는 단원이 없어요. <a href="#/">단원 목록으로</a></p>`; return; }
-  const [topics, acts] = await Promise.all([listTopics(), listActs()]);
+  const [topics, acts, M3D] = await Promise.all([listTopics(), listActs(), load3dMap()]);
   const t = topics.find(x => x.lesson_slug === slug);
   const act = t && t.activity_slug ? acts.find(a => a.slug === t.activity_slug) : null;
   const c = l.content;
@@ -920,7 +923,7 @@ async function viewLesson(slug) {
     <h1 class="pg-title">${esc(l.title)}</h1><p class="pg-lead">${esc(c.intro)}</p>
     <div class="pg-toc"><b>이번 단원에서 배울 것</b><ol>${c.sections.map(s => `<li>${esc(s.heading)}${s.preview ? ` <span class="pv-tag">${esc(s.preview)}</span>` : ''}</li>`).join('')}</ol></div></div></div>` });
   // 2. 개념 한 쪽씩
-  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}${s.preview ? ` <span class="pv-tag">${esc(s.preview)}</span>` : ''}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${diagHtml(slug, i)}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
+  c.sections.forEach((s, i) => pages.push({ label: `${i + 1}. ${s.heading}`, nkey: 's' + i, html: `<div class="pg-kicker">개념 ${i + 1} / ${c.sections.length}${s.preview ? ` <span class="pv-tag">${esc(s.preview)}</span>` : ''}</div><h2 class="pg-h">${esc(s.heading)}</h2>${s.paras.map(p => `<p>${esc(p)}</p>`).join('')}${diagHtml(slug, i)}${M3D[slug] && M3D[slug][i] ? `<button type="button" class="p3-open" data-p3="${esc(M3D[slug][i])}">🧊 3D로 보기</button>` : ''}${s.example ? `<div class="ex">${esc(s.example)}${sayChips(s.example)}</div>` : ''}` }));
   // 3. 표현·낱말
   if (c.expressions && c.expressions.length) pages.push({ label: '꼭 알아야 할 표현', html: `<div class="pg-kicker">표현 익히기</div><h2 class="pg-h">꼭 알아야 할 표현</h2><div class="tbl"><table><tbody>${c.expressions.map(e => `<tr><td>${esc(e.en)}${sayBtn(e.en)}</td><td>${esc(e.ko)}${e.note ? `<div class="sub" style="font-size:14px">${esc(e.note)}</div>` : ''}</td></tr>`).join('')}</tbody></table></div>` });
   if (c.keywords && c.keywords.length) pages.push({ label: '핵심 낱말', nkey: 'kw', html: `<div class="pg-kicker">정리</div><h2 class="pg-h">핵심 낱말</h2><dl class="kw big">${c.keywords.map(k => `<dt>${esc(k.word)}</dt><dd>${esc(k.meaning)}</dd>`).join('')}</dl>` });
@@ -1335,6 +1338,17 @@ function openPdfPreview(k, pages, href, title) {
   document.addEventListener('keydown', key); document.body.appendChild(d); document.body.style.overflow = 'hidden'; d.querySelector('.pv-x').focus();
   try { gtag('event', 'pdf_preview', { file: k.path }); } catch (e) {}
 }
+
+/* ---------- 입체 그림책 3D ---------- */
+let MAP3D = null;
+const load3dMap = () => MAP3D || (MAP3D = fetch('3d/index.json?v=1').then(r => r.ok ? r.json() : {}).catch(() => ({})));
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-p3]'); if (!b) return;
+  e.preventDefault(); try { stopNarr(); } catch (er) {}
+  b.disabled = true; const t0 = b.textContent; b.textContent = '불러오는 중…';
+  try { await loadScript('3d/popup3d.js?v=1'); POP3D.open(b.dataset.p3); } catch (er) { toast('입체 그림을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); }
+  b.disabled = false; b.textContent = t0;
+});
 async function route() {
   stopNarr(); clearTimeout(window._nt);
   logView('/' + (location.hash.replace(/^#\/?/, '') || ''));

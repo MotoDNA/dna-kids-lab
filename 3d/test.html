@@ -1,0 +1,10 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D 장면 시험</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<meta name="robots" content="noindex"><style>body{font-family:'Gowun Dodum',sans-serif;background:#f6f1e6;padding:20px}</style></head><body>
+<p>장면 시험 페이지 (검색 제외). <span id="list"></span></p>
+<script src="popup3d.js?v=1"></script>
+<script>
+const id = new URLSearchParams(location.search).get('scene') || 'net';
+fetch('index.json').then(r => r.json()).then(m => { const ids = [...new Set(Object.values(m).flatMap(o => Object.values(o)))]; document.getElementById('list').innerHTML = ids.map(i => `<a href="?scene=${i}">${i}</a>`).join(' · '); });
+POP3D.open(id);
+</script></body></html>
