@@ -2,7 +2,7 @@
    사용법: POP3D.open('net')  → /3d/scenes/net.js 를 불러와 창으로 보여 줌
    장면 파일은 POP3D.register(id, def) 로 등록한다. def 형식은 /3d/SCENES.md 참고. */
 (function () {
-  const VER = '1';
+  const VER = '2';
   const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
   const ORBIT_URL = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
   const BASE = (document.currentScript && document.currentScript.src) ? document.currentScript.src.replace(/popup3d\.js.*$/, '') : '3d/';
@@ -77,7 +77,7 @@
     catch (e) { return fail('입체 그림을 불러오지 못했어요. 인터넷 연결을 확인하고 다시 열어 주세요.'); }
     if (disposed) return;
     const def = DEFS[id]; if (!def) return fail('이 입체 그림은 아직 준비 중이에요.');
-    try { await Promise.all([document.fonts.load('64px Jua'), document.fonts.load('34px "Gowun Dodum"')]); } catch (e) {}
+    try { const allTxt = [def.title, def.kicker, def.pageTitle, def.caption].concat(def.pageLines || [], ...(def.steps || []).map(s => [s.name, s.title])).join(' ') + '0123456789kgcm'; await Promise.all([document.fonts.load('64px Jua', allTxt), document.fonts.load('34px "Gowun Dodum"', allTxt)]); } catch (e) {}
     if (disposed) return;
     const THREE = window.THREE;
     try { renderer = new THREE.WebGLRenderer({ antialias: true }); if (!renderer.getContext()) throw 0; } catch (e) { renderer = null; return fail('이 기기에서는 입체 그림을 그릴 수 없어요. 책 페이지의 그림으로 공부해 주세요.'); }
@@ -179,8 +179,10 @@
     const label = (text, size, color, bg) => {
       size = size || 0.7; color = color || '#1f2a33'; bg = bg || 'rgba(255,253,246,.94)';
       const len = String(text).length; const W = Math.max(256, 64 + len * 58);
-      const cv = canvas(W, 128, (c, w, h) => { c.fillStyle = bg; const r = 40; c.beginPath(); c.moveTo(r, 8); c.arcTo(w - 8, 8, w - 8, h - 8, r); c.arcTo(w - 8, h - 8, 8, h - 8, r); c.arcTo(8, h - 8, 8, 8, r); c.arcTo(8, 8, w - 8, 8, r); c.fill(); c.fillStyle = color; c.font = '64px Jua'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(text, w / 2, h / 2 + 4); });
-      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex(cv), depthTest: false, transparent: true })); s.scale.set(size * W / 256, size / 2, 1); s.renderOrder = 10; return s;
+      const paint = (c, w, h) => { c.clearRect(0, 0, w, h); c.fillStyle = bg; const r = 40; c.beginPath(); c.moveTo(r, 8); c.arcTo(w - 8, 8, w - 8, h - 8, r); c.arcTo(w - 8, h - 8, 8, h - 8, r); c.arcTo(8, h - 8, 8, 8, r); c.arcTo(8, 8, w - 8, 8, r); c.fill(); c.fillStyle = color; c.font = '64px Jua'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(text, w / 2, h / 2 + 4); };
+      const cv = canvas(W, 128, paint); const tx = tex(cv);
+      try { if (document.fonts && !document.fonts.check('64px Jua', String(text))) document.fonts.load('64px Jua', String(text)).then(() => { paint(cv.getContext('2d'), cv.width, cv.height); tx.needsUpdate = true; }).catch(() => {}); } catch (e) {}
+      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, depthTest: false, transparent: true })); s.scale.set(size * W / 256, size / 2, 1); s.renderOrder = 10; return s;
     };
     const line = (points, color, opacity) => { const g = new THREE.BufferGeometry().setFromPoints(points.map(p => Array.isArray(p) ? new THREE.Vector3(p[0], p[1], p[2]) : p)); return new THREE.Line(g, new THREE.LineBasicMaterial({ color: color == null ? 0x24303a : color, transparent: opacity != null, opacity: opacity == null ? 1 : opacity })); };
     const arrow = (from, to, color) => { const d = new THREE.Vector3().subVectors(to, from); const len = d.length(); const a = new THREE.ArrowHelper(d.clone().normalize(), from, len, color == null ? 0xd04a3a : color, Math.min(0.35, len * 0.3), Math.min(0.22, len * 0.18)); return a; };
