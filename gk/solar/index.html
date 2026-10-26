@@ -193,16 +193,18 @@ function sizeText(b) {
   return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구의 약 ${(Math.round(r * 10) / 10).toFixed(1)}배` };
 }
 function say(text) {
-  try { const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; u.rate = .95;
-    const v = speechSynthesis.getVoices().find(v => /^ko/i.test(v.lang)); if (v) u.voice = v;
-    speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+  // 문장마다 따로 읽어서 문장 사이에 한 템포 쉬어요
+  try { speechSynthesis.cancel();
+    const v = speechSynthesis.getVoices().find(v => /^ko/i.test(v.lang));
+    text.split(/(?<=[.!?])\s+/).filter(Boolean).forEach(t => { const u = new SpeechSynthesisUtterance(t); u.lang = 'ko-KR'; u.rate = .95; if (v) u.voice = v; speechSynthesis.speak(u); });
+  } catch (e) {}
 }
 function speech(b) {
   const km = s => s.replace('km', '킬로미터');
   if (b.star) return `${b.ko}. ${b.fact} 표면 온도는 약 5,500도예요. 지구까지 거리는 ${km(fmtKm(AU_KM))}예요.`;
   let sz = sizeText(b).s.replace(/\s*\(.*\)/, '');
   sz = b.en === 'Earth' ? '' : ` 지름은 ${sz}${/요$/.test(sz) ? '' : /반$/.test(sz) ? '이에요' : '예요'}.`;
-  const yr = `1년은 ${b.x.P > 1000 ? '지구의 해로' : '지구의 날로'} ${b.x.year}이에요.`;
+  const yr = b.en === 'Earth' ? `1년은, ${b.x.year}이에요.` : `1년은, 지구의 ${b.x.year}이에요.`;
   const m = b.x.moons, moon = m === '0개' ? '위성은 없어요.' : m.includes('(달)') ? '위성은 달 1개예요.' : /이상$/.test(m) ? `위성은 ${m}이에요.` : `위성은 ${m}예요.`;
   return `${b.ko}. ${b.fact}${sz} 태양에서 ${km(fmtKm(b.au * AU_KM))} 떨어져 있어요. ${yr} ${moon}`;
 }
