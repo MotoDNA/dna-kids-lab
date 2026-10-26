@@ -1,5 +1,5 @@
 POP3D.register('circle-area', {
-  title: '원을 잘라 직사각형 만들기', kicker: '수학 5학년 · 원의 넓이', pageTitle: '원의 넓이', pageNo: 40,
+  title: '원을 잘라 직사각형 만들기', kicker: '수학 6학년 · 원의 넓이', pageTitle: '원의 넓이', pageNo: 40,
   pageLines: ['원을 피자처럼 잘게 잘라', '위아래로 엇갈리게 붙이면', '직사각형에 가까워져요.', '', '가로는 원주의 반,', '세로는 반지름이에요.'],
   caption: '그림 3. 원을 16조각으로 잘라 붙이기',
   steps: [

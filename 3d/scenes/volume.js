@@ -1,5 +1,5 @@
 POP3D.register('volume', {
-  title: '쌓기나무로 부피 재기', kicker: '수학 5학년 · 직육면체의 부피', pageTitle: '부피와 1cm³', pageNo: 18,
+  title: '쌓기나무로 부피 재기', kicker: '수학 6학년 · 직육면체의 부피', pageTitle: '부피와 1cm³', pageNo: 18,
   pageLines: ['물건이 공간에서 차지하는 크기를', '부피라고 해요.', '', '한 모서리가 1cm인 정육면체의 부피는', '1cm³ (1세제곱센티미터)예요.', '쌓기나무가 몇 개 들어가는지 세어요.'],
   caption: '그림 1. 상자에 1cm³ 쌓기나무 채우기',
   steps: [

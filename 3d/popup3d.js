@@ -2,7 +2,7 @@
    사용법: POP3D.open('net')  → /3d/scenes/net.js 를 불러와 창으로 보여 줌
    장면 파일은 POP3D.register(id, def) 로 등록한다. def 형식은 /3d/SCENES.md 참고. */
 (function () {
-  const VER = '2';
+  const VER = '3';
   const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
   const ORBIT_URL = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
   const BASE = (document.currentScript && document.currentScript.src) ? document.currentScript.src.replace(/popup3d\.js.*$/, '') : '3d/';

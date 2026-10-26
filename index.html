@@ -1346,7 +1346,7 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('[data-p3]'); if (!b) return;
   e.preventDefault(); try { stopNarr(); } catch (er) {}
   b.disabled = true; const t0 = b.textContent; b.textContent = '불러오는 중…';
-  try { await loadScript('3d/popup3d.js?v=2'); POP3D.open(b.dataset.p3); } catch (er) { toast('입체 그림을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); }
+  try { await loadScript('3d/popup3d.js?v=3'); POP3D.open(b.dataset.p3); } catch (er) { toast('입체 그림을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); }
   b.disabled = false; b.textContent = t0;
 });
 async function route() {
