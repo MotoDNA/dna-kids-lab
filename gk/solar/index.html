@@ -199,6 +199,14 @@ function say(text) {
     text.split(/(?<=[.!?])\s+/).filter(Boolean).forEach(t => { const u = new SpeechSynthesisUtterance(t); u.lang = 'ko-KR'; u.rate = .95; if (v) u.voice = v; speechSynthesis.speak(u); });
   } catch (e) {}
 }
+// 미리 만든 목소리(audio/<영어이름>.mp3)를 틀고, 못 틀면 브라우저 음성으로 읽어요
+let voiceEl = null;
+function sayBody(b) {
+  try { speechSynthesis.cancel(); } catch (e) {}
+  if (voiceEl) { voiceEl.pause(); voiceEl = null; }
+  const el = new Audio('audio/' + b.en.toLowerCase() + '.mp3?v=1'); voiceEl = el;
+  el.play().catch(() => { if (voiceEl === el) say(speech(b)); });
+}
 function speech(b) {
   const km = s => s.replace('km', '킬로미터');
   if (b.star) return `${b.ko}. ${b.fact} 표면 온도는 약 5,500도예요. 지구까지 거리는 ${km(fmtKm(AU_KM))}예요.`;
@@ -570,7 +578,7 @@ function showInfo(b) {
     <div class="tiles">${tiles}</div>
     <div class="cardbtns"><button type="button" class="btn ghost" id="cardall">🔭 전체 보기</button>${ix < BODIES.length - 1 ? `<button type="button" class="btn ghost" id="next">다음: ${esc(BODIES[ix + 1].ko)} ›</button>` : ''}</div>`;
   thumb(b, $('#th'));
-  $('#say').onclick = () => say(speech(b));
+  $('#say').onclick = () => sayBody(b);
   $('#cardall').onclick = overview;
   const nx = $('#next'); if (nx) nx.onclick = () => select(BODIES[ix + 1]);
 }
@@ -639,7 +647,7 @@ $('#retry').onclick = () => { try { sessionStorage.removeItem('solar_retry'); } 
     } else startFly(null);
   });
   $('#all').onclick = overview;
-  $('#selsay').onclick = () => sel && say(speech(sel));
+  $('#selsay').onclick = () => sel && sayBody(sel);
   $('#selmore').onclick = () => $('#info').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
 
   if (!window.THREE || !THREE.OrbitControls) { webglOK = false; fail('3D 그림 도구를 불러오지 못했어요. 새로고침하거나 다시 시도해 보세요.', new Error('three missing')); return; }
