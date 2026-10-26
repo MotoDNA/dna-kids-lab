@@ -60,10 +60,12 @@ const IC = {
   globe: '<circle cx="20" cy="20" r="15" fill="currentColor" opacity=".25"/><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="2.6"/><ellipse cx="20" cy="20" rx="6.5" ry="15" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M5 20h30M8 12h24M8 28h24" stroke="currentColor" stroke-width="2"/>',
   time: '<circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20 10.5V20l6.5 4" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
 };
+IC.solar3d = IC.space;
 const ic = (k, size) => `<svg viewBox="0 0 40 40" width="${size || 34}" height="${size || 34}" aria-hidden="true" focusable="false">${IC[k]}</svg>`;
 
 const ACTS = [
   { id: 'globe', href: 'gk/globe/', t: '3D 지구본 여행', d: '위성 사진 지구본을 돌리며 나라·수도·문화와 북극·남극을 알아봐요.', c: '#0b57d0' },
+  { id: 'solar3d', href: 'gk/solar/', t: '3D 태양계 탐험', d: '태양 둘레를 도는 8개 행성에 날아가 크기·거리·1년 길이를 알아봐요.', c: '#3949ab' },
   { id: 'map', t: '세계지도 탐험', d: '나라를 눌러 국기·수도·인사말을 알아보고, 어디 있는지 맞혀 봐요.', c: '#34a853' },
   { id: 'flags', t: '국기 맞히기', d: '국기를 보고 나라를, 나라를 보고 국기를 골라요.', c: '#d93025' },
   { id: 'capitals', t: '나라·수도', d: '카드를 뒤집어 나라와 수도 짝을 찾아요.', c: '#0071e3' },

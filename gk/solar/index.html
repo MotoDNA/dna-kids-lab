@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="태양과 8개 행성이 도는 3D 태양계를 돌려 보며 행성의 크기·거리·1년 길이·위성 수를 알아보고 퀴즈로 확인하는 초등 4학년 과학 태양계 학습 - DNA Kids Lab">
+<link rel="canonical" href="https://dnakidslab.cloud/gk/solar/">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>3D 태양계 탐험 - DNA Kids Lab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: planet chips + controls, then a black space stage (3D solar system) with an info card beside it (below on phones), then a short quiz */
+:root{
+  --bg:#f3f5fa; --panel:#ffffff; --ink:#151a2c; --sub:#5d6479; --line:#e1e5ef; --tint:#eef2fa;
+  --accent:#2f6fe4; --accent-ink:#ffffff; --gold:#f5b700; --ok:#16a34a; --no:#e11d48;
+  --display:"Jua","Noto Sans KR",system-ui,sans-serif;
+  --body:"Gowun Dodum","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1120;--panel:#161b2e;--ink:#eef1fa;--sub:#a2a9c2;--line:#283050;--tint:#1f2640;--accent:#6f9bff;--accent-ink:#0b1430;--ok:#4ade80;--no:#fb7185;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1120;--panel:#161b2e;--ink:#eef1fa;--sub:#a2a9c2;--line:#283050;--tint:#1f2640;--accent:#6f9bff;--accent-ink:#0b1430;--ok:#4ade80;--no:#fb7185;color-scheme:dark}
+*{box-sizing:border-box}
+html{overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 20px;margin-bottom:14px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);margin:0;line-height:1.1}
+h2,h3{font-weight:400}
+.lead{margin:4px 0 0;color:var(--sub);font-size:15px}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;line-height:1.3}
+.btn.ghost{background:var(--tint);color:var(--ink)}
+.btn:focus-visible,.chip:focus-visible,.seg button:focus-visible,.opt:focus-visible,.lbl:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.back{display:inline-block;margin-bottom:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:15px}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{font:inherit;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:7px;padding:7px 13px 7px 9px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.chip i{width:16px;height:16px;border-radius:50%;flex:none;box-shadow:inset -3px -3px 5px #0005}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+/* control row */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--tint);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:14px;font-weight:700;border:0;background:transparent;color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--panel);box-shadow:0 1px 4px #0003;color:var(--accent)}
+.ctrl .lab{font-size:13px;color:var(--sub);font-weight:700;margin-right:2px}
+.grp{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+/* explore = stage + card */
+.explore{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:14px;align-items:stretch}
+.stage{position:relative;border-radius:26px;overflow:hidden;background:#02040b;height:min(72vh,640px);min-height:380px;touch-action:none}
+#space{position:absolute;inset:0}
+#space canvas{display:block;width:100%;height:100%;outline:none}
+.load{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;color:#cfd8f5;font-size:15px;text-align:center;padding:20px}
+.badge{position:absolute;left:12px;top:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none}
+.badge span{background:#000a;color:#ffe08a;border:1px solid #ffe08a55;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+.badge span.ok{color:#bfe3ff;border-color:#bfe3ff55}
+.clock{position:absolute;right:12px;bottom:12px;background:#000a;color:#dfe6ff;font-size:13px;padding:4px 10px;border-radius:999px;pointer-events:none;font-variant-numeric:tabular-nums}
+.hint{position:absolute;left:14px;bottom:12px;color:#dfe6ff;opacity:.85;font-size:13px;pointer-events:none;text-shadow:0 1px 3px #000;max-width:55%}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;pointer-events:auto;cursor:pointer;font:inherit;font-size:12.5px;font-weight:800;color:#fff;background:#0b1430b3;border:1px solid #ffffff40;border-radius:999px;padding:1px 8px;white-space:nowrap;will-change:transform}
+.lbl.on{background:#ffd65a;color:#1a1400;border-color:#ffd65a}
+.lbl.sun{background:#ff9f1ccc;border-color:#ffd38a}
+.seltag{position:absolute;left:50%;top:52px;transform:translateX(-50%);display:none;align-items:center;gap:8px;background:#0b1430d9;color:#fff;border:1px solid #ffffff33;border-radius:999px;padding:5px 6px 5px 14px;font-weight:700;white-space:nowrap;max-width:calc(100% - 24px)}
+.seltag b{font-family:var(--display);font-weight:400;font-size:19px}
+.seltag button{font:inherit;font-size:13px;font-weight:700;border:0;border-radius:999px;padding:5px 10px;background:#ffffff26;color:#fff;cursor:pointer}
+.seltag .more{display:none}
+/* card */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:18px;min-width:0}
+.explore .card{height:min(72vh,640px);min-height:380px;overflow:auto}
+.empty{color:var(--sub);text-align:center;padding:20px 6px}
+.empty .big{font-size:44px;line-height:1.2}
+.hero{display:flex;gap:14px;align-items:center}
+.hero canvas{width:84px;height:84px;flex:none}
+.hero h2{font-family:var(--display);font-size:32px;margin:0;line-height:1.1}
+.hero .en{color:var(--sub);font-size:14px}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--tint);margin-top:4px}
+.say{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:999px;padding:7px 12px;background:var(--accent);color:var(--accent-ink);cursor:pointer;margin-left:auto;flex:none}
+.fact{margin:14px 0 4px;background:#fff7d6;color:#3b2f00;border-radius:16px 16px 16px 4px;padding:10px 14px;font-weight:700;font-size:15.5px}
+:root[data-theme="dark"] .fact{background:#3a3210;color:#ffeeb0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .fact{background:#3a3210;color:#ffeeb0}}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tile{background:var(--tint);border-radius:16px;padding:10px 12px;min-width:0}
+.tile h3{margin:0 0 2px;font-size:13px;color:var(--sub);font-weight:800}
+.tile .v{font-size:18px;font-weight:800;line-height:1.3;font-variant-numeric:tabular-nums}
+.tile .s{font-size:12.5px;color:var(--sub);line-height:1.4;margin-top:2px}
+.tile.w{grid-column:1/-1}
+.cmp{display:flex;align-items:flex-end;gap:14px;margin-top:6px}
+.cmp figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--sub)}
+.cmp svg{display:block}
+.cardbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+/* quiz */
+.quiz{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:20px}
+.quiz h2{font-family:var(--display);font-size:28px;margin:0 0 2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.qnum{font-size:14px;color:var(--sub);font-weight:700}
+.qq{font-size:20px;font-weight:800;margin:12px 0 10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.opt{font:inherit;font-size:17px;font-weight:700;padding:12px 14px;border-radius:16px;border:2px solid var(--line);background:var(--tint);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left}
+.opt i{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:inset -3px -3px 5px #0005}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--panel))}
+.opt.wrong{border-color:var(--no);background:color-mix(in srgb,var(--no) 12%,var(--panel))}
+.opt[disabled]{cursor:default}
+.fb{margin-top:12px;border-radius:16px;padding:12px 14px;background:var(--tint);font-size:15.5px}
+.fb b{font-size:18px}
+.fb .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.note{margin-top:14px;font-size:12px;color:var(--sub)}
+@media (max-width:980px){.explore{grid-template-columns:1fr}.explore .card{height:auto;min-height:0;overflow:visible}.seltag .more{display:inline-block}}
+@media (max-width:560px){.stage{height:min(62vh,520px);min-height:340px;border-radius:20px}.hero h2{font-size:28px}.hint{display:none}.tiles{grid-template-columns:1fr 1fr}.qq{font-size:18px}.chip{font-size:14px;padding:6px 11px 6px 8px}.seg button{padding:7px 10px}.badge span{font-size:12px}.seltag{top:auto;bottom:44px}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{allow_google_signals:false,allow_ad_personalization_signals:false});</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../../index.html#/gk">‹ 상식 놀이터</a>
+  <header>
+    <div><h1>3D 태양계 탐험</h1><p class="lead">태양 둘레를 도는 8개 행성을 만나 보세요. 행성을 누르면 가까이 날아가요.</p></div>
+    <div class="tools"><a class="btn" href="../../index.html#/u/s5-04">📘 태양계 단원 공부하기</a></div>
+  </header>
+
+  <nav class="chips" id="chips" aria-label="천체 고르기"></nav>
+
+  <div class="ctrl">
+    <div class="grp"><span class="lab">도는 속도</span><div class="seg" id="speed" role="group" aria-label="도는 속도">
+      <button type="button" data-v="0" aria-pressed="false">⏸ 멈춤</button><button type="button" data-v="1" aria-pressed="true">▶ 보통</button><button type="button" data-v="2" aria-pressed="false">⏩ 빠르게</button></div></div>
+    <div class="grp"><span class="lab">크기</span><div class="seg" id="mode" role="group" aria-label="크기 보기 방법">
+      <button type="button" data-v="easy" aria-pressed="true">보기 쉬운 크기</button><button type="button" data-v="real" aria-pressed="false">실제 크기 비율</button></div></div>
+    <button type="button" class="btn ghost" id="all">🔭 전체 보기</button>
+  </div>
+
+  <div class="explore">
+    <div class="stage" id="stage">
+      <div id="space"></div>
+      <div class="labels" id="labels"></div>
+      <div class="badge" id="badge"></div>
+      <div class="seltag" id="seltag"><b id="selname"></b><button type="button" id="selsay" aria-label="읽어 주기">🔊</button><button type="button" class="more" id="selmore">자세히 ↓</button></div>
+      <div class="hint">끌어서 돌리기 · 휠이나 두 손가락으로 확대 · 행성을 눌러 보세요</div>
+      <div class="clock" id="clock" aria-hidden="true"></div>
+      <div class="load" id="load"><div id="loadmsg">태양계를 불러오는 중…</div><button type="button" class="btn" id="retry" hidden>다시 시도</button></div>
+    </div>
+    <section class="card" id="info" aria-live="polite">
+      <div class="empty"><div class="big">☀️🪐</div><p>위의 단추나 우주 속 행성을 눌러 보세요.<br>행성의 크기, 거리, 1년 길이를 알려 줘요.</p><p class="sm" style="font-size:14px">행성 순서 외우기: <b>수·금·지·화·목·토·천·해</b></p></div>
+    </section>
+  </div>
+
+  <section class="quiz" id="quiz" aria-live="polite"></section>
+
+  <div class="links"><a class="btn" href="../../index.html#/u/s5-04">📘 태양계 단원 공부하기</a><a class="btn ghost" href="../../index.html#/gk">🎡 상식 놀이터로 돌아가기</a></div>
+  <p class="note">행성 지름·거리·공전 주기·자전 주기·온도: NASA 행성 자료(Planetary Fact Sheet)를 어린이용으로 반올림했어요. 위성 수는 2025년 기준이고, 새 위성이 발견되면 늘어나요. 지구 사진: NASA Blue Marble(공개 자료). 다른 행성의 겉모습은 실제 사진이 아니라 특징을 살려 컴퓨터로 그린 그림이에요. 궤도는 거의 원에 가까워서 원으로 그렸어요. 행성이 스스로 도는(자전) 빠르기는 보기 좋게 바꿨지만, 태양을 도는(공전) 빠르기는 실제 비율대로예요.</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const AU_KM = 149597871, EARTH_D = 12756;
+
+/* 어린이용으로 반올림한 NASA Planetary Fact Sheet 값 */
+const EXTRA = {
+  Sun:     { col: '#ffb32c', temp: '표면 약 5,500℃', age: '약 46억 년', rot: '약 25일 (적도)', earthKm: AU_KM },
+  Mercury: { col: '#9c9790', P: 87.97,  rot: '약 59일', year: '88일', moons: '0개', temp: '낮 약 430℃, 밤 약 -180℃', tilt: 0.03 },
+  Venus:   { col: '#e8c47e', P: 224.70, rot: '약 243일', rotNote: '다른 행성과 반대 방향으로 돌아요', year: '225일', moons: '0개', temp: '약 460℃', tilt: 177.4 },
+  Earth:   { col: '#3d7fd8', P: 365.26, rot: '약 24시간', year: '365일', moons: '1개 (달)', temp: '약 15℃', tilt: 23.44 },
+  Mars:    { col: '#c1623a', P: 686.98, rot: '약 24시간 37분', year: '687일', yearNote: '지구의 약 1.9년', moons: '2개', temp: '약 -65℃', tilt: 25.19 },
+  Jupiter: { col: '#c9a27a', P: 4332.6, rot: '약 10시간', year: '약 12년', moons: '95개 이상', temp: '약 -110℃', tempNote: '구름 꼭대기', tilt: 3.13 },
+  Saturn:  { col: '#dcc58f', P: 10759,  rot: '약 10시간 40분', year: '약 29년', moons: '270개 이상', temp: '약 -140℃', tempNote: '구름 꼭대기', tilt: 26.73 },
+  Uranus:  { col: '#9fdfe6', P: 30685,  rot: '약 17시간', rotNote: '옆으로 누워(약 98°) 굴러가듯 돌아요', year: '약 84년', moons: '28개 이상', temp: '약 -195℃', tempNote: '구름 꼭대기', tilt: 97.77 },
+  Neptune: { col: '#4470dc', P: 60190,  rot: '약 16시간', year: '약 165년', moons: '16개', temp: '약 -200℃', tempNote: '구름 꼭대기', tilt: 28.32 }
+};
+/* 보기 쉬운 크기(easy) / 실제 크기 비율(real) 배치. real: 지구 반지름 0.5 기준으로 행성·태양 지름을 실제 비율로 */
+const EASY_D = { Mercury: 9.5, Venus: 13.5, Earth: 17.5, Mars: 21.5, Jupiter: 29.5, Saturn: 39.5, Uranus: 49.5, Neptune: 57.5 };
+const REAL_D = { Mercury: 75, Venus: 90, Earth: 105, Mars: 120, Jupiter: 165, Saturn: 210, Uranus: 255, Neptune: 295 };
+const PHASE = { Mercury: 40, Venus: 160, Earth: 250, Mars: 320, Jupiter: 70, Saturn: 200, Uranus: 290, Neptune: 120 };
+const SPEEDS = [0, 365.26 / 20, 365.26 / 6]; // 하루(지구 날) / 초 : 보통이면 지구가 20초에 한 바퀴
+
+let BODIES = [], byEn = {}, sel = null, speedIx = RM ? 0 : 1, mode = 'easy', mix = 0, mixTo = 0;
+let renderer, scene, camera, controls, sunUniform, simDays = 0, raf = 0, last = 0, fly = null, lastP = null, webglOK = true;
+
+/* ---------- 작은 도우미 ---------- */
+function fmtKm(km) {
+  if (km >= 1e9) return `약 ${Math.round(km / 1e8).toLocaleString('ko-KR')}억 km`;
+  if (km >= 1e8) { const e = Math.floor(km / 1e8), m = Math.round((km - e * 1e8) / 1e7) * 1000; return m >= 10000 ? `약 ${e + 1}억 km` : `약 ${e}억${m ? ' ' + m.toLocaleString('ko-KR') + '만' : ''} km`; }
+  return `약 ${(Math.round(km / 1e6) * 100).toLocaleString('ko-KR')}만 km`;
+}
+function sizeText(b) {
+  const r = b.d / EARTH_D;
+  if (b.en === 'Earth') return { v: '12,756km', s: '우리 지구예요' };
+  if (b.star) return { v: '약 139만 km', s: '지구의 약 109배' };
+  if (r >= 10) return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구의 약 ${Math.round(r)}배` };
+  if (r >= 1.5) return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구의 약 ${(Math.round(r * 10) / 10).toFixed(1)}배` };
+  if (r > 0.9) return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구와 거의 같아요 (약 ${(Math.floor(r * 100) / 100)}배)` };
+  if (r > 0.45) return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구의 약 절반 (약 ${(Math.round(r * 10) / 10).toFixed(1)}배)` };
+  return { v: b.d.toLocaleString('ko-KR') + 'km', s: `지구의 약 ${(Math.round(r * 10) / 10).toFixed(1)}배` };
+}
+function say(text) {
+  try { const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; u.rate = .95;
+    const v = speechSynthesis.getVoices().find(v => /^ko/i.test(v.lang)); if (v) u.voice = v;
+    speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+}
+function speech(b) {
+  const km = s => s.replace('km', '킬로미터');
+  if (b.star) return `${b.ko}. ${b.fact} 표면 온도는 약 5,500도예요. 지구까지 거리는 ${km(fmtKm(AU_KM))}예요.`;
+  let sz = sizeText(b).s.replace(/\s*\(.*\)/, '');
+  sz = b.en === 'Earth' ? '' : ` 지름은 ${sz}${/요$/.test(sz) ? '' : /반$/.test(sz) ? '이에요' : '예요'}.`;
+  const yr = `1년은 ${b.x.P > 1000 ? '지구의 해로' : '지구의 날로'} ${b.x.year}이에요.`;
+  const m = b.x.moons, moon = m === '0개' ? '위성은 없어요.' : m.includes('(달)') ? '위성은 달 1개예요.' : /이상$/.test(m) ? `위성은 ${m}이에요.` : `위성은 ${m}예요.`;
+  return `${b.ko}. ${b.fact}${sz} 태양에서 ${km(fmtKm(b.au * AU_KM))} 떨어져 있어요. ${yr} ${moon}`;
+}
+
+/* ---------- 절차적 행성 그림 (외부 이미지 없이 캔버스로) ---------- */
+function hash(x, y, s) { let h = Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(s, 1442695041); h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; }
+function noise(x, y, px, s) { // x 방향으로 이어지는(px 주기) 값 노이즈
+  const ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy;
+  const ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+  const x0 = ((ix % px) + px) % px, x1 = (x0 + 1) % px;
+  const a = hash(x0, iy, s), b = hash(x1, iy, s), c = hash(x0, iy + 1, s), d = hash(x1, iy + 1, s);
+  return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+}
+function fbm(u, v, fx, fy, oct, s) { let t = 0, a = .5, n = 0; for (let o = 0; o < oct; o++) { const k = 1 << o; t += a * noise(u * fx * k, v * fy * k, fx * k, s + o * 17); n += a; a *= .5; } return t / n; }
+const mixc = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const smooth = (e0, e1, x) => { const t = clamp((x - e0) / (e1 - e0)); return t * t * (3 - 2 * t); };
+function paint(w, h, fn) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); const img = x.createImageData(w, h), D = img.data;
+  for (let j = 0; j < h; j++) { const v = (j + .5) / h, lat = (.5 - v) * Math.PI; for (let i = 0; i < w; i++) { const u = (i + .5) / w; const col = fn(u, v, lat); const k = (j * w + i) * 4; D[k] = col[0]; D[k + 1] = col[1]; D[k + 2] = col[2]; D[k + 3] = 255; } }
+  x.putImageData(img, 0, 0); return c;
+}
+function craters(c, n, seed, dark, bright) {
+  const x = c.getContext('2d'), W = c.width, H = c.height;
+  for (let i = 0; i < n; i++) {
+    const u = hash(i, 1, seed), v = .08 + .84 * hash(i, 2, seed), r = (2 + Math.pow(hash(i, 3, seed), 3) * 16) * W / 512;
+    const lat = (.5 - v) * Math.PI, sx = 1 / Math.max(Math.cos(lat), .25);
+    for (const off of [0, -W, W]) {
+      const cx = u * W + off, cy = v * H; if (cx < -r * sx * 2 || cx > W + r * sx * 2) continue;
+      x.save(); x.translate(cx, cy); x.scale(sx, 1);
+      const g = x.createRadialGradient(-r * .2, -r * .2, 0, 0, 0, r);
+      g.addColorStop(0, `rgba(0,0,0,${dark})`); g.addColorStop(.72, `rgba(0,0,0,${dark * .6})`); g.addColorStop(.86, `rgba(255,255,255,${bright})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(0, 0, r, 0, Math.PI * 2); x.fill(); x.restore();
+    }
+  }
+  return c;
+}
+const PAINT = {
+  Sun: () => paint(512, 256, (u, v) => { const f = fbm(u, v, 28, 14, 4, 3), g = fbm(u, v, 6, 3, 3, 9); let c = mixc([255, 150, 30], [255, 236, 150], smooth(.3, .75, f * .7 + g * .3)); return c; }),
+  Mercury: () => craters(paint(512, 256, (u, v) => { const f = fbm(u, v, 8, 4, 5, 11), g = fbm(u, v, 3, 2, 3, 5); return mixc([96, 92, 88], [188, 182, 174], clamp(f * .8 + g * .45 - .15)); }), 170, 4, .22, .22),
+  Venus: () => paint(512, 256, (u, v, lat) => { const w = fbm(u, v, 4, 3, 4, 21); const t = Math.sin(lat * 7 + w * 6 + Math.sin(u * Math.PI * 2) * .6) * .5 + .5; const f = fbm(u, v, 10, 6, 4, 23); let c = mixc([214, 164, 96], [246, 224, 170], t * .6 + f * .4); return mixc(c, [240, 214, 160], .25 * (1 - Math.cos(lat))); }),
+  Mars: () => paint(512, 256, (u, v, lat) => {
+    const f = fbm(u, v, 6, 3, 5, 31), g = fbm(u, v, 3, 2, 4, 37); let c = mixc([150, 66, 38], [212, 116, 70], f);
+    c = mixc(c, [92, 46, 34], smooth(.55, .7, g) * .75); // 어두운 지역
+    const cap = 1.32 + (fbm(u, v, 10, 5, 3, 41) - .5) * .12; const a = Math.abs(lat);
+    return mixc(c, [244, 240, 234], smooth(cap, cap + .05, a));
+  }),
+  Jupiter: () => paint(1024, 512, (u, v, lat) => {
+    const turb = (fbm(u, v, 8, 16, 4, 51) - .5) * .028; const t = v + turb;
+    const b1 = Math.sin(t * Math.PI * 15 + .6) * .5 + .5, b2 = Math.sin(t * Math.PI * 37) * .5 + .5;
+    const streak = fbm(u, v, 6, 48, 4, 57);
+    let c = mixc([241, 229, 206], [196, 146, 100], smooth(.35, .8, b1));
+    c = mixc(c, [150, 98, 66], smooth(.6, .95, b2) * .45 * smooth(.25, .6, b1));
+    c = mixc(c, [250, 240, 222], clamp((streak - .5) * .45));
+    c = mixc(c, [120, 82, 58], clamp((.5 - streak) * .35));
+    c = mixc(c, [150, 146, 140], smooth(1.0, 1.45, Math.abs(lat)) * .7);
+    // 대적점 (남위 약 22°)
+    let du = u - .66; if (du > .5) du -= 1; if (du < -.5) du += 1;
+    const dv = v - .625, d = (du / .055) ** 2 + (dv / .03) ** 2;
+    if (d < 1.9) { const sw = fbm(u, v, 40, 40, 3, 59); c = mixc(c, [252, 240, 222], smooth(1.9, 1.15, d) * .55); c = mixc(c, [196, 92, 58], smooth(1.1, .2, d + (sw - .5) * .5)); }
+    return c;
+  }),
+  Saturn: () => paint(512, 256, (u, v, lat) => {
+    const t = v + (fbm(u, v, 6, 10, 3, 61) - .5) * .012;
+    const b = Math.sin(t * Math.PI * 18) * .5 + .5, b2 = Math.sin(t * Math.PI * 44) * .5 + .5;
+    let c = mixc([236, 220, 178], [204, 176, 124], b * .7 + b2 * .3);
+    return mixc(c, [166, 168, 150], smooth(1.05, 1.5, Math.abs(lat)) * .65);
+  }),
+  Uranus: () => paint(256, 128, (u, v, lat) => { const f = fbm(u, v, 4, 6, 3, 71); const b = Math.sin(lat * 9) * .5 + .5; return mixc(mixc([142, 214, 222], [178, 236, 240], b * .25 + f * .35), [196, 244, 246], smooth(.9, 1.5, Math.abs(lat)) * .5); }),
+  Neptune: () => paint(512, 256, (u, v, lat) => {
+    const f = fbm(u, v, 5, 8, 4, 81), b = Math.sin(lat * 10 + f * 2) * .5 + .5;
+    let c = mixc([40, 74, 190], [78, 120, 228], b * .55 + f * .45);
+    const s = fbm(u, v, 6, 40, 4, 87); c = mixc(c, [225, 235, 255], smooth(.68, .8, s) * (Math.abs(lat + .45) < .25 || Math.abs(lat - .3) < .15 ? .85 : .25));
+    let du = u - .3; const d = (du / .05) ** 2 + ((v - .64) / .03) ** 2; c = mixc(c, [24, 40, 120], smooth(1, .2, d) * .8);
+    return c;
+  }),
+  Moon: () => craters(paint(256, 128, (u, v) => { const f = fbm(u, v, 6, 3, 5, 91), m = fbm(u, v, 3, 2, 4, 97); return mixc(mixc([120, 118, 114], [196, 194, 188], f), [84, 84, 86], smooth(.52, .62, m) * .8); }), 60, 9, .18, .2),
+  Earth: () => paint(256, 128, (u, v, lat) => { const f = fbm(u, v, 5, 3, 5, 101); return smooth(.55, .58, f) ? mixc([60, 110, 50], [140, 130, 90], f) : mixc([20, 60, 150], [40, 100, 190], f); })
+};
+function ringCanvas(kind) {
+  const c = document.createElement('canvas'); c.width = 512; c.height = 4; const x = c.getContext('2d'); const img = x.createImageData(512, 4), D = img.data;
+  for (let i = 0; i < 512; i++) {
+    let r, g, b, a;
+    if (kind === 'saturn') {
+      const R = 1.24 + (i / 511) * 1.03, n = noise(i / 3, 0, 1e6, 7) * .5 + noise(i / 11, 1, 1e6, 8) * .5;
+      if (R < 1.53) { [r, g, b] = [168, 150, 122]; a = .22 + n * .15; }            // C 고리
+      else if (R < 1.95) { [r, g, b] = [232, 212, 172]; a = .78 + n * .2; }         // B 고리
+      else if (R < 2.03) { [r, g, b] = [120, 110, 90]; a = .06; }                  // 카시니 간극
+      else { [r, g, b] = [214, 194, 156]; a = (Math.abs(R - 2.21) < .008 ? .1 : .6 + n * .2); } // A 고리
+      const sh = .85 + n * .25; r *= sh; g *= sh; b *= sh;
+      if (i < 3 || i > 508) a *= .4;
+    } else { const R = i / 511; [r, g, b] = [205, 232, 238]; a = (Math.abs(R - .95) < .04 ? .35 : Math.abs(R - .55) < .02 ? .15 : .03); }
+    for (let j = 0; j < 4; j++) { const k = (j * 512 + i) * 4; D[k] = r; D[k + 1] = g; D[k + 2] = b; D[k + 3] = clamp(a) * 255; }
+  }
+  x.putImageData(img, 0, 0); return c;
+}
+function glowCanvas(stops) {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'); const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+  stops.forEach(([o, col]) => g.addColorStop(o, col)); x.fillStyle = g; x.fillRect(0, 0, 256, 256); return c;
+}
+
+/* ---------- 카드에 쓰는 작은 행성 그림 ---------- */
+function thumb(b, cv) {
+  const S = 168, x = cv.getContext('2d'); cv.width = cv.height = S; x.clearRect(0, 0, S, S);
+  const src = b.thumbSrc; const R = b.en === 'Saturn' ? 44 : 62, cx = S / 2, cy = S / 2;
+  const ring = (front) => { if (b.en !== 'Saturn') return; x.save(); x.translate(cx, cy); x.rotate(-.35); x.scale(1, .32); x.lineWidth = 15; x.strokeStyle = front ? 'rgba(226,206,166,.95)' : 'rgba(200,180,140,.75)';
+    x.beginPath(); if (front) x.arc(0, 0, R * 1.7, 0, Math.PI); else x.arc(0, 0, R * 1.7, Math.PI, Math.PI * 2); x.stroke(); x.lineWidth = 6; x.strokeStyle = 'rgba(214,194,156,.7)'; x.beginPath(); if (front) x.arc(0, 0, R * 2.05, 0, Math.PI); else x.arc(0, 0, R * 2.05, Math.PI, Math.PI * 2); x.stroke(); x.restore(); };
+  if (b.star) { const g = x.createRadialGradient(cx, cy, R * .6, cx, cy, S / 2); g.addColorStop(0, 'rgba(255,200,80,.8)'); g.addColorStop(1, 'rgba(255,160,40,0)'); x.fillStyle = g; x.fillRect(0, 0, S, S); }
+  ring(false);
+  x.save(); x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.clip();
+  if (src) { const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight; x.drawImage(src, w * .1, h * .05, w * .5, h * .9, cx - R * 1.15, cy - R, R * 2.3, R * 2); }
+  else { x.fillStyle = b.x.col; x.fillRect(0, 0, S, S); }
+  if (!b.star) { const g = x.createRadialGradient(cx - R * .35, cy - R * .35, R * .1, cx, cy, R * 1.05); g.addColorStop(0, 'rgba(255,255,255,.18)'); g.addColorStop(.55, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,20,.6)'); x.fillStyle = g; x.fillRect(0, 0, S, S); }
+  else { const g = x.createRadialGradient(cx, cy, R * .3, cx, cy, R); g.addColorStop(0, 'rgba(255,255,220,.2)'); g.addColorStop(1, 'rgba(200,80,0,.45)'); x.fillStyle = g; x.fillRect(0, 0, S, S); }
+  x.restore(); ring(true);
+}
+
+/* ---------- 3D 장면 ---------- */
+const ATM_V = `varying vec3 vN; varying vec3 vP; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.0); vP = mv.xyz; vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * mv; }`;
+const ATM_F = `uniform vec3 color; uniform float power; uniform vec3 sunV; varying vec3 vN; varying vec3 vP;
+void main(){ vec3 n = normalize(vN); vec3 vd = normalize(-vP); float rim = 1.0 - max(dot(n, vd), 0.0); float lit = clamp(dot(n, normalize(sunV - vP)) * 0.8 + 0.35, 0.0, 1.0); gl_FragColor = vec4(color, pow(rim, 2.6) * lit * power); }`;
+const SUN_F = `uniform sampler2D map; uniform float t; varying vec3 vN; varying vec2 vUv; varying vec3 vP;
+void main(){ vec3 c = texture2D(map, vUv + vec2(t, 0.0)).rgb; float mu = max(dot(normalize(vN), normalize(-vP)), 0.0); gl_FragColor = vec4(c * (0.5 + 0.6 * pow(mu, 0.45)), 1.0); }`;
+const SUN_V = `varying vec3 vN; varying vec2 vUv; varying vec3 vP; void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position,1.0); vP = mv.xyz; vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * mv; }`;
+
+function texFrom(canvas) { const t = new THREE.CanvasTexture(canvas); t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy()); return t; }
+
+function build() {
+  const host = $('#space');
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  host.appendChild(renderer.domElement);
+  scene = new THREE.Scene(); scene.background = new THREE.Color('#02040b');
+  camera = new THREE.PerspectiveCamera(45, 1, 0.05, 6000);
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = .08; controls.enablePan = false; controls.rotateSpeed = .7; controls.zoomSpeed = .9;
+  controls.minPolarAngle = .05; controls.maxPolarAngle = Math.PI - .05;
+
+  // 별 하늘
+  const N = 1700, pos = new Float32Array(N * 3), colr = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { const u = hash(i, 3, 5) * 2 - 1, th = hash(i, 4, 5) * Math.PI * 2, s = Math.sqrt(1 - u * u), R = 2600;
+    pos.set([R * s * Math.cos(th), R * u, R * s * Math.sin(th)], i * 3); const k = .45 + Math.pow(hash(i, 6, 5), 2) * .55, w = hash(i, 7, 5);
+    colr.set(w < .15 ? [k * .8, k * .88, k] : w > .9 ? [k, k * .9, k * .75] : [k, k, k], i * 3); }
+  const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(pos, 3)); sg.setAttribute('color', new THREE.BufferAttribute(colr, 3));
+  scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ size: 1.6, sizeAttenuation: false, vertexColors: true, depthWrite: false })));
+
+  scene.add(new THREE.AmbientLight(0xffffff, .16));
+  const light = new THREE.PointLight(0xfff4e0, 1.25, 0); scene.add(light);
+  sunUniform = { value: new THREE.Vector3() };
+
+  const sphere = new THREE.SphereGeometry(1, 48, 32), sphereLo = new THREE.SphereGeometry(1, 32, 20);
+  const orbitGeo = (() => { const pts = []; for (let i = 0; i <= 160; i++) { const a = i / 160 * Math.PI * 2; pts.push(new THREE.Vector3(Math.cos(a), 0, -Math.sin(a))); } return new THREE.BufferGeometry().setFromPoints(pts); })();
+  const atm = (color, power, scale = 1.06) => { const m = new THREE.Mesh(sphereLo, new THREE.ShaderMaterial({ uniforms: { color: { value: new THREE.Color(color) }, power: { value: power }, sunV: sunUniform }, vertexShader: ATM_V, fragmentShader: ATM_F, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); m.scale.setScalar(scale); return m; };
+
+  BODIES.forEach(b => {
+    b.x = EXTRA[b.en] || {};
+    const g = new THREE.Group(); scene.add(g); b.group = g;
+    if (b.star) {
+      b.sunMat = new THREE.ShaderMaterial({ uniforms: { map: { value: null }, t: { value: 0 } }, vertexShader: SUN_V, fragmentShader: SUN_F });
+      b.mesh = new THREE.Mesh(sphere, b.sunMat); g.add(b.mesh);
+      const glow = (stops, k, op) => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: texFrom(glowCanvas(stops)), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: op })); s.userData.k = k; g.add(s); return s; };
+      b.glows = [glow([[0, 'rgba(255,250,220,1)'], [.3, 'rgba(255,214,120,.85)'], [.55, 'rgba(255,150,40,.25)'], [1, 'rgba(255,120,20,0)']], 3.2, 1), glow([[0, 'rgba(255,190,90,.5)'], [.5, 'rgba(255,140,40,.1)'], [1, 'rgba(255,100,0,0)']], 8, .7)];
+      b.easyR = 5; b.realR = 109.1 * .5; b.easyD = b.realD = 0;
+      return;
+    }
+    b.easyR = 1.05 * Math.pow(b.d / EARTH_D, .45); b.realR = .5 * b.d / EARTH_D; b.easyD = EASY_D[b.en]; b.realD = REAL_D[b.en];
+    const tilt = new THREE.Group(); tilt.rotation.z = THREE.MathUtils.degToRad(b.x.tilt || 0); g.add(tilt); b.tilt = tilt;
+    b.mat = new THREE.MeshPhongMaterial({ color: b.x.col, shininess: b.en === 'Earth' ? 18 : 4, specular: b.en === 'Earth' ? 0x223344 : 0x000000 });
+    b.mesh = new THREE.Mesh(sphere, b.mat); tilt.add(b.mesh);
+    const A = { Earth: ['#6fb4ff', 1.15, 1.07], Venus: ['#ffe2a8', .8, 1.06], Uranus: ['#bff6ff', .45, 1.05], Neptune: ['#86adff', .7, 1.05] }[b.en];
+    if (A) tilt.add(atm(A[0], A[1], A[2]));
+    if (b.en === 'Saturn' || b.en === 'Uranus') {
+      const [ri, ro] = b.en === 'Saturn' ? [1.24, 2.27] : [1.6, 2.0];
+      const rg = new THREE.RingGeometry(ri, ro, 128, 1), p = rg.attributes.position, uv = rg.attributes.uv, v3 = new THREE.Vector3();
+      for (let i = 0; i < p.count; i++) { v3.fromBufferAttribute(p, i); uv.setXY(i, (v3.length() - ri) / (ro - ri), .5); }
+      const ring = new THREE.Mesh(rg, new THREE.MeshBasicMaterial({ map: texFrom(ringCanvas(b.en.toLowerCase())), transparent: true, side: THREE.DoubleSide, depthWrite: false, color: b.en === 'Saturn' ? 0xf2ead8 : 0xffffff }));
+      ring.rotation.x = -Math.PI / 2; ring.renderOrder = 2; tilt.add(ring);
+    }
+    b.orbit = new THREE.LineLoop(orbitGeo, new THREE.LineBasicMaterial({ color: 0x5a6ea8, transparent: true, opacity: .38, depthWrite: false }));
+    scene.add(b.orbit);
+    if (b.en === 'Earth') {
+      const mg = new THREE.Group(); g.add(mg); b.moonPivot = mg;
+      b.moonMat = new THREE.MeshPhongMaterial({ color: '#b9b6b0', shininess: 2, specular: 0 });
+      b.moon = new THREE.Mesh(sphereLo, b.moonMat); mg.add(b.moon);
+    }
+  });
+  BODIES.sun = BODIES.find(b => b.star);
+
+  // 지구 사진(earth.webp)
+  new THREE.TextureLoader().load('../globe/earth.webp', t => { const e = byEn.Earth; t.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy()); e.mat.map = t; e.mat.color.set('#ffffff'); e.mat.needsUpdate = true; e.thumbSrc = t.image; if (sel === e) showInfo(e); });
+
+  // 행성 그림은 첫 화면이 뜬 뒤 하나씩 그려요(옛 태블릿도 멈추지 않게)
+  const queue = ['Sun', 'Jupiter', 'Saturn', 'Mars', 'Venus', 'Mercury', 'Neptune', 'Uranus', 'Moon'];
+  const step = () => { const k = queue.shift(); if (!k) return; const c = PAINT[k]();
+    if (k === 'Sun') { BODIES.sun.sunMat.uniforms.map.value = texFrom(c); BODIES.sun.thumbSrc = c; }
+    else if (k === 'Moon') { byEn.Earth.moonMat.map = texFrom(c); byEn.Earth.moonMat.color.set('#ffffff'); byEn.Earth.moonMat.needsUpdate = true; }
+    else { const b = byEn[k]; b.mat.map = texFrom(c); b.mat.color.set('#ffffff'); b.mat.needsUpdate = true; b.thumbSrc = c; }
+    if (sel && (sel.en === k || (k === 'Sun' && sel.star))) showInfo(sel);
+    setTimeout(step, 16); };
+  // 해 그림이 없을 때의 임시 색
+  BODIES.sun.sunMat.uniforms.map.value = texFrom(paint(8, 4, () => [255, 200, 90]));
+  setTimeout(step, 30);
+
+  // 이름표
+  const lay = $('#labels');
+  BODIES.forEach(b => { const e = document.createElement('button'); e.type = 'button'; e.className = 'lbl' + (b.star ? ' sun' : ''); e.textContent = b.ko; e.setAttribute('aria-label', b.ko + ' 보기'); e.onclick = () => select(b); lay.appendChild(e); b.lbl = e; });
+
+  // 누르기(끌기와 구분)
+  let down = null; const cv = renderer.domElement;
+  cv.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, t: performance.now() }; if (fly) { fly = null; controls.enabled = true; } });
+  cv.addEventListener('pointerup', e => { if (!down) return; const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y), dt = performance.now() - down.t; down = null; if (moved < 8 && dt < 600) pickAt(e.clientX, e.clientY); });
+  cv.addEventListener('pointermove', e => { if (down) return; cv.style.cursor = hitTest(e.clientX, e.clientY) ? 'pointer' : 'grab'; });
+
+  const resize = () => { const r = $('#stage').getBoundingClientRect(); renderer.setSize(r.width, r.height, false); camera.aspect = r.width / Math.max(r.height, 1); camera.updateProjectionMatrix(); };
+  resize(); if ('ResizeObserver' in window) new ResizeObserver(resize).observe($('#stage')); else addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); } });
+
+  layout(0); place(); camera.position.copy(overviewPos()); controls.target.set(0, 0, 0); controls.update();
+}
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+function radiusOf(b) { return lerp(b.easyR, b.realR, mix); }
+function layout(m) {
+  mix = m;
+  BODIES.forEach(b => {
+    const r = radiusOf(b);
+    if (b.star) { b.mesh.scale.setScalar(r); b.glows.forEach((s, i) => s.scale.setScalar(r * lerp(s.userData.k, i ? 2.4 : 1.7, m))); return; }
+    b.tilt.scale.setScalar(r);
+    b.dist = lerp(b.easyD, b.realD, m); b.orbit.scale.setScalar(b.dist);
+    if (b.moon) { b.moon.scale.setScalar(r * .2727); b.moonDist = r * 2.7; } // 달 크기는 지구와 실제 비율, 거리는 줄였어요
+  });
+}
+function place() {
+  BODIES.forEach(b => {
+    if (b.star) { b.mesh.rotation.y = simDays / 25.4 * Math.PI * 2 * .02; return; }
+    const a = THREE.MathUtils.degToRad(PHASE[b.en]) + simDays / b.x.P * Math.PI * 2;
+    b.group.position.set(b.dist * Math.cos(a), 0, -b.dist * Math.sin(a));
+    if (b.moonPivot) { const ma = simDays / 27.32 * Math.PI * 2; b.moon.position.set(b.moonDist * Math.cos(ma), 0, -b.moonDist * Math.sin(ma)); b.moon.rotation.y = ma + Math.PI; }
+  });
+}
+function overviewPos() {
+  const R = lerp(60, 305, mix) * 1.04, vf = camera.fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect), el = camera.aspect < 1 ? .95 : .62;
+  const dH = R / Math.tan(hf / 2), dV = (R * Math.sin(el) + 4) / Math.tan(vf / 2);
+  const d = Math.max(dH, dV) * 1.02 + R * Math.cos(el) * .0;
+  return new THREE.Vector3(0, d * Math.sin(el), d * Math.cos(el));
+}
+function focusDist(b) { const r = radiusOf(b); return b.star ? r * 3.4 : b.en === 'Saturn' ? r * 6.2 : b.en === 'Earth' ? r * 6 : r * 4.6; }
+function worldPos(b, out) { return b.group.getWorldPosition(out || new THREE.Vector3()); }
+function startFly(b) {
+  const from = camera.position.clone(), fromT = controls.target.clone();
+  fly = { b, t: 0, start: performance.now(), dur: RM ? 0 : b ? 1.4 : 1.2, from, fromT }; // 느린 기기에서도 시간에 맞춰 도착해요
+  controls.enabled = false; lastP = null;
+}
+function flyStep() {
+  fly.t = fly.dur ? Math.min(1, (performance.now() - fly.start) / 1000 / fly.dur) : 1; const k = ease(fly.t);
+  let P, C;
+  if (fly.b) {
+    P = worldPos(fly.b); let dir;
+    if (fly.b.star) dir = new THREE.Vector3(0, .45, 1);
+    else { // 태양 쪽(밝은 면)에서 조금 비켜서 바라봐요
+      const t = P.clone().negate().setY(0).normalize(); const a = .6; dir = new THREE.Vector3(t.x * Math.cos(a) - t.z * Math.sin(a), 0, t.x * Math.sin(a) + t.z * Math.cos(a)); dir.y = .42; }
+    dir.normalize();
+    C = P.clone().add(dir.multiplyScalar(focusDist(fly.b)));
+  } else { P = new THREE.Vector3(); C = overviewPos(); }
+  controls.target.lerpVectors(fly.fromT, P, k); camera.position.lerpVectors(fly.from, C, k);
+  if (fly.t >= 1) { lastP = fly.b ? P.clone() : null; fly = null; controls.enabled = true; setLimits(); }
+}
+function setLimits() { if (sel) { controls.minDistance = radiusOf(sel) * 1.4; controls.maxDistance = overviewPos().length() * 1.6; } else { controls.minDistance = lerp(8, 60, mix); controls.maxDistance = overviewPos().length() * 2; } }
+
+function project(v) { const p = v.clone().project(camera); const r = renderer.domElement.getBoundingClientRect(); return { x: (p.x * .5 + .5) * r.width, y: (-p.y * .5 + .5) * r.height, z: p.z, w: r.width, h: r.height, left: r.left, top: r.top }; }
+function screenRadius(b, P) { const d = camera.position.distanceTo(P); return radiusOf(b) / (d * Math.tan(camera.fov * Math.PI / 360)) * (renderer.domElement.getBoundingClientRect().height / 2); }
+function hitTest(cx, cy) {
+  let best = null, bs = 1e9; const tmp = new THREE.Vector3();
+  BODIES.forEach(b => { const P = worldPos(b, tmp); const s = project(P); if (s.z > 1) return; const d = Math.hypot(s.x + s.left - cx, s.y + s.top - cy), R = screenRadius(b, P);
+    const lim = b.star ? R : Math.max(R + 8, 24); if (d < lim) { const score = b.star ? 1e6 + d : d / lim; if (score < bs) { bs = score; best = b; } } });
+  return best;
+}
+function pickAt(cx, cy) { const b = hitTest(cx, cy); if (b) select(b); }
+
+function loop(now) {
+  raf = requestAnimationFrame(loop);
+  const raw = Math.max(0, (now - last) / 1000 || 0), dt = Math.min(.1, raw); last = now;
+  if (mix !== mixTo) { const s = RM ? 1 : Math.min(raw, .5) / 1.1; const m = mixTo > mix ? Math.min(mixTo, mix + s) : Math.max(mixTo, mix - s); layout(m); if (!fly && !sel) camera.position.copy(overviewPos()); }
+  simDays += dt * SPEEDS[speedIx];
+  const spin = speedIx ? dt * (speedIx === 2 ? .9 : .35) : 0;
+  BODIES.forEach(b => { if (!b.star) b.mesh.rotation.y += spin * (b.en === 'Jupiter' || b.en === 'Saturn' ? 1.6 : 1); });
+  if (BODIES.sun.sunMat) BODIES.sun.sunMat.uniforms.t.value = (simDays * .0006) % 1;
+  place();
+  if (fly) flyStep();
+  else if (sel && lastP) { const P = worldPos(sel), d = P.clone().sub(lastP); camera.position.add(d); controls.target.add(d); lastP.copy(P); }
+  controls.update();
+  sunUniform.value.setFromMatrixPosition(BODIES.sun.mesh.matrixWorld).applyMatrix4(camera.matrixWorldInverse);
+  BODIES.forEach(b => { if (b.orbit) b.orbit.material.opacity = sel === b ? .9 : .38; if (b.orbit) b.orbit.material.color.set(sel === b ? 0xffd65a : 0x5a6ea8); });
+  renderer.render(scene, camera);
+  labels();
+  clock();
+}
+const tmpV = new THREE.Vector3();
+function labels() {
+  const info = BODIES.map(b => { const P = worldPos(b, new THREE.Vector3()); const s = project(P); return { b, s, R: screenRadius(b, P), dep: camera.position.distanceTo(P) }; });
+  const placed = [];
+  // 고른 천체 → 화면에서 큰 천체 순서로 자리를 잡고, 겹치거나 다른 천체 뒤에 가려진 이름표는 숨겨요
+  info.slice().sort((p, q) => (q.b === sel) - (p.b === sel) || (p.b.star ? -1 : q.b.star ? 1 : q.R - p.R)).forEach(o => {
+    const { b, s, R } = o;
+    let vis = s.z < 1 && s.x > -40 && s.x < s.w + 40 && s.y > -20 && s.y < s.h + 20 && !(b.star && R > s.h * .45);
+    if (vis && sel === b && !fly) vis = false; // 고른 천체 이름은 위쪽 이름표에 보여요
+    if (vis) vis = !info.some(p => p !== o && p.dep < o.dep && p.s.z < 1 && Math.hypot(p.s.x - s.x, p.s.y - s.y) < p.R * (p.b.en === 'Saturn' ? 1 : .95));
+    const yOff = b.star ? Math.min(R, s.h * .4) * .9 + 6 : Math.max(R, 3) + 5 + (b.en === 'Saturn' ? R * .6 : 0);
+    const w = b.ko.length * 13 + 18, rect = [s.x - w / 2, s.y + yOff, s.x + w / 2, s.y + yOff + 21];
+    if (vis && placed.some(r => rect[0] < r[2] && rect[2] > r[0] && rect[1] < r[3] && rect[3] > r[1])) vis = false;
+    b.lbl.style.display = vis ? '' : 'none'; if (!vis) return; placed.push(rect);
+    b.lbl.style.transform = `translate(${(s.x).toFixed(1)}px,${(s.y + yOff).toFixed(1)}px) translateX(-50%)`;
+  });
+}
+let lastClock = '';
+function clock() {
+  const d = Math.floor(simDays), y = Math.floor(simDays / 365.25), dd = Math.floor(simDays - y * 365.25);
+  const t = speedIx === 0 && d === 0 ? '⏸ 멈춰 있어요' : `🌍 지구 날짜로 ${y ? y + '년 ' : ''}${dd}일 지났어요`;
+  if (t !== lastClock) { $('#clock').textContent = t; lastClock = t; }
+}
+
+/* ---------- 고르기 / 카드 ---------- */
+function select(b) {
+  sel = b; document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c.dataset.en === b.en ? 'true' : 'false'));
+  BODIES.forEach(x => x.lbl && x.lbl.classList.toggle('on', x === b));
+  showInfo(b);
+  $('#seltag').style.display = 'flex'; $('#selname').textContent = b.ko;
+  if (webglOK) startFly(b);
+}
+function overview() {
+  sel = null; document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+  BODIES.forEach(x => x.lbl && x.lbl.classList.remove('on')); $('#seltag').style.display = 'none';
+  if (webglOK) startFly(null);
+}
+function cmpSvg(b) {
+  const r = b.d / EARTH_D; const big = Math.max(r, 1), H = 70, sp = H / 2 / big;
+  const R1 = Math.max(r * sp, 1.2), R2 = Math.max(sp, 1.2);
+  const W1 = Math.max(R1 * 2, 6), W2 = Math.max(R2 * 2, 6);
+  const fig = (R, W, col, name) => `<figure><svg width="${W + 4}" height="${H + 4}" viewBox="0 0 ${W + 4} ${H + 4}" aria-hidden="true"><circle cx="${W / 2 + 2}" cy="${H + 2 - R}" r="${R}" fill="${col}"/></svg>${name}</figure>`;
+  return `<div class="cmp">${fig(R1, W1, b.x.col, esc(b.ko))}${b.en === 'Earth' ? '' : fig(R2, W2, EXTRA.Earth.col, '지구')}</div>`;
+}
+function showInfo(b) {
+  const sz = sizeText(b);
+  let tiles;
+  if (b.star) {
+    tiles = `<div class="tile w"><h3>지름</h3><div class="v">${sz.v}</div><div class="s">${sz.s} · 지구가 약 130만 개 들어가요</div>${cmpSvg(b)}</div>
+      <div class="tile"><h3>지구까지 거리</h3><div class="v">${fmtKm(AU_KM)}</div><div class="s">빛으로 약 8분 20초</div></div>
+      <div class="tile"><h3>온도</h3><div class="v">${b.x.temp}</div><div class="s">중심은 약 1,500만℃</div></div>
+      <div class="tile"><h3>나이</h3><div class="v">${b.x.age}</div></div>
+      <div class="tile"><h3>스스로 한 바퀴</h3><div class="v">${b.x.rot}</div></div>`;
+  } else {
+    tiles = `<div class="tile w"><h3>지름</h3><div class="v">${sz.v}</div><div class="s">${sz.s}</div>${cmpSvg(b)}</div>
+      <div class="tile w"><h3>태양과의 거리 (평균)</h3><div class="v">${fmtKm(b.au * AU_KM)}</div><div class="s">${b.en === 'Earth' ? '이 거리를 1 AU(천문단위)라고 해요' : `태양–지구 거리의 약 ${b.au}배`}</div></div>
+      <div class="tile"><h3>1년 (태양 한 바퀴)</h3><div class="v">${b.x.year}</div><div class="s">${b.x.yearNote || (b.x.P > 1000 ? '지구의 해로 세었어요' : '지구의 날로 세었어요')}</div></div>
+      <div class="tile"><h3>위성 수</h3><div class="v">${b.x.moons}</div></div>
+      <div class="tile"><h3>스스로 한 바퀴 (자전)</h3><div class="v">${b.x.rot}</div>${b.x.rotNote ? `<div class="s">${b.x.rotNote}</div>` : ''}</div>
+      <div class="tile"><h3>평균 온도</h3><div class="v">${b.x.temp}</div>${b.x.tempNote ? `<div class="s">${b.x.tempNote}</div>` : ''}</div>`;
+  }
+  const ix = BODIES.indexOf(b);
+  $('#info').innerHTML = `<div class="hero"><canvas id="th" aria-hidden="true"></canvas><div><h2>${esc(b.ko)}</h2><div class="en">${esc(b.en)}</div><span class="pill">${b.star ? '태양계의 중심 · 별' : `태양에서 ${ix}번째 행성`}</span></div><button class="say" id="say" type="button">🔊 듣기</button></div>
+    <div class="fact">💡 ${esc(b.fact)}</div>
+    <div class="tiles">${tiles}</div>
+    <div class="cardbtns"><button type="button" class="btn ghost" id="cardall">🔭 전체 보기</button>${ix < BODIES.length - 1 ? `<button type="button" class="btn ghost" id="next">다음: ${esc(BODIES[ix + 1].ko)} ›</button>` : ''}</div>`;
+  thumb(b, $('#th'));
+  $('#say').onclick = () => say(speech(b));
+  $('#cardall').onclick = overview;
+  const nx = $('#next'); if (nx) nx.onclick = () => select(BODIES[ix + 1]);
+}
+function badge() {
+  $('#badge').innerHTML = mode === 'easy'
+    ? `<span>⚠️ 크기와 거리가 실제와 비율이 달라요</span>`
+    : `<span class="ok">✅ 크기는 실제 비율이에요</span><span>⚠️ 거리는 실제와 비율이 달라요 (많이 줄였어요)</span>`;
+}
+
+/* ---------- 퀴즈 ---------- */
+const QUIZ = [
+  { q: '태양계에서 가장 큰 행성은 무엇일까요?', o: ['토성', '목성', '지구', '해왕성'], a: '목성', why: '목성은 지름이 지구의 약 11배예요. 지구가 1,000개 넘게 들어갈 만큼 커요.' },
+  { q: '태양과 가장 가까운 행성은 무엇일까요?', o: ['금성', '지구', '수성', '화성'], a: '수성', why: '수성은 태양과 가장 가깝고, 8개 행성 중 가장 작아요.' },
+  { q: '넓고 뚜렷한 고리가 있는 행성은 무엇일까요?', o: ['토성', '화성', '금성', '수성'], a: '토성', why: '토성 고리는 얼음과 돌 조각으로 되어 있어요. 목성·천왕성·해왕성에도 고리가 있지만 아주 희미해요.' },
+  { q: "'붉은 행성'이라고 불리는 행성은 무엇일까요?", o: ['목성', '화성', '해왕성', '금성'], a: '화성', why: '화성 흙에는 녹슨 철 성분이 많아서 붉게 보여요.' },
+  { q: '태양계 행성 중 가장 뜨거운 행성은 무엇일까요?', o: ['수성', '금성', '지구', '목성'], a: '금성', why: '수성이 태양과 더 가깝지만, 금성은 두꺼운 대기가 열을 가두어서 약 460℃나 돼요.' }
+];
+let qi = 0, score = 0;
+function quiz() {
+  const box = $('#quiz');
+  if (qi >= QUIZ.length) {
+    const msg = score === QUIZ.length ? '우와, 다 맞혔어요! 태양계 박사예요 🏅' : score >= 3 ? '잘했어요! 조금만 더 알아보면 박사가 될 거예요 🌟' : '괜찮아요! 행성을 눌러 보고 다시 도전해 봐요 🚀';
+    box.innerHTML = `<div class="qhead"><h2>태양계 퀴즈</h2><span class="qnum">끝!</span></div><p class="qq">${QUIZ.length}문제 중 ${score}문제 맞혔어요.</p><div class="fb"><b>${msg}</b><div class="row"><button type="button" class="btn" id="qre">다시 풀기</button></div></div>`;
+    $('#qre').onclick = () => { qi = 0; score = 0; quiz(); }; return;
+  }
+  const Q = QUIZ[qi];
+  box.innerHTML = `<div class="qhead"><h2>태양계 퀴즈</h2><span class="qnum">${qi + 1} / ${QUIZ.length}</span></div><p class="qq">${esc(Q.q)}</p>
+    <div class="opts">${Q.o.map(o => { const b = BODIES.find(x => x.ko === o); return `<button type="button" class="opt" data-o="${esc(o)}"><i style="background:${b ? b.x.col || EXTRA[b.en].col : '#999'}"></i>${esc(o)}</button>`; }).join('')}</div><div id="qfb"></div>`;
+  box.querySelectorAll('.opt').forEach(btn => btn.onclick = () => {
+    const ok = btn.dataset.o === Q.a; if (ok) score++;
+    box.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (x.dataset.o === Q.a) x.classList.add('right'); else if (x === btn) x.classList.add('wrong'); });
+    const ans = BODIES.find(x => x.ko === Q.a);
+    $('#qfb').innerHTML = `<div class="fb"><b>${ok ? '딩동댕! 맞았어요 🎉' : `아쉬워요! 정답은 ${esc(Q.a)}이에요.`}</b><div>${esc(Q.why)}</div><div class="row"><button type="button" class="btn" id="qnext">${qi + 1 < QUIZ.length ? '다음 문제 ›' : '결과 보기'}</button>${ans ? `<button type="button" class="btn ghost" id="qsee">🪐 ${esc(Q.a)} 3D로 보기</button>` : ''}</div></div>`;
+    $('#qnext').onclick = () => { qi++; quiz(); };
+    const see = $('#qsee'); if (see) see.onclick = () => { select(ans); $('#stage').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' }); };
+  });
+}
+
+/* ---------- 시작 ---------- */
+function fail(msg, e) {
+  console.error('solar init', e);
+  let again = false; try { again = !sessionStorage.getItem('solar_retry'); sessionStorage.setItem('solar_retry', '1'); } catch (er) {}
+  if (again) { setTimeout(() => location.reload(), 800); return; }
+  $('#loadmsg').textContent = msg; $('#retry').hidden = false; $('#load').hidden = false;
+}
+$('#retry').onclick = () => { try { sessionStorage.removeItem('solar_retry'); } catch (e) {} location.reload(); };
+(async () => {
+  let data;
+  try { const r = await fetch('../data/planets.json'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  catch (e) { fail('행성 자료를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 보세요.', e); return; }
+  BODIES = data.filter(d => d.star || EXTRA[d.en]); BODIES.forEach(b => { byEn[b.en] = b; b.x = EXTRA[b.en]; });
+  // 단추
+  $('#chips').innerHTML = BODIES.map(b => `<button type="button" class="chip" data-en="${esc(b.en)}" aria-pressed="false"><i style="background:${b.x.col}"></i>${esc(b.ko)}</button>`).join('');
+  document.querySelectorAll('.chip').forEach(c => c.onclick = () => { const b = byEn[c.dataset.en]; select(b); if (matchMedia('(max-width:980px)').matches) $('#stage').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'nearest' }); });
+  quiz(); badge();
+  const setSpeed = v => { speedIx = v; document.querySelectorAll('#speed button').forEach(x => x.setAttribute('aria-pressed', +x.dataset.v === v ? 'true' : 'false')); };
+  setSpeed(speedIx);
+  document.querySelectorAll('#speed button').forEach(x => x.onclick = () => setSpeed(+x.dataset.v));
+  document.querySelectorAll('#mode button').forEach(x => x.onclick = () => {
+    if (mode === x.dataset.v) return; mode = x.dataset.v; mixTo = mode === 'real' ? 1 : 0; badge();
+    document.querySelectorAll('#mode button').forEach(y => y.setAttribute('aria-pressed', y === x ? 'true' : 'false'));
+    if (!webglOK) return;
+    if (RM) { layout(mixTo); place(); }
+    if (sel) { // 크기가 바뀌는 동안 행성을 따라가다가 다시 맞춰 날아가요
+      setTimeout(() => sel && startFly(sel), RM ? 0 : 1150);
+    } else startFly(null);
+  });
+  $('#all').onclick = overview;
+  $('#selsay').onclick = () => sel && say(speech(sel));
+  $('#selmore').onclick = () => $('#info').scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+
+  if (!window.THREE || !THREE.OrbitControls) { webglOK = false; fail('3D 그림 도구를 불러오지 못했어요. 새로고침하거나 다시 시도해 보세요.', new Error('three missing')); return; }
+  try { build(); }
+  catch (e) { webglOK = false; console.error('solar webgl', e); $('#loadmsg').textContent = '이 기기에서는 3D 그림을 보여 줄 수 없어요. 위의 단추로 행성 정보는 볼 수 있어요.'; $('#load').hidden = false; return; }
+  setLimits();
+  $('#load').hidden = true;
+  last = performance.now(); raf = requestAnimationFrame(loop);
+  try { sessionStorage.removeItem('solar_retry'); } catch (er) {}
+})();
+</script>
+
+</body>
+</html>

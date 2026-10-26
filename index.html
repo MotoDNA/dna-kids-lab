@@ -1081,7 +1081,7 @@ function loadScript(src) {
 }
 async function viewGk(sub) {
   app.innerHTML = '<p class="sub">불러오는 중…</p>';
-  await loadScript('gk/gk.js?v=4');
+  await loadScript('gk/gk.js?v=5');
   await GK.render(app, sub || '');
   startTracking('gk', 'gk' + (sub ? '/' + sub : ''), '상식 놀이터');
 }
