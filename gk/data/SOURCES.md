@@ -36,3 +36,12 @@
 - 북극성 찾기(북두칠성 국자 끝 두 별 거리의 약 5배 / 카시오페이아자리 바깥쪽 두 선의 교점과 가운데 별 거리의 약 5배): 초등 과학 5학년 ‘태양계와 별’ 교과 내용과 같은 방법. 자료 좌표로 계산하면 5.06배·4.62배라 화면에는 ‘약 5배’로 표시.
   - 참고: https://starwalk.space/ko/news/polaris-north-star , https://m.cafe.daum.net/withandfree/IuXu/1863
 - 계절 구분(저녁 하늘 기준), 별자리 이야기·찾는 방법 문장은 일반 천문 상식으로 직접 작성.
+
+## 지구본 ‘자세한 지도’ `gk/globe/maps/<iso2>.json` (2026-11-02)
+- 자료: Natural Earth 1:10m (공개 도메인, https://www.naturalearthdata.com/ , GeoJSON은 https://github.com/nvkelso/natural-earth-vector/tree/master/geojson)
+  - 나라 경계: `ne_10m_admin_0_countries_kor` (Natural Earth의 대한민국 관점 판 — 독도는 대한민국, 크림반도는 우크라이나, 소말릴란드·북키프로스는 나누지 않음. 그 밖은 기본판과 같음)
+  - 지역(도·주) 경계와 한글 이름: `ne_10m_admin_1_states_provinces` (`name_ko`, 없으면 영어 이름). 지역은 iso 표시가 아니라 위 나라 경계 안에 있는지로 나눔
+  - 도시: `ne_10m_populated_places` (나라별 인구 상위 최대 10곳, `NAME_KO`), 강·호수: `ne_10m_rivers_lake_centerlines`, `ne_10m_lakes` (큰 것만)
+- 변환: `/home/claude/site/globe_maps/build_maps.py` (shapely 2) — 나라마다 중심을 둔 람베르트 정적 방위도법으로 투영, 단순화·정수화해서 SVG 경로로 저장. 수도 위치·이름은 `gk/globe/data.json`.
+- 이름 손질(스크립트에 주석): 강원도 → 강원특별자치도(2023), 전라북도 → 전북특별자치도(2024), 키예프 → 키이우(2022 외래어 표기 심의). 한국 도시 이름의 ‘시·광역시·특별시’, 일본 도시 이름 끝 ‘시’는 뗌. 울릉도·독도 위치 표시 추가.
+- 이웃 나라 이름은 `data.json`의 한글 이름, 없으면 Natural Earth `NAME_KO`. 지구본 화면과 같이 대만·코소보·팔레스타인·서사하라·이스라엘은 이름을 붙이지 않음. 바다 이름은 표시하지 않음.

@@ -79,6 +79,43 @@ svg text{font-family:var(--body)}
 .back{display:inline-block;margin-bottom:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:15px}
 .note{margin-top:14px;font-size:12px;color:var(--sub)}
 @media (max-width:560px){.bubble{margin-left:0}.hero h2{font-size:28px}.stage{height:56vh}}
+/* detailed country map (opens from the card) */
+.mapbtn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;margin-left:6px;font-size:14px;padding:7px 14px}
+:root{--cm-r1:#fbe3a0;--cm-r2:#cfe8b4;--cm-r3:#f8cfbd;--cm-r4:#cdd8f6;--cm-r5:#f4d0e6;--cm-r6:#c4e9e2;--cm-r7:#f1dfae;--cm-r8:#ddd0f3;--cm-r9:#d6ebbf;--cm-sea:#cfe7f6;--cm-nb:#ecebe6;--cm-nbline:#c9c7bf;--cm-land:#fbefc4;--cm-coast:#7a5b1e;--cm-adm:#a08550;--cm-water:#7fb8e6;--cm-lake:#b9dcf3;--cm-hl:#ef4444;--cm-ink:#1f2433;--cm-nbink:#7b7a73;--cm-halo:#ffffffd9}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--cm-r1:#5a4f2a;--cm-r2:#3d5232;--cm-r3:#5c3e33;--cm-r4:#34405e;--cm-r5:#563a4d;--cm-r6:#2f4f4a;--cm-r7:#55492c;--cm-r8:#45395c;--cm-r9:#425233;--cm-sea:#0f2a40;--cm-nb:#283042;--cm-nbline:#3c465c;--cm-land:#4a4430;--cm-coast:#e8c66a;--cm-adm:#b79b5a;--cm-water:#4c8fc6;--cm-lake:#1d4566;--cm-ink:#f2f4fb;--cm-nbink:#9aa3b8;--cm-halo:#0d1120d9}}
+:root[data-theme="dark"]{--cm-r1:#5a4f2a;--cm-r2:#3d5232;--cm-r3:#5c3e33;--cm-r4:#34405e;--cm-r5:#563a4d;--cm-r6:#2f4f4a;--cm-r7:#55492c;--cm-r8:#45395c;--cm-r9:#425233;--cm-sea:#0f2a40;--cm-nb:#283042;--cm-nbline:#3c465c;--cm-land:#4a4430;--cm-coast:#e8c66a;--cm-adm:#b79b5a;--cm-water:#4c8fc6;--cm-lake:#1d4566;--cm-ink:#f2f4fb;--cm-nbink:#9aa3b8;--cm-halo:#0d1120d9}
+.cm{position:fixed;inset:0;z-index:50;background:#050916b3;display:grid;place-items:center;padding:16px}
+.cm-box{width:min(1120px,100%);height:min(880px,100%);background:var(--panel);border-radius:24px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px #0008}
+.cm-head{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line)}
+.cm-head img{width:40px;height:30px;border-radius:4px;object-fit:cover;box-shadow:0 0 0 1px var(--line)}
+.cm-head h2{font-family:var(--display);font-weight:400;font-size:26px;margin:0;line-height:1.1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cm-head .sm{flex:none}
+.cm-x{margin-left:auto;flex:none;font:inherit;font-size:22px;line-height:1;width:42px;height:42px;border-radius:50%;border:0;background:var(--tint);color:var(--ink);cursor:pointer}
+.cm-map{position:relative;flex:1;min-height:0;background:var(--cm-sea);overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.cm-map.drag{cursor:grabbing}
+.cm-map svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cm-map svg text{font-family:var(--body)}
+.cm-geo path{vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.cm-ctl{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px}
+.cm-ctl button{font:inherit;font-size:20px;font-weight:800;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px #0002;display:grid;place-items:center;padding:0}
+.cm-ctl button.rs{font-size:12px;line-height:1.1}
+.cm-x:focus-visible,.cm-ctl button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.cm-map svg.cm-n{position:absolute;inset:auto;left:10px;top:10px;width:40px;height:52px;pointer-events:none}
+.cm-loc{position:absolute;right:10px;top:10px;width:140px;height:80px;border-radius:10px;background:var(--panel);box-shadow:0 2px 8px #0003;overflow:hidden;pointer-events:none}
+.cm-map .cm-loc svg{position:static;width:auto;height:auto}
+.cm-sc{position:absolute;left:12px;bottom:10px;pointer-events:none;font-size:12px;font-weight:800;color:var(--cm-ink);text-shadow:0 0 3px var(--cm-halo),0 0 3px var(--cm-halo)}
+.cm-sc i{display:block;height:7px;border:2px solid var(--cm-ink);border-top:0;margin-top:2px}
+.cm-ins{position:absolute;right:10px;bottom:10px;display:flex;gap:6px;align-items:flex-end;pointer-events:none}
+.cm-ins figure{margin:0;background:var(--cm-sea);border:1.5px solid var(--cm-nbline);border-radius:8px;overflow:hidden;position:relative}
+.cm-map .cm-ins figure svg{position:static;display:block;width:auto;height:auto}
+.cm-ins figcaption{position:absolute;left:0;right:0;bottom:1px;text-align:center;font-size:11px;font-weight:800;color:var(--cm-ink);text-shadow:0 0 3px var(--cm-halo),0 0 3px var(--cm-halo);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+.cm-toast{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:var(--panel);color:var(--ink);font-weight:800;font-size:16px;padding:7px 16px;border-radius:999px;box-shadow:0 4px 14px #0004;pointer-events:none;white-space:nowrap;max-width:calc(100% - 220px);overflow:hidden;text-overflow:ellipsis}
+.cm-msg{position:absolute;inset:0;display:grid;place-items:center;color:var(--cm-ink);font-weight:700;pointer-events:none}
+.cm-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;padding:8px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--sub)}
+.cm-foot b{color:var(--ink);font-weight:800}
+.cm-foot .cr{margin-left:auto}
+@media (max-width:600px){.cm-foot .wide-only{display:none}}
+@media (max-width:600px){.cm{padding:0}.cm-box{width:100%;height:100%;border-radius:0}.cm-head h2{font-size:22px}.cm-loc{width:104px;height:60px}.cm-toast{top:80px;max-width:calc(100% - 24px)}.cm-foot{font-size:11.5px;padding:6px 12px}.cm-foot .cr{margin-left:0}.cm-ctl button{width:40px;height:40px}}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-46W9BFYXKH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-46W9BFYXKH',{allow_google_signals:false,allow_ad_personalization_signals:false});</script>
@@ -87,13 +124,29 @@ svg text{font-family:var(--body)}
 <div class="wrap">
   <a class="back" href="../../#/gk">‹ 상식 놀이터</a>
   <header>
-    <div><h1>지구본 세계 여행</h1><p class="lead">지구본을 돌리고 나라 위에 마우스를 올려 보세요. 누르면 아래에 그림으로 알려 줘요.</p></div>
+    <div><h1>지구본 세계 여행</h1><p class="lead">지구본을 돌리고 나라 위에 마우스를 올려 보세요. 누르면 아래에 그림으로 알려 주고, 두 번 누르면 자세한 지도가 열려요.</p></div>
     <div class="tools"><input id="q" list="names" placeholder="나라 이름 찾기" aria-label="나라 이름 찾기"><datalist id="names"></datalist><button class="btn" id="go">찾기</button><button class="btn ghost" id="rand">아무 나라나</button><button class="btn ghost" id="np">북극</button><button class="btn ghost" id="sp">남극</button></div>
   </header>
   <div class="stage"><div id="globe"></div><div class="load" id="load">지구본을 불러오는 중…</div>
     <div class="hint">끌어서 돌리기 · 휠/두 손가락으로 확대 · 지구는 23.4° 기울어진 자전축을 따라 돌아요 · 노란 선은 국경, ★ 수도, ● 주요 도시</div></div>
   <section class="card" id="info" aria-live="polite"><div class="empty">지구본에서 나라를 눌러 보세요.</div></section>
   <p class="note">인구·면적·언어·종교: CIA 월드 팩트북(2025년판, 공개 자료) · 나라 경계와 도시: Natural Earth(공개 자료) · 지구 사진: NASA Blue Marble 2004년 12월(공개 자료) · 국기: flag-icons(MIT). 이름이 나오지 않는 곳은 아직 정보가 없거나 국경이 분쟁 중인 곳이에요.</p>
+</div>
+<div class="cm" id="cmap" hidden role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+  <div class="cm-box">
+    <div class="cm-head"><img id="cmFlag" alt=""><h2 id="cmTitle"></h2><span class="sm">자세한 지도</span><button class="cm-x" id="cmClose" aria-label="지도 닫기">✕</button></div>
+    <div class="cm-map" id="cmMap">
+      <svg id="cmSvg" aria-hidden="true"><g class="cm-geo" id="cmGeo"></g><g id="cmLab"></g></svg>
+      <svg class="cm-n" viewBox="0 0 40 52" aria-label="북쪽"><path d="M20 4 29 30 20 25 11 30z" fill="var(--cm-hl)" stroke="var(--cm-halo)" stroke-width="1.5"/><text x="20" y="47" text-anchor="middle" font-size="15" font-weight="800" fill="var(--cm-ink)" paint-order="stroke" stroke="var(--cm-halo)" stroke-width="3">북 N</text></svg>
+      <div class="cm-loc" id="cmLoc" aria-label="세계에서의 위치"></div>
+      <div class="cm-ctl"><button id="cmIn" aria-label="크게 보기">+</button><button id="cmOut" aria-label="작게 보기">−</button><button id="cmReset" class="rs" aria-label="처음 크기로">처음<br>대로</button></div>
+      <div class="cm-sc" id="cmScale"></div>
+      <div class="cm-ins" id="cmIns"></div>
+      <div class="cm-toast" id="cmToast" hidden></div>
+      <div class="cm-msg" id="cmMsg"></div>
+    </div>
+    <div class="cm-foot"><span><b style="color:#ef4444">★</b> 수도 · <b style="color:#2563eb">●</b> 큰 도시 · 가는 선은 지역 경계<span class="wide-only"> · 땅을 누르면 이름이 나와요</span></span><span class="cr">회색은 이웃 나라<span class="wide-only">(이름 없는 곳은 정보가 없거나 분쟁 중)</span> · 지도 자료: Natural Earth</span></div>
+  </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
 <script>
@@ -104,7 +157,7 @@ const KR = { pop: 51486343, area: 99720 };
 const COLORS = ['#2f6fe4', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#94a3b8'];
 const fmtPop = n => n >= 1e8 ? (Math.round(n / 1e6) / 100).toLocaleString('ko-KR') + '억 명' : n >= 1e4 ? Math.round(n / 1e4).toLocaleString('ko-KR') + '만 명' : n.toLocaleString('ko-KR') + '명';
 const ratio = r => r >= 10 ? Math.round(r) : Math.round(r * 10) / 10;
-let DATA = {}, feats = [], hover = null, sel = null, g, ctr;
+let DATA = {}, feats = [], hover = null, sel = null, g, ctr; let lastTap = { f: null, t: 0 };
 
 function starSky() {
   const c = document.createElement('canvas'); c.width = 2048; c.height = 1024; const x = c.getContext('2d');
@@ -199,7 +252,7 @@ function refresh() { g.polygonCapColor(g.polygonCapColor()).polygonStrokeColor(g
 function pick(f, fly) {
   sel = f; ctr.autoRotate = false; refresh(); const d = f.d;
   if (fly) { const c = center(f); g.pointOfView({ lat: c.lat, lng: c.lng, altitude: d.area > 3e6 ? 2.0 : d.area > 3e5 ? 1.4 : 0.9 }, 1200); }
-  $('#info').innerHTML = `<div class="hero"><img src="${flag(d.iso)}" alt="${esc(d.ko)} 국기"><div><h2>${esc(d.ko)}</h2><div class="en">${esc(d.en)}</div><span class="chip">${esc(d.cont)}</span></div>
+  $('#info').innerHTML = `<div class="hero"><img src="${flag(d.iso)}" alt="${esc(d.ko)} 국기"><div><h2>${esc(d.ko)}</h2><div class="en">${esc(d.en)}</div><span class="chip">${esc(d.cont)}</span><button class="btn mapbtn" id="openMap" type="button">🗺️ 자세한 지도 보기</button></div>
     ${d.greet ? `<div class="bubble"><b>${esc(d.greet.text)}</b><span class="sm">"안녕하세요"</span><button id="say">🔊 듣기</button></div>` : ''}</div>
   <div class="grid">
     <div class="tile"><h3>수도와 주요 도시</h3>${shapeSvg(f, d)}<div class="sm">★ 수도 <b>${esc(d.cap)}</b>${d.city ? ` · ● 주요 도시 <b>${esc(d.city[0])}</b>` : ''}${d.capNote ? `<br>${esc(d.capNote)}` : ''}</div></div>
@@ -208,6 +261,7 @@ function pick(f, fly) {
     ${(d.cul && d.cul.length) || (d.his && d.his.length) ? `<div class="tile wide"><h3>재미있는 이야기</h3><div class="grid" style="margin-top:0">${d.cul && d.cul.length ? `<div class="story"><div class="sm" style="background:none;padding:0">🎎 문화</div>${d.cul.map(t => `<div><b>🎈</b><span>${esc(t)}</span></div>`).join('')}</div>` : ''}${d.his && d.his.length ? `<div class="story"><div class="sm" style="background:none;padding:0">🏛️ 역사</div>${d.his.map(t => `<div><b>📜</b><span>${esc(t)}</span></div>`).join('')}</div>` : ''}</div></div>` : ''}
   </div>`;
   const sb = $('#say'); if (sb) sb.onclick = () => say(d.greet.text, d.greet.lang);
+  const ob = $('#openMap'); if (ob) ob.onclick = () => openMap(f);
   if (fly) $('#info').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -250,6 +304,153 @@ function showPole(k) {
 }
 function find(name) { name = (name || '').trim(); if (!name) return; const f = feats.find(x => x.d && (x.d.ko === name || x.d.en.toLowerCase() === name.toLowerCase())) || feats.find(x => x.d && x.d.ko.includes(name));
   if (f) pick(f, true); else $('#info').innerHTML = `<div class="empty">'${esc(name)}'(이)라는 나라를 찾지 못했어요. 목록에서 골라 보세요.</div>`; }
+/* ---------- 자세한 나라 지도 (maps/<iso>.json, Natural Earth) ---------- */
+const CM = { cache: new Map(), f: null, m: null, v: null, last: null, raf: 0, hl: -1 };
+const cm$ = id => document.getElementById(id);
+let mctx;
+function textW(t, size, weight) { mctx = mctx || document.createElement('canvas').getContext('2d'); mctx.font = `${weight || 700} ${size}px "Gowun Dodum","Noto Sans KR",sans-serif`; return mctx.measureText(t).width * 1.07 + 1; } // + room for synthetic bold
+function cmSize() { const r = cm$('cmMap').getBoundingClientRect(); return { W: r.width, H: r.height, L: r.left, T: r.top }; }
+async function openMap(f) {
+  const d = f && f.d; if (!d) return;
+  CM.f = f; CM.m = null; CM.hl = -1; CM.last = document.activeElement;
+  cm$('cmFlag').src = flag(d.iso); cm$('cmFlag').alt = `${d.ko} 국기`; cm$('cmTitle').textContent = d.ko;
+  ['cmGeo', 'cmLab', 'cmIns', 'cmLoc', 'cmScale'].forEach(id => { cm$(id).innerHTML = ''; });
+  cm$('cmToast').hidden = true; cm$('cmMsg').textContent = '지도를 불러오는 중…';
+  cm$('cmap').hidden = false; document.documentElement.style.overflow = 'hidden'; try { g && g.pauseAnimation(); } catch (e) {} cm$('cmClose').focus();
+  let m = CM.cache.get(d.iso);
+  try { if (!m) { m = await fetch(`maps/${d.iso}.json`).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); CM.cache.set(d.iso, m); } }
+  catch (e) { if (CM.f === f) cm$('cmMsg').textContent = '지도를 불러오지 못했어요. 잠시 뒤에 다시 눌러 보세요.'; return; }
+  if (CM.f !== f || cm$('cmap').hidden) return;
+  try { await document.fonts.ready; } catch (e) {}
+  cm$('cmMsg').textContent = ''; CM.m = m; drawMap(); cmFit();
+}
+function closeMap() { if (cm$('cmap').hidden) return; cm$('cmap').hidden = true; document.documentElement.style.overflow = ''; try { g && g.resumeAnimation(); } catch (e) {} CM.f = null; CM.m = null; if (CM.last && CM.last.focus) try { CM.last.focus({ preventScroll: true }); } catch (e) {} }
+function drawMap() {
+  const m = CM.m, f = CM.f, many = m.adm.length > 60;
+  let h = '';
+  m.nb.forEach((n, i) => { h += `<path d="${n.d}" fill="var(--cm-nb)" stroke="var(--cm-nbline)" stroke-width="1" data-nb="${i}"/>`; });
+  h += `<path d="${m.land}" fill="var(--cm-land)" data-land="1"/>`;
+  m.adm.forEach((a, i) => { h += `<path d="${a.d}" fill="var(--cm-r${a.c > 0 && a.c < 10 ? a.c : (i % 9) + 1})" stroke="var(--cm-adm)" stroke-width="${many ? 0.45 : 0.9}" stroke-opacity="${many ? 0.7 : 1}" data-adm="${i}"/>`; });
+  (m.lake || []).forEach(l => { h += `<path d="${l.d}" fill="var(--cm-lake)" stroke="var(--cm-water)" stroke-width=".8"/>`; });
+  if (m.riv) h += `<path d="${m.riv}" fill="none" stroke="var(--cm-water)" stroke-width="1.3" stroke-linecap="round" pointer-events="none"/>`;
+  h += `<path d="${m.land}" fill="none" stroke="var(--cm-coast)" stroke-width="1.6" pointer-events="none"/><path id="cmHL" d="" fill="none" stroke="var(--cm-hl)" stroke-width="3" pointer-events="none"/>`;
+  cm$('cmGeo').innerHTML = h;
+  // locator: where is it on the world?
+  const L = cm$('cmLoc'), lw = L.clientWidth || 140, lh = L.clientHeight || 80, k = lw / 360, lon0 = m.c[1];
+  const latc = Math.max(-58 + lh / 2 / k, Math.min(84 - lh / 2 / k, m.c[0]));
+  const X = lon => ((lon - lon0 + 540) % 360) * k, Y = lat => lh / 2 - (lat - latc) * k * 1.15;
+  const ring = r => { let s = '', px = null; r.forEach(([lo, la], i) => { const x = X(lo), y = Y(la); s += (i === 0 || Math.abs(x - px) > lw / 2 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1); px = x; }); return s; };
+  const fp = ft => (ft.geometry.type === 'Polygon' ? [ft.geometry.coordinates] : ft.geometry.coordinates).map(p => ring(p[0])).join('');
+  let world = '';
+  feats.forEach(ft => { if (ft !== f && ft.properties.i !== 'aq') world += fp(ft); });
+  L.innerHTML = `<svg viewBox="0 0 ${lw} ${lh}" width="${lw}" height="${lh}"><rect width="${lw}" height="${lh}" fill="var(--cm-sea)"/><path d="${world}" fill="var(--cm-nb)" stroke="var(--cm-nbline)" stroke-width=".3"/><path d="${fp(f)}" fill="var(--cm-hl)"/><circle cx="${(180 * k).toFixed(1)}" cy="${Y(m.c[0]).toFixed(1)}" r="6" fill="none" stroke="var(--cm-hl)" stroke-width="2"/></svg>`;
+  // insets: far-away parts (Alaska, Hawaii, overseas regions ...)
+  const phone = innerWidth <= 600;
+  cm$('cmIns').innerHTML = (m.ins || []).map(t => { const sc = Math.min((phone ? 84 : 128) / t.w, (phone ? 70 : 100) / t.h), w = Math.round(t.w * sc), hh = Math.round(t.h * sc);
+    return `<figure style="width:${w}px;height:${hh}px"><svg viewBox="0 0 ${t.w} ${t.h}" width="${w}" height="${hh}"><path d="${t.nb}" fill="var(--cm-nb)" stroke="var(--cm-nbline)" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${t.land}" fill="var(--cm-land)" stroke="var(--cm-coast)" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>${t.n ? `<figcaption>${esc(t.n)}</figcaption>` : ''}</figure>`; }).join('');
+  if (m.ins && m.ins.length) cm$('cmIns').setAttribute('aria-label', '멀리 떨어진 땅(크기 다름)');
+}
+function cmFit() { const m = CM.m; if (!m) return; const { W, H } = cmSize(); const ib = cm$('cmIns').offsetHeight ? cm$('cmIns').offsetHeight + 8 : 0; // keep the insets (Alaska ...) off the main map
+  const s = Math.min((W - 20) / m.w, (H - 20 - ib) / m.h); CM.v = { s, s0: s, tx: (W - m.w * s) / 2, ty: (H - ib - m.h * s) / 2 }; cmApply(); }
+function cmApply() {
+  const v = CM.v, m = CM.m; if (!v || !m) return; const { W, H } = cmSize();
+  v.s = Math.max(v.s0 * 0.85, Math.min(v.s0 * 12, v.s));
+  v.tx = Math.min(W / 2, Math.max(W / 2 - m.w * v.s, v.tx)); v.ty = Math.min(H / 2, Math.max(H / 2 - m.h * v.s, v.ty));
+  cm$('cmGeo').setAttribute('transform', `matrix(${v.s} 0 0 ${v.s} ${v.tx} ${v.ty})`);
+  const pxkm = m.km * v.s, want = W < 500 ? 70 : 100, raw = want / pxkm, p10 = 10 ** Math.floor(Math.log10(raw));
+  const nice = [10, 5, 2, 1].map(x => x * p10).find(x => x <= raw * 1.25) || p10;
+  cm$('cmScale').innerHTML = `${nice >= 1 ? nice.toLocaleString('ko-KR') + ' km' : Math.round(nice * 1000) + ' m'}<i style="width:${Math.round(nice * pxkm)}px"></i>`;
+  if (!CM.raf) CM.raf = requestAnimationFrame(() => { CM.raf = 0; cmLabels(); });
+}
+function cmZoom(x, y, k) { const v = CM.v; if (!v) return; const ns = Math.max(v.s0 * 0.85, Math.min(v.s0 * 12, v.s * k)), r = ns / v.s; v.tx = x - (x - v.tx) * r; v.ty = y - (y - v.ty) * r; v.s = ns; cmApply(); }
+function cmLabels() {
+  const m = CM.m, v = CM.v, f = CM.f; if (!m || !v || !f) return; const d = f.d;
+  const { W, H, L, T } = cmSize(), P = (x, y) => [x * v.s + v.tx, y * v.s + v.ty];
+  const obst = ['.cm-n', '.cm-loc', '.cm-ctl', '.cm-sc', '.cm-ins figure'].flatMap(sel => [...document.querySelectorAll('#cmap ' + sel)]).map(e => { const r = e.getBoundingClientRect(); return { x0: r.left - L - 3, y0: r.top - T - 3, x1: r.right - L + 3, y1: r.bottom - T + 3 }; }).filter(b => b.x1 > b.x0);
+  const sc = cm$('cmScale').getBoundingClientRect(); obst.push({ x0: sc.left - L - 3, y0: sc.top - T - 3, x1: sc.left - L + 110, y1: sc.bottom - T + 3 });
+  const placed = [], over = (a, b) => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+  const free = b => b.x0 >= 3 && b.y0 >= 3 && b.x1 <= W - 3 && b.y1 <= H - 3 && !placed.some(o => over(b, o)) && !obst.some(o => over(b, o));
+  const halo = 'paint-order="stroke" stroke="var(--cm-halo)" stroke-width="3.5" stroke-linejoin="round"';
+  let marks = '', texts = '';
+  const shown = [];
+  const point = (txt, x, y, size, weight, r, force) => { const w = textW(txt, size, weight) + 2, h = size * 1.2;
+    const c = [[x + r + 3, y - h / 2, 'start'], [x - r - 3 - w, y - h / 2, 'end'], [x - w / 2, y - r - h - 1, 'middle'], [x - w / 2, y + r + 1, 'middle'], [x + r, y - r - h + 2, 'start'], [x - r - w, y + r - 2, 'end']];
+    let pick = c.find(([lx, ly]) => free({ x0: lx, y0: ly, x1: lx + w, y1: ly + h }));
+    if (!pick && force) pick = c.find(([lx, ly]) => lx >= 3 && ly >= 3 && lx + w <= W - 3 && ly + h <= H - 3) || c[0];
+    if (!pick) return null; const [lx, ly, a] = pick; placed.push({ x0: lx, y0: ly, x1: lx + w, y1: ly + h });
+    const tx = a === 'start' ? lx + 1 : a === 'end' ? lx + w - 1 : lx + w / 2; return `<text x="${tx.toFixed(1)}" y="${(ly + h * 0.8).toFixed(1)}" text-anchor="${a}" font-size="${size}" font-weight="${weight}" fill="var(--cm-ink)" ${halo}>${esc(txt)}</text>`; };
+  const inView = (x, y, pad = 0) => x >= pad && y >= pad && x <= W - pad && y <= H - pad;
+  // 1) capital (always)
+  let cp = null;
+  if (m.cap) { cp = P(m.cap[0], m.cap[1]); if (inView(cp[0], cp[1])) placed.push({ x0: cp[0] - 9, y0: cp[1] - 9, x1: cp[0] + 9, y1: cp[1] + 9 }); }
+  // 2) fixed marks (울릉도, 독도)
+  const mk = (m.mark || []).map(([n, x, y]) => [n, ...P(x, y)]).filter(([, x, y]) => inView(x, y));
+  mk.forEach(([, x, y]) => placed.push({ x0: x - 4, y0: y - 4, x1: x + 4, y1: y + 4 }));
+  // 3) cities: reserve dots first so labels never cover them
+  const cs = m.city.map(([n, x, y, p]) => [n, ...P(x, y), p]).filter(([, x, y]) => inView(x, y, 4));
+  if (cp && inView(cp[0], cp[1])) { const t = point(d.cap, cp[0], cp[1], 16, 800, 9, true); texts += t; shown.push(d.cap);
+    marks += `<path d="M${cp[0]},${cp[1] - 9} l2.6,5.9 6.4,.7 -4.8,4.3 1.3,6.3 -5.5,-3.2 -5.5,3.2 1.3,-6.3 -4.8,-4.3 6.4,-.7z" fill="#ef4444" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>`; }
+  mk.forEach(([n, x, y]) => { const t = point(n, x, y, 13, 800, 4, true); if (t) { texts += t; marks += `<circle cx="${x}" cy="${y}" r="3.5" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>`; } });
+  cs.forEach(([n, x, y]) => { if (placed.some(o => over({ x0: x - 5, y0: y - 5, x1: x + 5, y1: y + 5 }, o))) return; const t = point(n, x, y, 13.5, 800, 5, false);
+    if (t) { texts += t; shown.push(n); placed.push({ x0: x - 5, y0: y - 5, x1: x + 5, y1: y + 5 }); marks += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="#2563eb" stroke="#fff" stroke-width="1.6"/>`; } });
+  // 4) area labels: regions, then neighbours, then lakes
+  const area = (n, e, size, weight, fill, style) => { const [x, y] = P(e.p[0], e.p[1]); if (!inView(x, y, 10)) return; const w = textW(n, size, weight) + 2, h = size * 1.2, r = (e.r || 0) * v.s;
+    if (e.b) { const bw = (e.b[2] - e.b[0]) * v.s, bh = (e.b[3] - e.b[1]) * v.s; if (bw < w * 1.05 || bh < h * 1.3) return; }
+    if (r < h * 0.5 || r * 3.4 < w) return;
+    const b = { x0: x - w / 2, y0: y - h / 2, x1: x + w / 2, y1: y + h / 2 }; if (!free(b)) return; placed.push(b);
+    texts += `<text x="${x.toFixed(1)}" y="${(y + h * 0.3).toFixed(1)}" text-anchor="middle" font-size="${size}" font-weight="${weight}" fill="${fill}" ${style || ''} ${halo}>${esc(n)}</text>`; };
+  m.adm.forEach(a => { if (!a.n || shown.some(s => s.length > 1 && a.n.startsWith(s))) return; area(a.n, a, 12.5, 700, 'var(--cm-ink)', 'fill-opacity=".78"'); });
+  m.nb.forEach(n => { if (n.n) area(n.n, n, 13, 700, 'var(--cm-nbink)'); });
+  (m.lake || []).forEach(l => { if (l.n) area(l.n, l, 11.5, 700, 'var(--cm-water)', 'font-style="italic"'); });
+  cm$('cmLab').innerHTML = marks + texts;
+}
+function cmTap(t) {
+  const m = CM.m, toast = cm$('cmToast'), hl = cm$('cmHL'); if (!m || !t || !t.dataset) return;
+  let name = '', dd = '';
+  if (t.dataset.adm != null) { const a = m.adm[+t.dataset.adm]; name = a.n; dd = a.d; }
+  else if (t.dataset.nb != null) { const n = m.nb[+t.dataset.nb]; name = n.n ? n.n + ' (이웃 나라)' : ''; dd = n.n ? n.d : ''; }
+  else if (t.dataset.land) { name = CM.f.d.ko; dd = m.land; }
+  if (hl) hl.setAttribute('d', dd);
+  toast.hidden = !name; toast.textContent = name;
+}
+(() => {
+  const map = cm$('cmMap'), pts = new Map(); let g = null;
+  const rel = e => { const r = map.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  map.addEventListener('pointerdown', e => {
+    if (!CM.v || e.target.closest('.cm-ctl')) return; try { map.setPointerCapture(e.pointerId); } catch (er) {}
+    pts.set(e.pointerId, rel(e)); const v = CM.v;
+    if (pts.size === 1) g = { k: 'pan', p0: rel(e), tx: v.tx, ty: v.ty, moved: 0, t: Date.now(), tg: e.target };
+    else if (pts.size === 2) { const [a, b] = [...pts.values()]; g = { k: 'pinch', d0: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, s: v.s, m0: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], tx: v.tx, ty: v.ty }; }
+    map.classList.add('drag');
+  });
+  map.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId) || !g) return; pts.set(e.pointerId, rel(e)); const v = CM.v;
+    if (g.k === 'pan') { const [x, y] = rel(e), dx = x - g.p0[0], dy = y - g.p0[1]; g.moved = Math.max(g.moved, Math.abs(dx) + Math.abs(dy)); v.tx = g.tx + dx; v.ty = g.ty + dy; cmApply(); }
+    else if (pts.size >= 2) { const [a, b] = [...pts.values()], dist = Math.hypot(a[0] - b[0], a[1] - b[1]), mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      const ns = Math.max(v.s0 * 0.85, Math.min(v.s0 * 12, g.s * dist / g.d0)), wx = (g.m0[0] - g.tx) / g.s, wy = (g.m0[1] - g.ty) / g.s; v.s = ns; v.tx = mid[0] - wx * ns; v.ty = mid[1] - wy * ns; cmApply(); }
+  });
+  const up = e => {
+    if (!pts.has(e.pointerId)) return; pts.delete(e.pointerId);
+    if (g && g.k === 'pan' && g.moved < 7 && Date.now() - g.t < 600 && e.type === 'pointerup') cmTap(g.tg);
+    if (pts.size === 1) { const [p] = [...pts.values()]; g = { k: 'pan', p0: p, tx: CM.v.tx, ty: CM.v.ty, moved: 99, t: 0 }; }
+    else if (!pts.size) { g = null; map.classList.remove('drag'); }
+  };
+  map.addEventListener('pointerup', up); map.addEventListener('pointercancel', up);
+  map.addEventListener('wheel', e => { if (!CM.v) return; e.preventDefault(); const [x, y] = rel(e); cmZoom(x, y, Math.exp(-Math.max(-300, Math.min(300, e.deltaY * (e.deltaMode ? 30 : 1))) * 0.0018)); }, { passive: false });
+  map.addEventListener('dblclick', e => { if (!CM.v || e.target.closest('.cm-ctl')) return; const [x, y] = rel(e); cmZoom(x, y, 2); });
+  const mid = () => { const { W, H } = cmSize(); return [W / 2, H / 2]; };
+  cm$('cmIn').onclick = () => cmZoom(...mid(), 1.6); cm$('cmOut').onclick = () => cmZoom(...mid(), 1 / 1.6); cm$('cmReset').onclick = () => { cmFit(); cmTap({ dataset: {} }); };
+  cm$('cmClose').onclick = closeMap;
+  cm$('cmap').addEventListener('click', e => { if (e.target === cm$('cmap')) closeMap(); });
+  document.addEventListener('keydown', e => {
+    if (cm$('cmap').hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMap(); return; }
+    if (e.key === 'Tab') { const fs = [...cm$('cmap').querySelectorAll('button')]; const i = fs.indexOf(document.activeElement); if (e.shiftKey && i <= 0) { e.preventDefault(); fs[fs.length - 1].focus(); } else if (!e.shiftKey && i === fs.length - 1) { e.preventDefault(); fs[0].focus(); } return; }
+    if (!CM.v) return; const st = { ArrowLeft: [60, 0], ArrowRight: [-60, 0], ArrowUp: [0, 60], ArrowDown: [0, -60] }[e.key];
+    if (st) { e.preventDefault(); CM.v.tx += st[0]; CM.v.ty += st[1]; cmApply(); } else if (e.key === '+' || e.key === '=') cmZoom(...mid(), 1.4); else if (e.key === '-') cmZoom(...mid(), 1 / 1.4);
+  });
+  addEventListener('resize', () => { if (!cm$('cmap').hidden && CM.m) { drawMap(); cmFit(); } });
+})();
 (async () => {
   try {
     const [data, geo] = await Promise.all([fetch('data.json').then(r => r.json()), fetch('geo.json').then(r => r.json())]);
@@ -267,7 +468,7 @@ function find(name) { name = (name || '').trim(); if (!name) return; const f = f
       .polygonsTransitionDuration(0)
       .polygonLabel(f => f.pole ? `<div class="tip"><div>남극 대륙<small>눌러서 남극 알아보기</small></div></div>` : f.d ? `<div class="tip"><img src="${flag(f.d.iso)}" alt=""><div>${esc(f.d.ko)}<small>수도 ${esc(f.d.cap)}${f.d.city ? ' · ' + esc(f.d.city[0]) : ''}</small></div></div>` : '')
       .onPolygonHover(f => { hover = f && (f.d || f.pole) ? f : null; el.style.cursor = hover ? 'pointer' : 'grab'; refresh(); })
-      .onPolygonClick(f => { if (f.pole) showPole(f.pole); else if (f.d) pick(f, false); })
+      .onPolygonClick(f => { if (f.pole) showPole(f.pole); else if (f.d) { const now = Date.now(), dbl = lastTap.f === f && now - lastTap.t < 450; lastTap = { f, t: now }; pick(f, false); if (dbl) openMap(f); } })
       .htmlElementsData([]).htmlLat(m => m.lat).htmlLng(m => m.lng).htmlAltitude(0.008)
       .htmlElement(m => { const e = document.createElement('div'); e.className = 'mk ' + m.cls; e.innerHTML = `<span>${esc(m.t)}</span><i></i>`; if (m.pole) e.onclick = () => showPole(m.pole); return e; });
     ctr = g.controls(); ctr.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches; ctr.autoRotateSpeed = 0.45;
