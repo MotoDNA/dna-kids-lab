@@ -212,7 +212,7 @@
       document.body.classList.add('ws-print');
       const done = () => { document.body.classList.remove('ws-print'); window.removeEventListener('afterprint', done); };
       window.addEventListener('afterprint', done);
-      setTimeout(() => { window.print(); setTimeout(done, 1500); }, 50);
+      setTimeout(() => { window.print(); }, 50);
     };
     // 불러 주기
     $('dictSayAll').onclick = () => {
@@ -242,7 +242,7 @@
     };
     function toastMsg(m) { if (typeof window.toast === 'function') window.toast(m); else alert(m); }
     render();
-    return () => { stopSay(); window.removeEventListener('resize', later); };
+    return () => { stopSay(); window.removeEventListener('resize', later); document.body.classList.remove('ws-print'); const pr = document.getElementById('wsPrint'); if (pr) pr.remove(); };
   };
   window.DICT_TEST = { parse, wrap, build };
 })();
