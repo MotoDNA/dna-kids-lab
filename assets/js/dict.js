@@ -34,7 +34,8 @@
   function cell(s, ch, kind, o = {}) {
     const fs = (s * 0.72).toFixed(2);
     const num = o.num ? `<i style="font-size:${Math.max(2.4, s * 0.2).toFixed(1)}mm">${o.num}</i>` : '';
-    const b = ch && ch !== ' ' ? `<b class="${kind}" style="font-size:${fs}mm">${E(ch)}</b>` : '';
+    const pt = ch === '.' || ch === ',';   // 원고지 쓰기: 마침표·쉼표는 칸의 왼쪽 아래
+    const b = ch && ch !== ' ' ? `<b class="${kind}${pt ? ' p' : ''}" style="font-size:${fs}mm">${E(ch)}</b>` : '';
     return `<div class="c${s >= 14 ? ' g' : ''}${o.hl ? ' hl' : ''}" style="width:${s}mm;height:${s}mm">${num}${b}</div>`;
   }
   const row = (s, cols, chars, kind, o = {}) => {
@@ -109,6 +110,7 @@
 .ws .c.g::before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:.25mm dashed #c9d9e8}
 .ws .c.g::after{content:"";position:absolute;top:50%;left:0;right:0;border-top:.25mm dashed #c9d9e8}
 .ws .c b{position:relative;z-index:1;font-weight:400}
+.ws .c b.p{position:absolute;left:14%;bottom:8%;line-height:1}
 .ws .c b.m{color:#1d1d1f}.ws .c b.t{color:#c4c4c4}
 .ws .c.hl{background:#f4f8fc}
 .ws .c i{position:absolute;left:.6mm;top:.3mm;font-style:normal;font-weight:700;color:#0071e3;z-index:2;line-height:1}
