@@ -488,6 +488,23 @@ h1,h2,h3,h4,.brand,.pg-h{font-family:var(--fh);font-weight:400;letter-spacing:0}
 .p3-open{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #2a56c6;color:#2a56c6;background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;margin:12px 0 4px}
 .p3-open:hover{background:#eef3ff}.p3-open:disabled{opacity:.6}
 @media print{.p3-open{display:none}}
+.hb-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:18px 0 6px;text-align:left;width:min(1280px,calc(100vw - 48px));position:relative;left:50%;transform:translateX(-50%)}
+.ah-hero h1.hb-h1{font-size:clamp(30px,4.6vw,48px);margin-bottom:10px}
+.ah-hero .hb-h1 + .ah-sub{margin-bottom:8px}
+.hb{position:relative;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;color:var(--ink);text-decoration:none;box-shadow:0 0 0 1px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.06);transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s}
+.hb:hover,.hb:focus-visible{text-decoration:none;transform:scale(1.045);box-shadow:0 0 0 1px rgba(0,0,0,.05),0 18px 40px rgba(0,0,0,.16);z-index:2}
+.hb:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.hb .im{display:block;aspect-ratio:16/11;overflow:hidden;background:#eef2f7}
+.hb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.hb:hover img{transform:scale(1.06)}
+.hb .tx{display:flex;flex-direction:column;gap:4px;padding:12px 15px 15px}
+.hb .k{align-self:flex-start;font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:999px}
+.hb b{font-size:19px;letter-spacing:-.02em;line-height:1.3}
+.hb .d{font-size:14.5px;color:var(--sub);line-height:1.4}
+.hb-more{text-align:center;margin:14px 0 0;font-size:16px;font-weight:600}
+@media (max-width:1000px){.hb-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.hb-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:calc(100vw - 28px)}.hb{border-radius:16px}.hb .tx{padding:9px 11px 11px;gap:3px}.hb b{font-size:16px}.hb .d{font-size:13px}.hb .k{font-size:11.5px;padding:2px 8px}.hb:hover,.hb:focus-visible{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.hb,.hb img{transition:none}.hb:hover,.hb:hover img{transform:none}}
 .dict-cta{display:block;margin:10px 0 16px;padding:14px 16px;border:1.5px solid var(--accent);border-radius:14px;background:#f3f8f5;color:inherit;text-decoration:none}
 .dict-cta b{display:block;color:var(--accent);font-size:18px;margin-bottom:4px}.dict-cta span{font-size:15px;color:var(--sub)}
 .seo-intro{max-width:760px;margin:32px auto;line-height:1.7}.seo-intro h1{font-size:24px;margin:0 0 6px}.seo-intro ul{padding-left:1.2em}.seo-intro li{margin:4px 0}
@@ -674,6 +691,20 @@ async function myDone() {
   const best = {}; (data || []).forEach(r => { const p = r.total ? r.score / r.total : 0; if (!best[r.ref] || p > best[r.ref].p) best[r.ref] = { p, s: r.score, t: r.total }; });
   return best;
 }
+const HOME_BLOCKS = [
+  { img: 'units', href: '#/', scroll: 1, k: '공부', c: '#0071e3', bg: '#e8f1fd', t: '단원 개념 공부', d: '학년별 {n}개 단원을 그림으로 쉽게' },
+  { img: 'lab', href: '#/activities', k: '실험', c: '#c2410c', bg: '#fff1e6', t: '집에서 하는 실험', d: '재활용품으로 {a}가지 실험·활동' },
+  { img: 'dict', href: '#/dictation', k: '쓰기', c: '#1e7e34', bg: '#eaf7ee', t: '받아쓰기 연습장', d: '급수표 문장으로 연습장 만들기' },
+  { img: 'globe', href: 'gk/globe/', k: '3D', c: '#0b57d0', bg: '#e6efff', t: '3D 지구본 여행', d: '지구본을 돌리며 나라 찾기' },
+  { img: 'solar', href: 'gk/solar/', k: '3D', c: '#3949ab', bg: '#eceefb', t: '3D 태양계 탐험', d: '여덟 행성으로 날아가 보기' },
+  { img: 'flags', href: '#/gk/flags', k: '상식', c: '#d93025', bg: '#fdeceb', t: '국기 맞히기', d: '국기를 보고 나라 맞히기' },
+  { img: 'map', href: '#/gk/map', k: '상식', c: '#34a853', bg: '#e6f4ea', t: '세계지도 탐험', d: '나라를 눌러 수도·인사말 알기', lazy: 1 },
+  { img: 'stars', href: '#/gk/stars', k: '상식', c: '#5b3cc4', bg: '#efeafb', t: '별자리 여행', d: '계절 별자리와 북극성 찾기', lazy: 1 },
+  { img: 'typing', href: '#/typing', k: '타자', c: '#0071e3', bg: '#e8f1fd', t: '타자 연습', d: '한글·영어 타자를 손가락 자리부터', lazy: 1 },
+  { img: 'greet', href: '#/gk/greet', k: '상식', c: '#d6336c', bg: '#fdebf2', t: '세계의 인사말', d: '여러 나라 "안녕하세요" 듣기', lazy: 1 },
+  { img: 'quiz', href: '#/gk/quiz', k: '상식', c: '#e37400', bg: '#fff3e0', t: '상식 퀴즈', d: '자연·과학·역사 10문제 도전', lazy: 1 },
+  { img: 'print', href: '#/downloads', k: '인쇄', c: '#7e3bb5', bg: '#f3ecfb', t: '도안·문제지', d: '학습지·칸 공책·도안 내려받기', lazy: 1 }
+];
 async function viewHome() {
   const [topics, lessons, done, actsAll] = await Promise.all([listTopics(), listLessons(), myDone(), listActs()]);
   const L = Object.fromEntries(lessons.map(l => [l.slug, l]));
@@ -684,34 +715,10 @@ async function viewHome() {
   const nL = lessons.length;
   app.innerHTML = `<div class="ah">
   <section class="ah-hero">
-    <h1>${name ? esc(callName(name)) + ',<br>오늘은 무엇을 해 볼까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
+    <h1 class="hb-h1">${name ? esc(callName(name)) + ',<br>오늘은 무엇을 해 볼까?' : '학교에서 배우는 개념,<br>집에서 쉽게.'}</h1>
     <p class="ah-sub">초등 1~6학년, 개념은 쉽게 공부하고 실험으로 직접 확인해요.</p>
-    <div class="ah-split">
-      <div class="sp study">
-        <div class="k">공부하기</div>
-        <h2>단원 개념 공부</h2>
-        <p>국어·수학·과학·영어·중국어·일본어 <b>${nL}개 단원</b>을 그림과 애니메이션으로 쉽게 익히고 문제로 다져요.</p>
-        <div class="chips"><button type="button" class="sc" data-s="국어" style="background:#fff1e6;color:#c2410c">국어</button><button type="button" class="sc" data-s="수학" style="background:#e8f1fd;color:#0071e3">수학</button><button type="button" class="sc" data-s="과학" style="background:#fdeeee;color:#d70015">과학</button><button type="button" class="sc" data-s="영어" style="background:#eaf7ee;color:#1e7e34">영어</button><button type="button" class="sc" data-s="중국어" style="background:#fff6dd;color:#a15c00">중국어</button><button type="button" class="sc" data-s="일본어" style="background:#f3ecfb;color:#7e3bb5">일본어</button></div>
-        <img src="assets/img/didi/read.webp" alt="책을 읽는 디디" width="220" height="220" class="pic didi">
-        <button class="btn" type="button" id="goUnits">단원 고르기</button>
-      </div>
-      <div class="sp lab">
-        <div class="k">실험하기</div>
-        <h2>집에서 하는 실험</h2>
-        <p>재활용품으로 <b>${actsAll.length}가지 실험·활동</b>을 하며 개념을 눈으로 확인해요. 재료가 없으면 실험 키트로도 할 수 있어요.</p>
-        <div class="chips"><span class="tg">종이컵 실전화</span><span class="tg">물에 뜨는 나침반</span><span class="tg">분수 피자</span></div>
-        <img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" class="pic photo" loading="lazy">
-        <a class="btn" href="#/activities">실험 보러 가기</a>
-      </div>
-      <div class="sp gkp">
-        <div class="k">상식 놀이터</div>
-        <h2>세계 상식 놀이</h2>
-        <p>세계지도·국기·수도부터 모스부호, 행성, 공룡까지 <b>11가지 놀이</b>로 세상을 알아 가요.</p>
-        <div class="chips"><a class="tg" href="#/gk/flags">국기</a><a class="tg" href="#/gk/capitals">수도</a><a class="tg" href="#/gk/morse">모스부호</a></div>
-        <svg class="pic gkill" viewBox="0 0 220 150" width="220" height="150" role="img" aria-label="지구본과 깃발 그림"><circle cx="96" cy="80" r="58" fill="#d8ecff"/><path d="M58 52c10-12 26-16 36-10 6 4 2 12 10 14 9 2 12 12 4 18-9 6-6 16-16 18-10 2-14-8-22-10-9-2-18-8-18-17 0-5 2-9 6-13z" fill="#8fd19e"/><path d="M112 96c8-6 20-4 24 4 3 7-2 14-4 21-3 9-14 10-18 2-3-6-8-9-6-16 1-4 1-8 4-11z" fill="#8fd19e"/><path d="M118 40c6-4 16-2 18 5 1 5-4 8-9 8-6 0-12-8-9-13z" fill="#8fd19e"/><ellipse cx="96" cy="80" rx="24" ry="58" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/><path d="M38 80h116M45 52h102M45 108h102" stroke="#fff" stroke-width="2" opacity=".8"/><circle cx="96" cy="80" r="58" fill="none" stroke="#34a853" stroke-width="3"/><path d="M150 14v62" stroke="#5f6368" stroke-width="3" stroke-linecap="round"/><path d="M151.5 15 196 29l-44.5 14z" fill="#34a853"/><circle cx="166" cy="29" r="5" fill="#fff"/><g fill="#5e5ce6"><circle cx="164" cy="128" r="4"/><rect x="173" y="124" width="14" height="8" rx="4"/><circle cx="196" cy="128" r="4"/></g></svg>
-        <a class="btn" href="#/gk">놀러 가기</a>
-      </div>
-    </div>
+    <div class="hb-grid">${HOME_BLOCKS.map(b => `<a class="hb" href="${b.href}"${b.scroll ? ' data-scroll="1"' : ''}><span class="im"><img src="assets/img/home/${b.img}.webp?v=2" alt="" width="640" height="440" loading="${b.lazy ? 'lazy' : 'eager'}"></span><span class="tx"><span class="k" style="background:${b.bg};color:${b.c}">${b.k}</span><b>${b.t}</b><span class="d">${b.d.replace('{n}', nL).replace('{a}', actsAll.length)}</span></span></a>`).join('')}</div>
+    <p class="hb-more"><a href="#/gk">상식 놀이 14가지 모두 보기 ›</a></p>
     ${me ? '' : `<p class="ah-login">로그인하면 공부 기록이 남아서 부모님이 확인할 수 있어요. <a href="#/login">로그인</a> · <a href="#/signup">가족 가입</a></p>`}
   </section>
   <section class="ah-band" id="units"><div class="in">
@@ -723,15 +730,8 @@ async function viewHome() {
       return l ? `<li><a href="#/u/${esc(l.slug)}"><span class="n">${i + 1}</span><span><span class="t">${esc(l.title)}</span><span class="topic">${t.semester ? t.semester + '학기 · ' : ''}${esc(t.name)}${t.activity_slug ? ' · 실험 있음' : ''}</span></span>${d ? `<span class="done">✓ ${d.s}/${d.t}</span>` : '<span></span>'}</a></li>`
         : `<li><span class="units-x" style="display:block;padding:14px 0;color:#999">${i + 1}. ${esc(t.name)} — 준비 중</span></li>`; }).join('')}</ol>
     <p class="note2">학년·학기는 2022 개정 교육과정 교과서에서 주로 배우는 시기를 기준으로 나눴어요. 출판사나 학교에 따라 한 학기 정도 차이가 날 수 있어요.</p>
-    <div class="ah-tiles">
-      <a class="tile" href="#/activities"><div class="tx"><h3>실험·활동</h3><p>재활용품으로 단원 개념을 직접 확인해요. 재료가 없으면 실험 키트로도 할 수 있어요.</p><span class="go">활동 보기 ›</span></div><div class="im"><img src="assets/img/e1_done.jpg" alt="종이컵 실전화로 이야기하는 아이들" loading="lazy"></div></a>
-      <a class="tile" href="#/typing"><div class="tx"><h3>타자 연습</h3><p>손가락 자리를 보며 한글 타자와 영어 타자(영타)를 익혀요.</p><span class="go">연습하기 ›</span></div><div class="im"><img class="didi" src="assets/img/didi/cheer.webp" alt="응원하는 디디" loading="lazy"></div></a>
-      <a class="tile" href="#/dictation"><div class="tx"><h3>받아쓰기 연습장</h3><p>학교 급수표 문장을 적으면 따라 쓰기 연습장을 바로 만들어 인쇄해요. 칸 공책 PDF도 있어요.</p><span class="go">만들기 ›</span></div><div class="im"><img src="assets/img/n_writing.jpg" alt="낱말 따라 쓰기 연습장" loading="lazy" style="object-position:top"></div></a>
-      <a class="tile" href="#/downloads"><div class="tx"><h3>도안·문제지</h3><p>단원 학습지와 활동 도안을 인쇄해서 써요.</p><span class="go">내려받기 ›</span></div><div class="im"><img src="assets/img/n_tangram.jpg" alt="칠교판 도안" loading="lazy"></div></a>
-    </div>
   </div></section></div>`;
-  const gu = document.getElementById('goUnits'); if (gu) gu.onclick = () => document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-  app.querySelectorAll('.ah-split .sc').forEach(b => b.onclick = () => { if (subjHere.includes(b.dataset.s)) { state.subject = b.dataset.s; saveState(); viewHome(); } document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
+  app.querySelectorAll('.hb[data-scroll]').forEach(b => b.onclick = e => { e.preventDefault(); document.getElementById('units').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
   app.querySelectorAll('.f').forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; if (b.dataset.k === 'grade') try { localStorage.setItem('dnakids_band_set', '1'); } catch (e) {} saveState(); viewHome(); });
 }
 
