@@ -1385,7 +1385,7 @@ async function route() {
     else if (p === 'activities') await viewActivities();
     else if (p === 'downloads') await viewDownloads(arg);
     else if (p === 'typing') viewTyping(arg);
-    else if (p === 'dictation') { app.innerHTML = '<p class="sub">불러오는 중…</p>'; await loadScript('assets/js/dict.js?v=3'); dictLeave = window.viewDictation(app); }
+    else if (p === 'dictation') { app.innerHTML = '<p class="sub">불러오는 중…</p>'; await loadScript('assets/js/dict.js?v=4'); dictLeave = window.viewDictation(app); }
     else if (p === 'gk') await viewGk(arg);
     else if (p === 'login') viewLogin();
     else if (p === 'signup') viewSignup();

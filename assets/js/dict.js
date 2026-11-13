@@ -76,6 +76,12 @@
   }
 
   const CSS = `
+.dict-ocr{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 4px}
+.dict-ocr .sub{font-size:14px;margin:0}
+.dict-cam{cursor:pointer;display:inline-flex;align-items:center;min-height:44px}
+.dict-cam.busy{opacity:.6;pointer-events:none}
+.dict-ocrmsg{margin:8px 0 4px;padding:10px 14px;border-radius:12px;background:#eef4ff;color:#1d1d1f;font-size:15px;line-height:1.5}
+.dict-ocrmsg.ok{background:#eaf7ee}.dict-ocrmsg.bad{background:#fdeceb}
 .dict-list{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:8px}
 @media (max-width:640px){.dict-list{grid-template-columns:1fr}}
 .dict-row{display:flex;align-items:center;gap:8px}
@@ -136,6 +142,88 @@
   }
   const wait = ms => new Promise(r => setTimeout(r, ms));
 
+  /* ---------- 급수표 사진 읽기 (무료 글자 인식 Tesseract, 기기 안에서 처리) ---------- */
+  const TESS = 'https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/';
+  let tessP = null;
+  function loadTess() {
+    if (window.Tesseract) return Promise.resolve();
+    return tessP || (tessP = new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = TESS + 'tesseract.min.js'; sc.onload = ok; sc.onerror = () => { tessP = null; no(new Error('load')); }; document.head.appendChild(sc); }));
+  }
+  async function prepImage(file) {
+    let bmp;
+    try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+    catch (e) { bmp = await new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = URL.createObjectURL(file); }); }
+    const w0 = bmp.width, h0 = bmp.height, k = Math.min(2.5, Math.max(1, 1800 / Math.max(w0, h0)), 2400 / Math.max(w0, h0));
+    const cv = document.createElement('canvas'); cv.width = Math.round(w0 * k); cv.height = Math.round(h0 * k);
+    const cx = cv.getContext('2d'); cx.drawImage(bmp, 0, 0, cv.width, cv.height);
+    const W = cv.width, H = cv.height, d = cx.getImageData(0, 0, W, H), p = d.data, N = W * H;
+    const g = new Float32Array(N);                                   // 1) 흑백 + 대비 늘리기
+    for (let i = 0, j = 0; j < N; i += 4, j++) g[j] = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2];
+    const hist = new Uint32Array(256); for (let j = 0; j < N; j++) hist[g[j] | 0]++;
+    let lo = 0, hi = 255, acc = 0; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc > N * 0.01) { lo = v; break; } }
+    acc = 0; for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc > N * 0.05) { hi = v; break; } }
+    const span = Math.max(30, hi - lo); for (let j = 0; j < N; j++) g[j] = Math.max(0, Math.min(255, (g[j] - lo) * 255 / span));
+    const ii = new Float64Array((W + 1) * (H + 1));                 // 2) 주변보다 어두운 곳만 글자로 (그림자에 강하게)
+    for (let y = 0; y < H; y++) { let row = 0; for (let x = 0; x < W; x++) { row += g[y * W + x]; ii[(y + 1) * (W + 1) + x + 1] = ii[y * (W + 1) + x + 1] + row; } }
+    const R = 15, dark = new Uint8Array(N);
+    for (let y = 0; y < H; y++) { const y0 = Math.max(0, y - R), y1 = Math.min(H, y + R + 1);
+      for (let x = 0; x < W; x++) { const x0 = Math.max(0, x - R), x1 = Math.min(W, x + R + 1);
+        const m = (ii[y1 * (W + 1) + x1] - ii[y0 * (W + 1) + x1] - ii[y1 * (W + 1) + x0] + ii[y0 * (W + 1) + x0]) / ((y1 - y0) * (x1 - x0));
+        const v = g[y * W + x]; dark[y * W + x] = (v < m - 18 && v < 170) ? 1 : 0; } }
+    const L = 60, line = new Uint8Array(N);                          // 3) 표 테두리(긴 가로·세로 선) 지우기
+    for (let y = 0; y < H; y++) { let run = 0;
+      for (let x = 0; x <= W; x++) { const on = x < W && (dark[y * W + x] || (y > 0 && dark[(y - 1) * W + x]) || (y < H - 1 && dark[(y + 1) * W + x]));
+        if (on) run++; else { if (run >= L) for (let k = x - run; k < x; k++) line[y * W + k] = 1; run = 0; } } }
+    for (let x = 0; x < W; x++) { let run = 0;
+      for (let y = 0; y <= H; y++) { const on = y < H && (dark[y * W + x] || (x > 0 && dark[y * W + x - 1]) || (x < W - 1 && dark[y * W + x + 1]));
+        if (on) run++; else { if (run >= L) for (let k = y - run; k < y; k++) line[k * W + x] = 1; run = 0; } } }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const j = y * W + x;
+      let ln = line[j] || (x > 0 && line[j - 1]) || (x < W - 1 && line[j + 1]) || (y > 0 && line[j - W]) || (y < H - 1 && line[j + W]);
+      const v = dark[j] && !ln ? 0 : 255; p[j * 4] = p[j * 4 + 1] = p[j * 4 + 2] = v; }
+    cx.putImageData(d, 0, 0);
+    return cv;
+  }
+  const HANGUL = /[가-힣]/;
+  function cleanSent(t) {
+    return t.replace(/[|\[\]{}_=~`<>@#$%^&*+\\/]/g, ' ').replace(/^[\s.,:;·\-–—)]+/, '').replace(/\s+/g, ' ')
+      .replace(/\s+([.,?!])/g, '$1').replace(/[^가-힣0-9a-zA-Z.,?!"'“”‘’()~\s]+$/g, '').trim();
+  }
+  function parseOcr(text) {
+    const groups = []; let cur = null;
+    const newG = name => { cur = { name, items: [] }; groups.push(cur); };
+    for (const raw of String(text).split(/\n/)) {
+      const l = raw.replace(/[|\[\]{}=]/g, ' ').replace(/\s+/g, ' ').trim();
+      if (!l) continue;
+      const hg = l.match(/(\d{1,2})\s*급/);
+      if (hg && l.replace(/받아\s*쓰기|급수표|\d+\s*급|[^가-힣]/g, '').length <= 3) { newG(hg[1] + '급'); continue; }
+      if (!cur) newG('');
+      const hasNo = /^[^가-힣0-9①-⑳]*(\d{1,2}|[①-⑳])\s*[.)\],:·、。_\-]?\s+/.test(l);
+      if (!hasNo && /급수표|받아\s*쓰기|학년|학기|이름|날짜|부모님|확인/.test(l)) continue;   // 제목·안내 줄 빼기
+      let t = l.replace(/^[^가-힣0-9①-⑳]+/, '').replace(/^(\d{1,2}|[①-⑳])\s*[.)\],:·、。_\-]?\s*/, '');
+      t = t.replace(/^[^가-힣"“‘']+/, '');
+      t = cleanSent(t);
+      if (t.replace(/[^가-힣]/g, '').length >= 2) cur.items.push(t);
+    }
+    // 번호는 잘못 읽힐 때가 많아서, 위에서부터 순서대로 1, 2, 3… 으로 넣어요
+    return groups.map(gr => ({ name: gr.name, list: gr.items.slice(0, 30).map((t, i) => ({ no: i + 1, text: t })) })).filter(gr => gr.list.length);
+  }
+  async function ocrImage(file, onMsg) {
+    onMsg('글자 읽는 도구를 준비하는 중… (처음 한 번은 조금 걸려요)');
+    await loadTess();
+    const cv = await prepImage(file);
+    const worker = await Tesseract.createWorker('kor', 1, {
+      workerPath: TESS + 'worker.min.js',
+      corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@6.0.0',
+      langPath: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/kor@1.0.0/4.0.0_best_int',
+      logger: m => { if (m.status === 'recognizing text') onMsg(`사진 속 글자를 읽는 중… ${Math.round((m.progress || 0) * 100)}%`); }
+    });
+    try {
+      await worker.setParameters({ preserve_interword_spaces: '1' });
+      const r = await worker.recognize(cv);
+      return r.data.text || '';
+    } finally { try { await worker.terminate(); } catch (e) {} }
+  }
+
   window.viewDictation = function (app) {
     const st = load();
     document.title = '받아쓰기 연습장 만들기 · DNA Kids Lab';
@@ -146,6 +234,8 @@
 <label for="dictTitle" style="font-weight:700">제목</label>
 <div class="opt" style="margin-top:6px"><input type="text" id="dictTitle" maxlength="30" placeholder="예: 1학년 받아쓰기 3급" style="flex:1;min-width:220px" value="${E(st.title || '')}"></div>
 <div style="font-weight:700;margin-top:6px">급수표 문장 <span class="cnt" id="dictCnt"></span></div>
+<div class="dict-ocr"><label class="btn pill dict-cam">📷 급수표 사진으로 채우기<input type="file" id="dictPhoto" accept="image/*" hidden></label><span class="sub">사진 속 글자를 읽어 1번부터 채워요. 사진은 이 기기 밖으로 보내지 않아요.</span></div>
+<div class="dict-ocrmsg" id="dictOcrMsg" hidden></div>
 <div class="dict-list" id="dictRows"></div>
 <button class="btn2" id="dictMore" style="margin-top:8px">＋ 문장 칸 더하기</button>
 <div class="opt">
@@ -183,6 +273,33 @@
       arr.forEach(t => { if (i < 30) { lines[i++] = t; } }); while (lines.length < Math.min(30, i)) lines.push('');
       drawRows(); render();
     });
+    $('dictPhoto').onchange = async e => {
+      const file = e.target.files && e.target.files[0]; e.target.value = ''; if (!file) return;
+      const box = $('dictOcrMsg'), msg = (t, cls) => { box.hidden = false; box.className = 'dict-ocrmsg' + (cls ? ' ' + cls : ''); box.textContent = t; };
+      const lab = document.querySelector('.dict-cam'); lab.classList.add('busy');
+      try {
+        const text = await ocrImage(file, msg);
+        const groups = parseOcr(text);
+        if (!groups.length) { msg('사진에서 문장을 찾지 못했어요. 급수표가 화면에 꽉 차게, 밝고 반듯하게 다시 찍어 주세요.', 'bad'); return; }
+        const fill = gr => {
+          if (sentList().length && !confirm('지금 적혀 있는 문장을 사진에서 읽은 문장으로 바꿀까요?')) return;
+          lines = []; gr.list.forEach(x => { if (x.no <= 30) lines[x.no - 1] = x.text; });
+          for (let i = 0; i < lines.length; i++) if (lines[i] == null) lines[i] = '';
+          while (lines.length < 10) lines.push('');
+          if (gr.name && !$('dictTitle').value.trim()) $('dictTitle').value = '받아쓰기 ' + gr.name;
+          drawRows(); render();
+          msg(`${gr.list.length}문장을 채웠어요${gr.name ? ' (' + gr.name + ')' : ''}. 사진에서 읽은 글자는 틀릴 수 있으니, 맞춤법과 띄어쓰기를 한 번 확인해 주세요.`, 'ok');
+        };
+        if (groups.length === 1) fill(groups[0]);
+        else {
+          box.hidden = false; box.className = 'dict-ocrmsg';
+          box.innerHTML = `<b>사진에 급수가 ${groups.length}개 있어요. 어느 것을 넣을까요?</b><div class="acts" style="margin:8px 0 0">${groups.map((g, i) => `<button class="btn2" data-g="${i}">${E(g.name || (i + 1) + '번째 묶음')} · ${g.list.length}문장</button>`).join('')}</div>`;
+          box.querySelectorAll('button[data-g]').forEach(b => b.onclick = () => fill(groups[+b.dataset.g]));
+        }
+      } catch (err) {
+        msg('사진을 읽지 못했어요. 인터넷 연결을 확인하고 다시 해 주세요.', 'bad');
+      } finally { lab.classList.remove('busy'); }
+    };
     $('dictMore').onclick = () => { for (let k = 0; k < 5 && lines.length < 30; k++) lines.push(''); drawRows(); };
     const sentList = () => lines.map((t, i) => ({ no: i + 1, text: String(t || '').replace(/\s+/g, ' ').trim() })).filter(x => x.text);
     const opts = () => ({ title: $('dictTitle').value.trim(), lines, size: +$('dictSize').value, reps: +$('dictReps').value, traceFirst: $('dictTraceFirst').checked, test: $('dictTest').checked, answer: $('dictAns').checked });
@@ -246,5 +363,5 @@
     render();
     return () => { stopSay(); window.removeEventListener('resize', later); document.body.classList.remove('ws-print'); const pr = document.getElementById('wsPrint'); if (pr) pr.remove(); };
   };
-  window.DICT_TEST = { parse, wrap, build };
+  window.DICT_TEST = { parse, wrap, build, parseOcr };
 })();
