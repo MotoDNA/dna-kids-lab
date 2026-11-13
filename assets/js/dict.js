@@ -153,49 +153,109 @@
     let bmp;
     try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
     catch (e) { bmp = await new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = URL.createObjectURL(file); }); }
-    const w0 = bmp.width, h0 = bmp.height, k = Math.min(2.5, Math.max(1, 1800 / Math.max(w0, h0)), 2400 / Math.max(w0, h0));
-    const cv = document.createElement('canvas'); cv.width = Math.round(w0 * k); cv.height = Math.round(h0 * k);
-    const cx = cv.getContext('2d'); cx.drawImage(bmp, 0, 0, cv.width, cv.height);
-    const W = cv.width, H = cv.height, d = cx.getImageData(0, 0, W, H), p = d.data, N = W * H;
-    const g = new Float32Array(N);                                   // 1) 흑백 + 대비 늘리기
-    for (let i = 0, j = 0; j < N; i += 4, j++) g[j] = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2];
-    const hist = new Uint32Array(256); for (let j = 0; j < N; j++) hist[g[j] | 0]++;
-    let lo = 0, hi = 255, acc = 0; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc > N * 0.01) { lo = v; break; } }
-    acc = 0; for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc > N * 0.05) { hi = v; break; } }
-    const span = Math.max(30, hi - lo); for (let j = 0; j < N; j++) g[j] = Math.max(0, Math.min(255, (g[j] - lo) * 255 / span));
-    const ii = new Float64Array((W + 1) * (H + 1));                 // 2) 주변보다 어두운 곳만 글자로 (그림자에 강하게)
-    for (let y = 0; y < H; y++) { let row = 0; for (let x = 0; x < W; x++) { row += g[y * W + x]; ii[(y + 1) * (W + 1) + x + 1] = ii[y * (W + 1) + x + 1] + row; } }
-    const R = 15, dark = new Uint8Array(N);
-    for (let y = 0; y < H; y++) { const y0 = Math.max(0, y - R), y1 = Math.min(H, y + R + 1);
-      for (let x = 0; x < W; x++) { const x0 = Math.max(0, x - R), x1 = Math.min(W, x + R + 1);
-        const m = (ii[y1 * (W + 1) + x1] - ii[y0 * (W + 1) + x1] - ii[y1 * (W + 1) + x0] + ii[y0 * (W + 1) + x0]) / ((y1 - y0) * (x1 - x0));
-        const v = g[y * W + x]; dark[y * W + x] = (v < m - 18 && v < 170) ? 1 : 0; } }
-    const L = 60, line = new Uint8Array(N);                          // 3) 표 테두리(긴 가로·세로 선) 지우기
-    for (let y = 0; y < H; y++) { let run = 0;
+    const w0 = bmp.width, h0 = bmp.height, k = Math.min(2.5, 2200 / Math.max(w0, h0));
+    let W = Math.round(w0 * k), H = Math.round(h0 * k);
+    const cv0 = document.createElement('canvas'); cv0.width = W; cv0.height = H;
+    const c0 = cv0.getContext('2d', { willReadFrequently: true }); c0.fillStyle = '#fff'; c0.fillRect(0, 0, W, H); c0.drawImage(bmp, 0, 0, W, H);
+    // 1) 흑백 → 주변보다 어두운 곳만 글자로
+    const binar = (ctx, W, H) => {
+      const p = ctx.getImageData(0, 0, W, H).data, N = W * H, g = new Float32Array(N);
+      for (let i = 0, j = 0; j < N; i += 4, j++) g[j] = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2];
+      const hist = new Uint32Array(256); for (let j = 0; j < N; j++) hist[g[j] | 0]++;
+      let lo = 0, hi = 255, acc = 0; for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc > N * 0.01) { lo = v; break; } }
+      acc = 0; for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc > N * 0.05) { hi = v; break; } }
+      const span = Math.max(30, hi - lo); for (let j = 0; j < N; j++) g[j] = Math.max(0, Math.min(255, (g[j] - lo) * 255 / span));
+      const ii = new Float64Array((W + 1) * (H + 1));
+      for (let y = 0; y < H; y++) { let row = 0; for (let x = 0; x < W; x++) { row += g[y * W + x]; ii[(y + 1) * (W + 1) + x + 1] = ii[y * (W + 1) + x + 1] + row; } }
+      const R = 15, d = new Uint8Array(N);
+      for (let y = 0; y < H; y++) { const y0 = Math.max(0, y - R), y1 = Math.min(H, y + R + 1);
+        for (let x = 0; x < W; x++) { const x0 = Math.max(0, x - R), x1 = Math.min(W, x + R + 1);
+          const m = (ii[y1 * (W + 1) + x1] - ii[y0 * (W + 1) + x1] - ii[y1 * (W + 1) + x0] + ii[y0 * (W + 1) + x0]) / ((y1 - y0) * (x1 - x0));
+          const v = g[y * W + x]; d[y * W + x] = (v < m - 18 && v < 170) ? 1 : 0; } }
+      return d;
+    };
+    let dark = binar(c0, W, H);
+    // 2) 기울기 바로잡기: 가로줄이 가장 또렷해지는 각도 찾기
+    const pts = []; for (let y = 0; y < H; y += 3) for (let x = 0; x < W; x += 3) if (dark[y * W + x]) pts.push(x, y);
+    let best = 0, bestS = -1;
+    for (let a = -5; a <= 5.001; a += 0.25) {
+      const t = a * Math.PI / 180, sn = Math.sin(t), cs = Math.cos(t), hist = new Float64Array(Math.ceil(H / 2) + W);
+      for (let i = 0; i < pts.length; i += 2) { const yy = ((-pts[i] * sn + pts[i + 1] * cs) / 2 + W / 2) | 0; if (yy >= 0 && yy < hist.length) hist[yy]++; }
+      let sc = 0; for (let i = 0; i < hist.length; i++) sc += hist[i] * hist[i];
+      if (sc > bestS) { bestS = sc; best = a; }
+    }
+    if (Math.abs(best) >= 0.25) {
+      const cv1 = document.createElement('canvas'); cv1.width = W; cv1.height = H;
+      const c1 = cv1.getContext('2d', { willReadFrequently: true }); c1.fillStyle = '#fff'; c1.fillRect(0, 0, W, H);
+      c1.translate(W / 2, H / 2); c1.rotate(-best * Math.PI / 180); c1.drawImage(cv0, -W / 2, -H / 2);
+      dark = binar(c1, W, H);
+    }
+    // 3) 칸 선(표·원고지 선) 지우기: 반듯해진 그림에서 길게 이어진 가로줄·세로줄만 지우기
+    const line = new Uint8Array(W * H), L = Math.max(50, Math.round(W * 0.035)); let vcols = 0; const vx = new Uint8Array(W);
+    for (let y = 0; y < H; y++) { let run = 0;   // 위아래 한 줄까지 함께 봐서 살짝 끊긴 선도 잡기
       for (let x = 0; x <= W; x++) { const on = x < W && (dark[y * W + x] || (y > 0 && dark[(y - 1) * W + x]) || (y < H - 1 && dark[(y + 1) * W + x]));
-        if (on) run++; else { if (run >= L) for (let k = x - run; k < x; k++) line[y * W + k] = 1; run = 0; } } }
+        if (on) run++; else { if (run >= L) for (let q = x - run; q < x; q++) if (dark[y * W + q]) line[y * W + q] = 1; run = 0; } } }
     for (let x = 0; x < W; x++) { let run = 0;
       for (let y = 0; y <= H; y++) { const on = y < H && (dark[y * W + x] || (x > 0 && dark[y * W + x - 1]) || (x < W - 1 && dark[y * W + x + 1]));
-        if (on) run++; else { if (run >= L) for (let k = y - run; k < y; k++) line[k * W + x] = 1; run = 0; } } }
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const j = y * W + x;
-      let ln = line[j] || (x > 0 && line[j - 1]) || (x < W - 1 && line[j + 1]) || (y > 0 && line[j - W]) || (y < H - 1 && line[j + W]);
-      const v = dark[j] && !ln ? 0 : 255; p[j * 4] = p[j * 4 + 1] = p[j * 4 + 2] = v; }
-    cx.putImageData(d, 0, 0);
-    return cv;
+        if (on) run++; else { if (run >= L) { vcols++; vx[x] = 1; for (let q = y - run; q < y; q++) if (dark[q * W + x]) line[q * W + x] = 1; } run = 0; } } }
+    // 가늘고 긴 선 조각(끊긴 원고지 선) 한 번 더: 굵기 3px 이하, 길이 L2 이상
+    const L2 = Math.max(26, Math.round(W * 0.02));
+    const thinV = (x, y) => !(x > 2 && dark[y * W + x - 3]) && !(x < W - 3 && dark[y * W + x + 3]);
+    const thinH = (x, y) => !(y > 2 && dark[(y - 3) * W + x]) && !(y < H - 3 && dark[(y + 3) * W + x]);
+    for (let x = 0; x < W; x++) { let run = 0, th = 0;
+      for (let y = 0; y <= H; y++) { if (y < H && dark[y * W + x] && !line[y * W + x]) { run++; if (thinV(x, y)) th++; } else { if (run >= L2 && th >= run * 0.8) for (let q = y - run; q < y; q++) line[q * W + x] = 1; run = 0; th = 0; } } }
+    for (let y = 0; y < H; y++) { let run = 0, th = 0;
+      for (let x = 0; x <= W; x++) { if (x < W && dark[y * W + x] && !line[y * W + x]) { run++; if (thinH(x, y)) th++; } else { if (run >= L2 && th >= run * 0.8) for (let q = x - run; q < x; q++) line[y * W + q] = 1; run = 0; th = 0; } } }
+    // 선 옆에 붙은 한 줄짜리 찌꺼기도 지우기
+    for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) { const j = y * W + x;
+      if (dark[j] && !line[j] && ((line[j - 1] && line[j + 1]) || (line[j - W] && line[j + W]))) line[j] = 2; }
+    const ink = new Uint8Array(W * H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const j = y * W + x; if (!dark[j] || line[j]) continue;
+      const nb = (x > 0 && line[j - 1] === 1) + (x < W - 1 && line[j + 1] === 1) + (y > 0 && line[j - W] === 1) + (y < H - 1 && line[j + W] === 1);
+      ink[j] = nb >= 2 ? 0 : 1; }
+    // 작은 점·잡티 지우기 (주변에 잉크가 거의 없는 점)
+    // 4) 왼쪽·오른쪽 두 단이면 나누기: 가운데 세로 띠에 글자가 걸친 줄이 거의 없을 때만
+    const rowInk = new Uint8Array(H); let inkRows = 0;
+    for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) if (ink[y * W + x]) { rowInk[y] = 1; inkRows++; break; } }
+    let gx = -1, gmin = Infinity;
+    for (let x = Math.round(W * 0.38); x < W * 0.62; x += 2) {
+      let hit = 0;
+      for (let y = 0; y < H; y++) { if (!rowInk[y]) continue; const o = y * W; for (let d = -6; d <= 6; d++) if (ink[o + x + d]) { hit++; break; } }
+      if (hit < gmin) { gmin = hit; gx = x; }
+    }
+    const cuts = gmin < inkRows * 0.1 ? [[0, gx], [gx, W]] : [[0, W]];
+    // 원고지인지: 서로 떨어진 세로선 묶음이 많으면(한 줄에 칸이 여럿) 원고지
+    let vclusters = 0; for (let x = 0, last = -99; x < W; x++) if (vx[x]) { if (x - last > 4) vclusters++; last = x; }
+    const grid = vclusters >= 14;
+    return cuts.map(([a, b]) => {
+      const cw = b - a, cv = document.createElement('canvas'); cv.width = cw + 40; cv.height = H + 40;
+      const cx = cv.getContext('2d'), im = cx.createImageData(cw + 40, H + 40), q = im.data; q.fill(255);
+      for (let y = 0; y < H; y++) for (let x = a; x < b; x++) if (ink[y * W + x]) { const o = ((y + 20) * (cw + 40) + (x - a + 20)) * 4; q[o] = q[o + 1] = q[o + 2] = 0; }
+      cx.putImageData(im, 0, 0); cv.grid = grid; return cv;
+    });
   }
   const HANGUL = /[가-힣]/;
   function cleanSent(t) {
-    return t.replace(/[|\[\]{}_=~`<>@#$%^&*+\\/]/g, ' ').replace(/^[\s.,:;·\-–—)]+/, '').replace(/\s+/g, ' ')
-      .replace(/\s+([.,?!])/g, '$1').replace(/[^가-힣0-9a-zA-Z.,?!"'“”‘’()~\s]+$/g, '').trim();
+    t = t.replace(/(^|\s)[ㄱ-ㅎㅏ-ㅣ|｜¦](?=\s|$)/g, '$1').replace(/[|｜¦【】「」『』〔〕]/g, ' ');
+    t = t.replace(/[\[\]{}_=~`<>@#$%^&*+\\\/]/g, ' ');
+    // 끝부분 찌꺼기 정리: 마침표·물음표·느낌표 하나만 남기기
+    const m = t.match(/[\s.,，。、:：;'"’”0-9!?)]*$/); let tail = '';
+    if (m && m[0]) { const z = m[0].replace(/\s/g, ''); if (/\?/.test(z)) tail = '?'; else if (/^[.,，。、]/.test(z)) tail = '.'; else if (/^!/.test(z)) tail = '!'; t = t.slice(0, t.length - m[0].length); }
+    // 글자 사이에 끼어든 점·쉼표는 빈칸(띄어쓰기)으로
+    t = t.replace(/([가-힣])[\s.,，。、:：;]*[.,，。、:：;][\s.,，。、:：;]*(?=[가-힣])/g, '$1 ');
+    t = t.replace(/^[^가-힣"“‘']+/, '').replace(/\s+/g, ' ').trim();
+    return t ? t + tail : t;
   }
   function parseOcr(text) {
-    const groups = []; let cur = null;
-    const newG = name => { cur = { name, items: [] }; groups.push(cur); };
+    const groups = []; let cur = null, part = 0;
+    const newG = name => { cur = { name, items: [], part }; groups.push(cur); };
     for (const raw of String(text).split(/\n/)) {
       const l = raw.replace(/[|\[\]{}=]/g, ' ').replace(/\s+/g, ' ').trim();
       if (!l) continue;
+      if (l === '§PART§') { part++; cur = null; continue; }
       const hg = l.match(/(\d{1,2})\s*급/);
-      if (hg && l.replace(/받아\s*쓰기|급수표|\d+\s*급|[^가-힣]/g, '').length <= 3) { newG(hg[1] + '급'); continue; }
+      if (hg && (hg.index <= 6 || /[<>〈〉]/.test(l) || l.replace(/받아\s*쓰기|급수표|\d+\s*급|[^가-힣]/g, '').length <= 3)) { newG(+hg[1] + '급'); continue; }
+      if (/^[<〈(]?\s*\S?\s*급\s*[>〉)]?\s*\.?\s*\d{1,2}\s*[.,]/.test(l) || /[<〈]\s*\S{0,2}\s*급\s*[>〉]/.test(l)) { newG('?'); continue; }   // 숫자를 못 읽은 급 제목
       if (!cur) newG('');
       const hasNo = /^[^가-힣0-9①-⑳]*(\d{1,2}|[①-⑳])\s*[.)\],:·、。_\-]?\s+/.test(l);
       if (!hasNo && /급수표|받아\s*쓰기|학년|학기|이름|날짜|부모님|확인/.test(l)) continue;   // 제목·안내 줄 빼기
@@ -205,12 +265,50 @@
       if (t.replace(/[^가-힣]/g, '').length >= 2) cur.items.push(t);
     }
     // 번호는 잘못 읽힐 때가 많아서, 위에서부터 순서대로 1, 2, 3… 으로 넣어요
-    return groups.map(gr => ({ name: gr.name, list: gr.items.slice(0, 30).map((t, i) => ({ no: i + 1, text: t })) })).filter(gr => gr.list.length);
+    // 숫자를 못 읽은 급: 같은 단의 앞뒤 급 번호로 채우기 (보통 1씩, 두 단이면 2씩)
+    for (let p = 0; p <= part; p++) {
+      const gs = groups.filter(g => g.part === p && g.name !== '');
+      const nums = gs.map(g => parseInt(g.name)).filter(n => !isNaN(n)); let step = 1;
+      for (let i = 1; i < gs.length; i++) { const a = parseInt(gs[i - 1].name), b = parseInt(gs[i].name); if (!isNaN(a) && !isNaN(b) && b > a) { step = b - a; break; } }
+      if (part >= 1 && step === 1 && nums.length > 1 && nums.every(n => n % 2 === nums[0] % 2)) step = 2;
+      gs.forEach((g, i) => { if (g.name === '?') { const prev = gs.slice(0, i).reverse().find(x => !isNaN(parseInt(x.name))); const next = gs.slice(i + 1).find(x => !isNaN(parseInt(x.name)));
+        g.name = prev ? (parseInt(prev.name) + step * (i - gs.indexOf(prev))) + '급' : next ? (parseInt(next.name) - step * (gs.indexOf(next) - i)) + '급' : ''; } });
+    }
+    // 급 번호를 잘못 읽은 경우(13급 → 3급 등): 같은 단에서 가장 많이 맞는 '시작 번호 + 간격'으로 다시 매기기
+    for (let p = 0; p <= part; p++) {
+      const gs = groups.filter(g => g.part === p && g.name && g.items.length >= 3), n = gs.map(g => parseInt(g.name));
+      let bestFit = null;
+      for (let i = 0; i < gs.length; i++) for (let j = i + 1; j < gs.length; j++) {
+        if (isNaN(n[i]) || isNaN(n[j]) || n[j] <= n[i] || (n[j] - n[i]) % (j - i)) continue;
+        const st = (n[j] - n[i]) / (j - i); if (st > 2) continue;
+        const s0 = n[i] - st * i, hit = n.filter((v, k) => v === s0 + st * k).length;
+        if (s0 >= 1 && (!bestFit || hit > bestFit.hit)) bestFit = { s0, st, hit };
+      }
+      if (bestFit && bestFit.hit >= 2) gs.forEach((g, k) => { g.name = (bestFit.s0 + bestFit.st * k) + '급'; });
+    }
+    groups.forEach(g => { [0, 9].forEach(k => { if (g.items[k]) g.items[k] = g.items[k].replace(/^[그고]\s*(0|01|10)?\s+(?=[가-힣])/, '').replace(/^[그고](0|01|10)(?=[가-힣])/, ''); }); });
+    let out = groups.filter(gr => gr.items.length);
+    if (out.some(g => g.name)) out = out.filter(g => g.name);           // 급 제목 앞의 꾸밈 글자는 빼기
+    const seen = {}; out = out.filter(g => !g.name || (seen[g.name] ? false : (seen[g.name] = 1)));
+    out.sort((a, b) => (parseInt(a.name) || 0) - (parseInt(b.name) || 0));
+    return out.map(gr => ({ name: gr.name, list: gr.items.slice(0, 30).map((t, i) => ({ no: i + 1, text: t })) }));
+  }
+  function lineText(ln, grid) {
+    if (!grid) return ln.text || '';
+    const sy = []; (ln.words || []).forEach(w => (w.symbols || []).forEach(c => { const t = (c.text || '').trim(); if (t && !/^[|｜¦ㅣㅡ!:;'"`‘’“”_~\-\\/()\[\]{}<>]$/.test(t) && !/^[ㄱ-ㅎㅏ-ㅣ]$/.test(t)) sy.push({ t, x0: c.bbox.x0, x1: c.bbox.x1 }); }));
+    if (sy.length < 2) return ln.text || '';
+    const cx = sy.map(c => (c.x0 + c.x1) / 2), df = []; for (let i = 1; i < sy.length; i++) if (/[가-힣]/.test(sy[i].t) && /[가-힣]/.test(sy[i - 1].t)) df.push(cx[i] - cx[i - 1]);
+    if (df.length < 2) return ln.text || '';
+    const ds = df.slice().sort((a, b) => a - b), pitch = ds[Math.floor(ds.length * 0.3)];   // 원고지 한 칸 너비
+    let out = sy[0].t;
+    for (let i = 1; i < sy.length; i++) { const gap = cx[i] - cx[i - 1]; out += (gap > pitch * 1.55 ? ' ' : '') + sy[i].t; }
+    return out;
   }
   async function ocrImage(file, onMsg) {
     onMsg('글자 읽는 도구를 준비하는 중… (처음 한 번은 조금 걸려요)');
     await loadTess();
-    const cv = await prepImage(file);
+    onMsg('사진을 반듯하게 펴는 중…');
+    const parts = await prepImage(file);
     const worker = await Tesseract.createWorker('kor', 1, {
       workerPath: TESS + 'worker.min.js',
       corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@6.0.0',
@@ -219,8 +317,13 @@
     });
     try {
       await worker.setParameters({ preserve_interword_spaces: '1' });
-      const r = await worker.recognize(cv);
-      return r.data.text || '';
+      const texts = [];
+      for (const cv of parts) {
+        const r = await worker.recognize(cv, {}, { text: true, blocks: true });
+        const lines = []; (r.data.blocks || []).forEach(b => (b.paragraphs || []).forEach(p => (p.lines || []).forEach(l => lines.push(lineText(l, cv.grid)))));
+        texts.push(lines.length ? lines.join('\n') : (r.data.text || ''));
+      }
+      return texts.join('\n§PART§\n');
     } finally { try { await worker.terminate(); } catch (e) {} }
   }
 
@@ -363,5 +466,5 @@
     render();
     return () => { stopSay(); window.removeEventListener('resize', later); document.body.classList.remove('ws-print'); const pr = document.getElementById('wsPrint'); if (pr) pr.remove(); };
   };
-  window.DICT_TEST = { parse, wrap, build, parseOcr };
+  window.DICT_TEST = { parse, wrap, build, parseOcr, prepImage, ocrImage: (f, m) => ocrImage(f, m || (() => {})) };
 })();
